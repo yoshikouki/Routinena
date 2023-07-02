@@ -1,5 +1,5 @@
 import { appRouter } from "~/server/api/root";
-import { createContext } from "~/server/context";
+import { createContext } from "~/server/api/trpc";
 import { env } from "~/env.mjs";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 

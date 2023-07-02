@@ -1,10 +1,10 @@
 import { AuthShowcase } from "./AuthShowcase";
 import ClientHome from "./ClientHome";
 import Link from "next/link";
-import { auth } from "~/server/auth";
+import { getServerAuthSession } from "~/server/auth";
 
 export default async function Home() {
-  const session = await auth();
+  const session = await getServerAuthSession();
 
   return (
     <>
