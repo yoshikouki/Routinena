@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  // adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
