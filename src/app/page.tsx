@@ -1,5 +1,6 @@
 import { AuthShowcase } from "./AuthShowcase";
 import ClientHome from "./ClientHome";
+import InstallationButton from "./InstallationButton";
 import Link from "next/link";
 import { getServerAuthSession } from "~/server/auth";
 
@@ -35,6 +36,8 @@ export default async function Home() {
           </div>
 
           <AuthShowcase />
+
+          <InstallationButton />
         </div>
       </main>
     </>
