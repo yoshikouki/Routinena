@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import "./globals.css";
 import { TrpcProvider } from "./TrpcProvider";
-import ThemeRegistry from "./ThemeResistry";
+import ThemeRegistry from "./ThemeRegistry";
 
 export const metadata: Metadata = {
   title: "ルーティンナさん | Routinena",
