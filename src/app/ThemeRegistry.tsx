@@ -10,9 +10,11 @@ import {
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { Roboto } from "next/font/google";
-import { ThemeProvider } from "@mui/material/styles";
+import { type ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { type PaletteMode } from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 const GoogleRobotoFont = Roboto({
   weight: "400",
@@ -20,7 +22,52 @@ const GoogleRobotoFont = Roboto({
   display: "swap",
 });
 
-export const ThemeModeContext = createContext<{ mode: "light" | "dark"; toggleThemeMode: () => void }>({
+const lightThemePalette: ThemeOptions["palette"] = {
+  mode: "light",
+  background: {
+    default: "#F5F5F5",
+  },
+  primary: {
+    main: "#ADD8E6",
+  },
+  secondary: {
+    main: "#FFC0CB",
+  },
+  text: {
+    primary: grey[900],
+    secondary: grey[800],
+  },
+};
+const darkThemePalette: ThemeOptions["palette"] = {
+  mode: "dark",
+  background: {
+    default: "#424242",
+  },
+  primary: {
+    main: "#00008B",
+  },
+  secondary: {
+    main: "#FFA07A",
+  },
+  text: {
+    primary: "#fff",
+    secondary: grey[500],
+  },
+};
+
+const getDesignTokens = (mode: PaletteMode) => ({
+  palette: mode === "light" ? lightThemePalette : darkThemePalette,
+  typography: {
+    fontFamily: GoogleRobotoFont.style.fontFamily,
+    body1: { fontFamily: GoogleRobotoFont.style.fontFamily },
+    body2: { fontFamily: GoogleRobotoFont.style.fontFamily },
+  },
+});
+
+export const ThemeModeContext = createContext<{
+  mode: "light" | "dark";
+  toggleThemeMode: () => void;
+}>({
   mode: "dark",
   toggleThemeMode: () => undefined,
 });
@@ -32,26 +79,12 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
     prefersDarkMode ? "dark" : "light"
   );
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: mode,
-        },
-        typography: {
-          fontFamily: GoogleRobotoFont.style.fontFamily,
-          body1: { fontFamily: GoogleRobotoFont.style.fontFamily },
-          body2: { fontFamily: GoogleRobotoFont.style.fontFamily },
-        },
-      }),
-    [mode]
-  );
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   const themeMode = useMemo(
     () => ({
       mode,
-      toggleThemeMode: () => {
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-      },
+      toggleThemeMode: () =>
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light")),
     }),
     [mode]
   );
