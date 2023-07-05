@@ -3,6 +3,7 @@ import ClientHome from "./ClientHome";
 import InstallationButton from "./InstallationButton";
 import LoginButton from "~/components/LoginButton";
 import LogoutButton from "~/components/LogoutButton";
+import ThemeModeToggleButton from "./ThemeModeToggleButton";
 import { getServerAuthSession } from "~/server/auth";
 
 export default async function Home() {
@@ -25,6 +26,7 @@ export default async function Home() {
           <AuthShowcase />
 
           <InstallationButton />
+          <ThemeModeToggleButton />
         </div>
       </main>
     </>

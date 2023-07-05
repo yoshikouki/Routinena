@@ -1,6 +1,12 @@
 "use client";
 
-import * as React from "react";
+import {
+  type ReactNode,
+  createContext,
+  useMemo,
+  useContext,
+  useState,
+} from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { Roboto } from "next/font/google";
@@ -14,18 +20,23 @@ const GoogleRobotoFont = Roboto({
   display: "swap",
 });
 
-export default function ThemeRegistry({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+export const ThemeModeContext = createContext<{ mode: "light" | "dark"; toggleThemeMode: () => void }>({
+  mode: "dark",
+  toggleThemeMode: () => undefined,
+});
+export const useThemeMode = () => useContext(ThemeModeContext);
 
-  const theme = React.useMemo(
+export default function ThemeRegistry({ children }: { children: ReactNode }) {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [mode, setMode] = useState<"light" | "dark">(
+    prefersDarkMode ? "dark" : "light"
+  );
+
+  const theme = useMemo(
     () =>
       createTheme({
         palette: {
-          mode: prefersDarkMode ? "dark" : "light",
+          mode: mode,
         },
         typography: {
           fontFamily: GoogleRobotoFont.style.fontFamily,
@@ -33,14 +44,25 @@ export default function ThemeRegistry({
           body2: { fontFamily: GoogleRobotoFont.style.fontFamily },
         },
       }),
-    [prefersDarkMode]
+    [mode]
+  );
+  const themeMode = useMemo(
+    () => ({
+      mode,
+      toggleThemeMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    [mode]
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
+    <ThemeModeContext.Provider value={themeMode}>
+      <ThemeProvider theme={theme}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
+    </ThemeModeContext.Provider>
   );
 }
