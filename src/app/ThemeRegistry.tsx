@@ -14,7 +14,7 @@ import { type ThemeOptions, ThemeProvider, makeStyles, styled, SxProps } from "@
 import { createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, type PaletteMode } from "@mui/material";
-import { grey, orange } from "@mui/material/colors";
+import { cyan, deepOrange, grey, indigo, orange } from "@mui/material/colors";
 
 const GoogleRobotoFont = Roboto({
   weight: "400",
@@ -25,33 +25,33 @@ const GoogleRobotoFont = Roboto({
 const lightThemePalette: ThemeOptions["palette"] = {
   mode: "light",
   background: {
-    default: "#F5F5F5",
+    default: grey[100], // #f5f5f5
   },
   primary: {
-    main: "#ADD8E6",
+    main: cyan[100], // #b2ebf2
   },
   secondary: {
-    main: "#FFC0CB",
+    main: deepOrange[100], // #ffccbc
   },
   text: {
-    primary: grey[900],
-    secondary: grey[800],
+    primary: grey[900], // #212121
+    secondary: grey[800], // #424242
   },
 };
 const darkThemePalette: ThemeOptions["palette"] = {
   mode: "dark",
   background: {
-    default: "#424242",
+    default: grey[800], // #424242
   },
   primary: {
-    main: "#00008B",
+    main: indigo[800], // #283593
   },
   secondary: {
-    main: "#FFA07A",
+    main: orange[800], // #ef6c00
   },
   text: {
-    primary: "#fff",
-    secondary: grey[500],
+    primary: grey[50], // #fafafa
+    secondary: grey[500], // #9e9e9e
   },
 };
 
