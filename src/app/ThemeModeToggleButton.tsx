@@ -1,15 +1,11 @@
 "use client";
 
-import { Button, IconButton } from "@mui/material";
 import { DarkMode, LightMode } from "@mui/icons-material";
 
+import { IconButton } from "@mui/material";
 import { useThemeMode } from "./ThemeRegistry";
 
-interface Props {
-  message?: string;
-}
-
-const ThemeModeToggleButton = ({ message }: Props) => {
+const ThemeModeToggleButton = () => {
   const { mode, toggleThemeMode } = useThemeMode();
   return (
     <IconButton onClick={toggleThemeMode} aria-label={`${mode} mode`}>
