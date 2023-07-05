@@ -10,11 +10,11 @@ import {
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { Roboto } from "next/font/google";
-import { type ThemeOptions, ThemeProvider } from "@mui/material/styles";
+import { type ThemeOptions, ThemeProvider, makeStyles, styled, SxProps } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { type PaletteMode } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Box, type PaletteMode } from "@mui/material";
+import { grey, orange } from "@mui/material/colors";
 
 const GoogleRobotoFont = Roboto({
   weight: "400",
@@ -88,13 +88,24 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
     }),
     [mode]
   );
+  const background =
+    mode === "light"
+      ? `linear-gradient(${theme.palette.background.default}, ${orange[50]})`
+      : `linear-gradient(${theme.palette.background.default}, ${grey[900]})`;
 
   return (
     <ThemeModeContext.Provider value={themeMode}>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        {children}
+        <Box
+          sx={{
+            minHeight: "100vh",
+            background,
+          }}
+        >
+          {children}
+        </Box>
       </ThemeProvider>
     </ThemeModeContext.Provider>
   );
