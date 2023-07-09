@@ -14,8 +14,7 @@ export const metadata: Metadata = {
     maximumScale: 1,
   },
   // PWA config
-  manifest: "/manifest.json",
-  themeColor: "#ffffff",
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
