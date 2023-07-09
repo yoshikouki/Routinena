@@ -6,15 +6,16 @@ import {
   useMemo,
   useContext,
   useState,
+  useEffect,
 } from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { Roboto } from "next/font/google";
-import { type ThemeOptions, ThemeProvider, makeStyles, styled, SxProps } from "@mui/material/styles";
+import { type ThemeOptions, ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, type PaletteMode } from "@mui/material";
-import { cyan, deepOrange, grey, indigo, orange } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 
 const GoogleRobotoFont = Roboto({
   weight: "400",
@@ -25,32 +26,33 @@ const GoogleRobotoFont = Roboto({
 const lightThemePalette: ThemeOptions["palette"] = {
   mode: "light",
   background: {
-    default: grey[100], // #f5f5f5
+    default: "#FEFCF7",
   },
   primary: {
-    main: cyan[100], // #b2ebf2
+    main: "#F29D52",
+    dark: "#A6705D",
   },
   secondary: {
-    main: deepOrange[100], // #ffccbc
+    main: "#509AB2",
   },
   text: {
-    primary: grey[900], // #212121
+    primary: "#40221B",
     secondary: grey[800], // #424242
   },
 };
 const darkThemePalette: ThemeOptions["palette"] = {
   mode: "dark",
   background: {
-    default: grey[800], // #424242
+    default: "#40221B",
   },
   primary: {
-    main: indigo[800], // #283593
+    main: "#F29D52",
   },
   secondary: {
-    main: orange[800], // #ef6c00
+    main: "#509AB2",
   },
   text: {
-    primary: grey[50], // #fafafa
+    primary: "#FFFCF5",
     secondary: grey[500], // #9e9e9e
   },
 };
@@ -78,20 +80,34 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<"light" | "dark">(
     prefersDarkMode ? "dark" : "light"
   );
+  const changeThemeMode = (theme: "light" | "dark") => {
+    localStorage.theme = theme;
+    setMode(theme);
+  };
 
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   const themeMode = useMemo(
     () => ({
       mode,
-      toggleThemeMode: () =>
-        setMode((prevMode) => (prevMode === "light" ? "dark" : "light")),
+      toggleThemeMode: () => changeThemeMode(mode === "light" ? "dark" : "light"),
     }),
     [mode]
   );
   const background =
     mode === "light"
-      ? `linear-gradient(${theme.palette.background.default}, ${orange[50]})`
+      ? `linear-gradient(${theme.palette.background.default}, #ffffff)`
       : `linear-gradient(${theme.palette.background.default}, ${grey[900]})`;
+
+  useEffect(() => {
+    const isDarkMode =
+      !("theme" in localStorage) &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (localStorage.theme === "dark" || isDarkMode) {
+      changeThemeMode("dark");
+    } else {
+      changeThemeMode("light");
+    }
+  }, [mode]);
 
   return (
     <ThemeModeContext.Provider value={themeMode}>
