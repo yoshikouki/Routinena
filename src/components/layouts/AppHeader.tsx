@@ -14,24 +14,17 @@ import {
 
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import { useState } from "react";
-import DashboardButton from "../DashboardButton";
+import { signOut, useSession } from "next-auth/react";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const AppHeader = () => {
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+    const { data: session } = useSession({ required: true });
 
-const LandingPageHeader = () => {
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   return (
     <AppBar>
       <Box sx={{ flex: "display" }}>
-        <Toolbar disableGutters>
+        <Toolbar>
           <RotateLeftIcon sx={{ mr: 1 }} />
           <Typography
             variant="h6"
@@ -54,14 +47,17 @@ const LandingPageHeader = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <IconButton onClick={() => setOpenMenu(true)} sx={{ p: 0 }}>
+                <Avatar
+                  alt={session?.user?.name || ""}
+                  src={session?.user?.image || ""}
+                />
               </IconButton>
             </Tooltip>
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
                 horizontal: "right",
@@ -71,16 +67,17 @@ const LandingPageHeader = () => {
                 vertical: "top",
                 horizontal: "right",
               }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              open={Boolean(openMenu)}
+              onClose={() => setOpenMenu(false)}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-              <MenuItem onClick={handleCloseUserMenu}>
-
+              <MenuItem onClick={() => setOpenMenu(false)}>
+                <Typography textAlign="center">設定</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => setOpenMenu(false)}>
+                <Typography textAlign="center">Settings</Typography>
+              </MenuItem>
+              <MenuItem onClick={() => void signOut()}>
+                <Typography textAlign="center">ログアウト</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -90,4 +87,4 @@ const LandingPageHeader = () => {
   );
 };
 
-export default LandingPageHeader;
+export default AppHeader;

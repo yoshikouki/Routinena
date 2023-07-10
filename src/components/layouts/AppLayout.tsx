@@ -6,6 +6,8 @@ import { type ReactNode } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import DoneIcon from "@mui/icons-material/Done";
 import AnimationBottomFab from "./AnimationBottomFab";
+import LandingPageHeader from "./LandingPageHeader";
+import AppHeader from "./AppHeader";
 
 interface Props {
   children: ReactNode;
@@ -33,6 +35,8 @@ const AppLayout = ({ children }: Props) => {
 
   return (
     <Box sx={{ display: "flex" }}>
+      <AppHeader />
+
       <Paper
         sx={{ position: "fixed", bottom: 40, left: 8, right: 8 }}
         elevation={8}

@@ -3,6 +3,7 @@ import "./globals.css";
 import { TrpcProvider } from "./TrpcProvider";
 import ThemeRegistry from "./ThemeRegistry";
 import LandingPageLayout from "~/components/layouts/LandingPageLayout";
+import { ClientSessionProvider } from "./ClientSessionProvider";
 
 export const metadata: Metadata = {
   title: "ルーティンナさん | Routinena",
@@ -37,11 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>
-          <TrpcProvider>
-            <LandingPageLayout>{children}</LandingPageLayout>
-          </TrpcProvider>
-        </ThemeRegistry>
+        <ClientSessionProvider>
+          <ThemeRegistry>
+            <TrpcProvider>{children}</TrpcProvider>
+          </ThemeRegistry>
+        </ClientSessionProvider>
       </body>
     </html>
   );
