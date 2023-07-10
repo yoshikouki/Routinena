@@ -2,7 +2,6 @@ import { type Metadata } from "next";
 import "./globals.css";
 import { TrpcProvider } from "./TrpcProvider";
 import ThemeRegistry from "./ThemeRegistry";
-import LandingPageLayout from "~/components/layouts/LandingPageLayout";
 import { ClientSessionProvider } from "./ClientSessionProvider";
 
 export const metadata: Metadata = {
