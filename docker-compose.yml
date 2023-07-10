@@ -1,0 +1,19 @@
+version: "3"
+
+volumes:
+  db-data:
+
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 8889:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: johndoe
+      POSTGRES_PASSWORD: randompassword
+      POSTGRES_DB: routinena
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    restart: always
