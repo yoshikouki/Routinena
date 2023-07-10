@@ -10,7 +10,7 @@ interface Props {
 
 const LoginButton = ({children = "ログイン"}: Props) => {
   return (
-    <Button href={"/api/auth/signin"} variant="contained" startIcon={<Login />}>
+    <Button href={"/api/auth/signin"} variant="outlined" startIcon={<Login />}>
       {children}
     </Button>
   );

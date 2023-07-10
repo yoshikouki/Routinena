@@ -47,11 +47,10 @@ const InstallationButton = ({
 
   return (
     <Button
+      startIcon={<InstallMobile />}
       onClick={() => void onInstallClick()}
       disabled={!isInstallable}
-      variant="contained"
       color="primary"
-      startIcon={<InstallMobile />}
     >
       {isInstallable ? message : disabledMessage}
     </Button>

@@ -2,6 +2,7 @@ import { type Metadata } from "next";
 import "./globals.css";
 import { TrpcProvider } from "./TrpcProvider";
 import ThemeRegistry from "./ThemeRegistry";
+import LandingPageLayout from "~/components/layouts/LandingPageLayout";
 
 export const metadata: Metadata = {
   title: "ルーティンナさん | Routinena",
@@ -37,7 +38,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <TrpcProvider>{children}</TrpcProvider>
+          <TrpcProvider>
+            <LandingPageLayout>{children}</LandingPageLayout>
+          </TrpcProvider>
         </ThemeRegistry>
       </body>
     </html>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@mui/material";
-import { Login, Logout } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import { type ReactNode } from "react";
 
 interface Props {

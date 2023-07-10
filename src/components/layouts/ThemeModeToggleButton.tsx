@@ -3,7 +3,7 @@
 import { DarkMode, LightMode } from "@mui/icons-material";
 
 import { IconButton } from "@mui/material";
-import { useThemeMode } from "./ThemeRegistry";
+import { useThemeMode } from "../../app/ThemeRegistry";
 
 const ThemeModeToggleButton = () => {
   const { mode, toggleThemeMode } = useThemeMode();
