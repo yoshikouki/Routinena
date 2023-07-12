@@ -12,7 +12,6 @@ const LandingPageLayout = ({ children }: Props) => {
   return (
     <Box sx={{ display: "flex" }}>
       <LandingPageHeader />
-
       {children}
     </Box>
   );

@@ -57,7 +57,7 @@ const darkThemePalette: ThemeOptions["palette"] = {
   },
 };
 
-const getDesignTokens = (mode: PaletteMode) => ({
+const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
   palette: mode === "light" ? lightThemePalette : darkThemePalette,
   typography: {
     fontFamily: GoogleRobotoFont.style.fontFamily,

@@ -1,12 +1,10 @@
-import InstallationButton from "./InstallationButton";
 import LandingPageLayout from "~/components/layouts/LandingPageLayout";
+import Home from "./Home";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <LandingPageLayout>
-      <main className="flex min-h-screen min-w-full flex-col items-center justify-center">
-        <InstallationButton />
-      </main>
+      <Home />
     </LandingPageLayout>
   );
 }
