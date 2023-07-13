@@ -56,7 +56,7 @@ export default function EmotionCacheProvider(props: EmotionCacheProviderProps) {
         key={cache.key}
         data-emotion={`${cache.key} ${names.join(" ")}`}
         dangerouslySetInnerHTML={{
-          __html: styles,
+        __html: options.prepend ? `@layer emotion {${styles}}` : styles,
         }}
       />
     );
