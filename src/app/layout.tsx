@@ -3,6 +3,7 @@ import "./globals.css";
 import { TrpcProvider } from "./TrpcProvider";
 import ThemeRegistry from "./ThemeRegistry";
 import { ClientSessionProvider } from "./ClientSessionProvider";
+import { font } from "./theme";
 
 export const metadata: Metadata = {
   title: "ルーティンナさん | Routinena",
@@ -36,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body>
+      <body className={font.className}>
         <ClientSessionProvider>
           <ThemeRegistry options={{ key: "mui" }}>
             <TrpcProvider>{children}</TrpcProvider>
