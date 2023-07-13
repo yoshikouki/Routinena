@@ -35,10 +35,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body>
         <ClientSessionProvider>
-          <ThemeRegistry>
+          <ThemeRegistry options={{ key: "mui" }}>
             <TrpcProvider>{children}</TrpcProvider>
           </ThemeRegistry>
         </ClientSessionProvider>

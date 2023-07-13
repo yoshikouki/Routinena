@@ -8,7 +8,7 @@ import {
   useState,
   useEffect,
 } from "react";
-
+import { type Options as OptionsOfCreateCache } from "@emotion/cache";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Roboto } from "next/font/google";
 import { type ThemeOptions, ThemeProvider } from "@mui/material/styles";
@@ -16,6 +16,7 @@ import { createTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, type PaletteMode } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import EmotionCacheProvider from "./EmotionCacheProvider";
 
 const GoogleRobotoFont = Roboto({
   weight: "400",
@@ -75,7 +76,13 @@ export const ThemeModeContext = createContext<{
 });
 export const useThemeMode = () => useContext(ThemeModeContext);
 
-export default function ThemeRegistry({ children }: { children: ReactNode }) {
+export default function ThemeRegistry({
+  children,
+  options,
+}: {
+  children: ReactNode;
+  options: OptionsOfCreateCache;
+}) {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [mode, setMode] = useState<"light" | "dark">(
     prefersDarkMode ? "dark" : "light"
@@ -89,7 +96,8 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
   const themeMode = useMemo(
     () => ({
       mode,
-      toggleThemeMode: () => changeThemeMode(mode === "light" ? "dark" : "light"),
+      toggleThemeMode: () =>
+        changeThemeMode(mode === "light" ? "dark" : "light"),
     }),
     [mode]
   );
@@ -110,19 +118,21 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
   }, [mode]);
 
   return (
-    <ThemeModeContext.Provider value={themeMode}>
+    <EmotionCacheProvider options={options}>
       <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Box
-          sx={{
-            minHeight: "100vh",
-            background,
-          }}
-        >
-          {children}
-        </Box>
+        <ThemeModeContext.Provider value={themeMode}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <Box
+            sx={{
+              minHeight: "100vh",
+              background,
+            }}
+          >
+            {children}
+          </Box>
+        </ThemeModeContext.Provider>
       </ThemeProvider>
-    </ThemeModeContext.Provider>
+    </EmotionCacheProvider>
   );
 }
