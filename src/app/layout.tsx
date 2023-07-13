@@ -39,7 +39,7 @@ export default function RootLayout({
     <html lang="ja">
       <body className={font.className}>
         <ClientSessionProvider>
-          <ThemeRegistry options={{ key: "mui" }}>
+          <ThemeRegistry>
             <TrpcProvider>{children}</TrpcProvider>
           </ThemeRegistry>
         </ClientSessionProvider>
