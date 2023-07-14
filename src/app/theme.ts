@@ -1,11 +1,12 @@
 import { grey } from "@mui/material/colors";
 import { type CssVarsThemeOptions } from "@mui/material/styles";
-import { Roboto } from "next/font/google";
+import { M_PLUS_Rounded_1c } from "next/font/google";
 
-export const font = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
+export const font = M_PLUS_Rounded_1c({
+  weight: ["100", "400", "900"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
+  fallback: ["system-ui", "arial"],
 });
 
 export const cssVarsThemeOptions: CssVarsThemeOptions = {
@@ -45,5 +46,14 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
         },
       },
     },
+  },
+
+  typography: {
+    allVariants: {
+      fontFamily: font.style.fontFamily,
+    },
+    button: {
+      textTransform: "none",
+    }
   },
 };
