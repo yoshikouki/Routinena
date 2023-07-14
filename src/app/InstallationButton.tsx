@@ -2,12 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 
-import { Button } from "@mui/material";
+import { Button, type ButtonProps } from "@mui/material";
 import { InstallMobile } from "@mui/icons-material";
 
 interface Props {
   message?: string;
   disabledMessage?: string;
+  props?: ButtonProps;
 }
 
 interface BeforeInstallPromptEvent extends Event {
@@ -18,6 +19,7 @@ interface BeforeInstallPromptEvent extends Event {
 const InstallationButton = ({
   message = "ホームに追加",
   disabledMessage = "ホームに追加済み",
+  props = {},
 }: Props) => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
@@ -47,10 +49,10 @@ const InstallationButton = ({
 
   return (
     <Button
-      startIcon={<InstallMobile />}
       onClick={() => void onInstallClick()}
+      startIcon={<InstallMobile />}
       disabled={!isInstallable}
-      color="primary"
+      {...props}
     >
       {isInstallable ? message : disabledMessage}
     </Button>

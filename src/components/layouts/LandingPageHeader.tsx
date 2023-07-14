@@ -6,8 +6,8 @@ import ThemeModeToggleButton from "./ThemeModeToggleButton";
 const LandingPageHeader = () => {
   return (
     <AppBar color="transparent" sx={{ boxShadow: "none" }}>
-      <Container maxWidth="md" sx={{ dispaly: "flex" }}>
-        <Toolbar>
+      <Container maxWidth="md">
+        <Toolbar disableGutters={true}>
           <Box sx={{ flexGrow: 1 }} />
           <ThemeModeToggleButton />
         </Toolbar>
