@@ -4,7 +4,7 @@ import { api } from "~/utils/api";
 
 export function AuthShowcase() {
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
-    undefined, // no input
+    undefined // no input
     // { enabled: sessionData?.user !== undefined }
   );
 

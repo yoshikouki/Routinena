@@ -54,6 +54,6 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
     },
     button: {
       textTransform: "none",
-    }
+    },
   },
 };

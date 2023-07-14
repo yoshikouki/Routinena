@@ -9,7 +9,7 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography
+  Typography,
 } from "@mui/material";
 
 import RotateLeftIcon from "@mui/icons-material/RotateLeft";
@@ -18,8 +18,7 @@ import { signOut, useSession } from "next-auth/react";
 
 const AppHeader = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-    const { data: session } = useSession({ required: true });
-
+  const { data: session } = useSession({ required: true });
 
   return (
     <AppBar>

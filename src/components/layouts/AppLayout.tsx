@@ -1,6 +1,11 @@
 "use client";
 
-import { BottomNavigation, BottomNavigationAction, Box, Paper } from "@mui/material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Box,
+  Paper,
+} from "@mui/material";
 import { type SyntheticEvent, useState } from "react";
 import { type ReactNode } from "react";
 import HomeIcon from "@mui/icons-material/Home";
@@ -23,7 +28,7 @@ const navigationActions = {
     value: "done",
     icon: <DoneIcon />,
   },
-}
+};
 
 const AppLayout = ({ children }: Props) => {
   const [value, setValue] = useState(navigationActions.home.value);

@@ -7,11 +7,7 @@ import { useSession } from "next-auth/react";
 const SessionButton = () => {
   const { data: session } = useSession();
 
-  return session ? (
-    <DashboardButton />
-  ) : (
-    <LoginButton />
-  );
+  return session ? <DashboardButton /> : <LoginButton />;
 };
 
 export default SessionButton;
