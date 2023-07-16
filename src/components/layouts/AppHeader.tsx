@@ -71,11 +71,9 @@ const AppHeader = () => {
               </MenuItem>
               <MenuItem onClick={() => setMode(modeString)}>
                 {mode === "light" ? <LightMode /> : <DarkMode />}
-                <Typography sx={{ ml: 1 }}>
-                  テーマ変更
-                </Typography>
+                <Typography sx={{ ml: 1 }}>テーマ変更</Typography>
               </MenuItem>
-              <MenuItem onClick={() => void signOut()}>
+              <MenuItem onClick={() => void signOut({ callbackUrl: "/" })}>
                 <Logout />
                 <Typography sx={{ ml: 1 }}>ログアウト</Typography>
               </MenuItem>

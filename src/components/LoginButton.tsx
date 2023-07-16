@@ -12,7 +12,11 @@ interface Props {
 
 const LoginButton = ({ children = "ログイン", props = {} }: Props) => {
   return (
-    <Button onClick={() => void signIn()} startIcon={<Login />} {...props}>
+    <Button
+      onClick={() => void signIn(undefined, { callbackUrl: "/dashboard" })}
+      startIcon={<Login />}
+      {...props}
+    >
       {children}
     </Button>
   );
