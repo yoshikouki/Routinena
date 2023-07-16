@@ -4,47 +4,43 @@ import {
   AppBar,
   Avatar,
   Box,
+  Container,
   IconButton,
   Menu,
   MenuItem,
   Toolbar,
   Tooltip,
   Typography,
+  useColorScheme,
 } from "@mui/material";
-
-import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import { DarkMode, LightMode, Logout, Settings } from "@mui/icons-material";
 
 const AppHeader = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const { data: session } = useSession({ required: true });
+  const { mode, setMode } = useColorScheme();
+  const modeString = mode === "light" ? "dark" : "light";
 
   return (
-    <AppBar>
-      <Box sx={{ flex: "display" }}>
-        <Toolbar>
-          <RotateLeftIcon sx={{ mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: "flex",
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            ルーティンナさん
-          </Typography>
+    <AppBar color="transparent" sx={{ boxShadow: "none" }}>
+      <Container maxWidth="md">
+        <Toolbar disableGutters={true}>
+          <IconButton>
+            <Image
+              src="/icons/apple-touch-icon.png"
+              alt="ルーティンナさん"
+              width={40}
+              height={40}
+              style={{ borderRadius: "100%" }}
+            />
+          </IconButton>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 1 }} />
+
+          <Box>
             <Tooltip title="Open settings">
               <IconButton onClick={() => setOpenMenu(true)} sx={{ p: 0 }}>
                 <Avatar
@@ -70,18 +66,23 @@ const AppHeader = () => {
               onClose={() => setOpenMenu(false)}
             >
               <MenuItem onClick={() => setOpenMenu(false)}>
-                <Typography textAlign="center">設定</Typography>
+                <Settings />
+                <Typography sx={{ ml: 1 }}>設定</Typography>
               </MenuItem>
-              <MenuItem onClick={() => setOpenMenu(false)}>
-                <Typography textAlign="center">Settings</Typography>
+              <MenuItem onClick={() => setMode(modeString)}>
+                {mode === "light" ? <LightMode /> : <DarkMode />}
+                <Typography sx={{ ml: 1 }}>
+                  テーマ変更
+                </Typography>
               </MenuItem>
               <MenuItem onClick={() => void signOut()}>
-                <Typography textAlign="center">ログアウト</Typography>
+                <Logout />
+                <Typography sx={{ ml: 1 }}>ログアウト</Typography>
               </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
-      </Box>
+      </Container>
     </AppBar>
   );
 };

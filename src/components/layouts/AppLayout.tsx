@@ -2,9 +2,8 @@
 
 import {
   BottomNavigation,
-  BottomNavigationAction,
-  Box,
-  Paper,
+  BottomNavigationAction, Container,
+  Paper
 } from "@mui/material";
 import { type SyntheticEvent, useState } from "react";
 import { type ReactNode } from "react";
@@ -38,7 +37,7 @@ const AppLayout = ({ children }: Props) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Container maxWidth="md">
       <AppHeader />
 
       <Paper
@@ -55,7 +54,7 @@ const AppLayout = ({ children }: Props) => {
       </Paper>
 
       {children}
-    </Box>
+    </Container>
   );
 };
 
