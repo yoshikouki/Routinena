@@ -1,8 +1,18 @@
 "use client";
 
-import { Fab, Zoom, useTheme } from "@mui/material";
-
+import { Fab, Zoom, styled, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+
+import type {} from "@mui/material/themeCssVarsAugmentation"; // Workaround for theme type errors with CSS theme variables
+const BottomFab = styled(Fab)(({ theme }) => ({
+  position: "absolute",
+  zIndex: 10,
+  top: -30,
+  left: 0,
+  right: 0,
+  margin: "0 auto",
+  backgroundColor: theme.vars.palette.primary.main,
+}));
 
 const AnimationBottomFab = () => {
   const theme = useTheme();
@@ -14,20 +24,11 @@ const AnimationBottomFab = () => {
         exit: theme.transitions.duration.leavingScreen,
       }}
     >
-      <Fab
-        sx={{
-          position: "absolute",
-          zIndex: 10,
-          top: -30,
-          left: 0,
-          right: 0,
-          margin: "0 auto",
-        }}
-        color="primary"
+      <BottomFab
         aria-label="add"
       >
         <AddIcon />
-      </Fab>
+      </BottomFab>
     </Zoom>
   );
 };
