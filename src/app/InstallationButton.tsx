@@ -17,8 +17,8 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const FilledButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.primary.contrastText,
-  backgroundColor: "orange",
+  color: (theme.vars || theme).palette.primary.contrastText,
+  backgroundColor: (theme.vars || theme).palette.primary.main,
 }));
 
 const InstallationButton = ({
