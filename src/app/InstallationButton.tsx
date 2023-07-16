@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { Button, styled, type ButtonProps } from "@mui/material";
+import { Button, type ButtonProps } from "@mui/material";
 import { InstallMobile } from "@mui/icons-material";
 
 interface Props {
@@ -15,11 +15,6 @@ interface BeforeInstallPromptEvent extends Event {
   prompt: () => void;
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 }
-
-const FilledButton = styled(Button)(({ theme }) => ({
-  color: (theme.vars || theme).palette.primary.contrastText,
-  backgroundColor: (theme.vars || theme).palette.primary.main,
-}));
 
 const InstallationButton = ({
   message = "ホームに追加",
@@ -49,14 +44,14 @@ const InstallationButton = ({
   }, [deferredPrompt]);
 
   return (
-    <FilledButton
+    <Button
       onClick={() => void onInstallClick()}
       startIcon={<InstallMobile />}
       disabled={!isInstallable}
       {...props}
     >
       {isInstallable ? message : disabledMessage}
-    </FilledButton>
+    </Button>
   );
 };
 
