@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import { Button, type ButtonProps } from "@mui/material";
+import { Button, styled, type ButtonProps } from "@mui/material";
 import { InstallMobile } from "@mui/icons-material";
 
 interface Props {
@@ -16,6 +16,11 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 }
 
+const FilledButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.primary.contrastText,
+  backgroundColor: "orange",
+}));
+
 const InstallationButton = ({
   message = "ホームに追加",
   disabledMessage = "ホームに追加済み",
@@ -23,16 +28,15 @@ const InstallationButton = ({
 }: Props) => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstallable, setIsInstallable] = useState(false);
+  const isInstallable = deferredPrompt !== null;
 
   useEffect(() => {
     window.addEventListener("beforeinstallprompt", (e: Event) => {
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setIsInstallable(true);
     });
   }, []);
 
-  const onInstallClick = async () => {
+  const onInstallClick = useCallback(async () => {
     if (!deferredPrompt) {
       return;
     }
@@ -41,21 +45,18 @@ const InstallationButton = ({
     const choiceResult = await deferredPrompt.userChoice;
     if (choiceResult.outcome === "accepted") {
       setDeferredPrompt(null);
-      setIsInstallable(false);
-    } else {
-      setIsInstallable(true);
     }
-  };
+  }, [deferredPrompt]);
 
   return (
-    <Button
+    <FilledButton
       onClick={() => void onInstallClick()}
       startIcon={<InstallMobile />}
       disabled={!isInstallable}
       {...props}
     >
       {isInstallable ? message : disabledMessage}
-    </Button>
+    </FilledButton>
   );
 };
 
