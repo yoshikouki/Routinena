@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-
-import { Button, type ButtonProps } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, styled, type ButtonProps } from "@mui/material";
 import { InstallMobile } from "@mui/icons-material";
 
 interface Props {
@@ -15,6 +14,12 @@ interface BeforeInstallPromptEvent extends Event {
   prompt: () => void;
   userChoice: Promise<{ outcome: "accepted" | "dismissed"; platform: string }>;
 }
+
+import type {} from "@mui/material/themeCssVarsAugmentation"; // Workaround for theme type errors with CSS theme variables
+const FilledButton = styled(Button)(({ theme }) => ({
+  color: theme.vars.palette.primary.contrastText,
+  backgroundColor: theme.vars.palette.primary.main,
+}));
 
 const InstallationButton = ({
   message = "ホームに追加",
@@ -44,14 +49,14 @@ const InstallationButton = ({
   }, [deferredPrompt]);
 
   return (
-    <Button
+    <FilledButton
       onClick={() => void onInstallClick()}
       startIcon={<InstallMobile />}
       disabled={!isInstallable}
       {...props}
     >
       {isInstallable ? message : disabledMessage}
-    </Button>
+    </FilledButton>
   );
 };
 
