@@ -41,12 +41,27 @@ const AppLayout = ({ children }: Props) => {
       <AppHeader />
 
       <Paper
-        sx={{ position: "fixed", bottom: 40, left: 8, right: 8 }}
-        elevation={8}
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: "transparent",
+          backgroundImage: "none",
+          boxShadow: "none",
+        }}
       >
-        <BottomNavigation value={value} onChange={handleChange}>
+        <BottomNavigation
+          value={value}
+          onChange={handleChange}
+          sx={{ borderRadius: "16px 16px 0 0", backgroundColor: "transparent", height: "auto" }}
+        >
           {Object.values(navigationActions).map((action) => (
-            <BottomNavigationAction key={action.value} {...action} />
+            <BottomNavigationAction
+              key={action.value}
+              {...action}
+              sx={{ py: 2 }}
+            />
           ))}
         </BottomNavigation>
 
