@@ -21,18 +21,22 @@ model Activity {
   description String?      @map("description")
   ownerId     String       @map("owner_id")
   owner       User         @relation(fields: [ownerId], references: [id])
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
   completions Completion[]
 
   @@map("activities")
 }
 
 model Completion {
-  id         String   @id @default(cuid()) @map("id")
-  date       DateTime @map("date")
-  userId     String   @map("user_id")
-  user       User     @relation(fields: [userId], references: [id])
-  activityId String   @map("activity_id")
-  activity   Activity @relation(fields: [activityId], references: [id])
+  id          String   @id @default(cuid()) @map("id")
+  completedAt DateTime @map("completed_at")
+  userId      String   @map("user_id")
+  user        User     @relation(fields: [userId], references: [id])
+  activityId  String   @map("activity_id")
+  activity    Activity @relation(fields: [activityId], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("completions")
 }
