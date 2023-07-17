@@ -4,7 +4,7 @@ import { type BuiltInProviderType } from "next-auth/providers";
 import { type ClientSafeProvider, type LiteralUnion } from "next-auth/react/types";
 import LoginButton from "~/components/LoginButton";
 
-export default function Dashboard({ providers }: {
+export default function Login({ providers }: {
   providers: Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider>;
 }) {
   return (
@@ -13,6 +13,7 @@ export default function Dashboard({ providers }: {
         <div key={provider.name}>
           <LoginButton provider={provider.id} props={{
             variant: "contained",
+            color: "primary",
             size: "large",
             sx: {
               minWidth: 300,

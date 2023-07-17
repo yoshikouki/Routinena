@@ -1,15 +1,15 @@
 import { getProviders } from "next-auth/react";
 import { redirect } from 'next/navigation';
-import LoginPage from "./LoginPage";
+import Login from "./Login";
 
-export default async function Dashboard() {
+export default async function LoginPage() {
   const providers = await getProviders();
 
   if (!providers) {
-    redirect("/dashboard");
-  };
+    redirect("/");
+  }
 
   return (
-    <LoginPage providers={providers} />
+    <Login providers={providers} />
   );
 }
