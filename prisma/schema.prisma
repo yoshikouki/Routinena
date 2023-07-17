@@ -15,12 +15,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Example {
-  id        String   @id @default(cuid()) @map("id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+model Activity {
+  id          String       @id @default(cuid()) @map("id")
+  name        String       @map("name")
+  description String?      @map("description")
+  ownerId     String       @map("owner_id")
+  owner       User         @relation(fields: [ownerId], references: [id])
+  completions Completion[]
 
-  @@map("examples")
+  @@map("activities")
+}
+
+model Completion {
+  id         String   @id @default(cuid()) @map("id")
+  date       DateTime @map("date")
+  userId     String   @map("user_id")
+  user       User     @relation(fields: [userId], references: [id])
+  activityId String   @map("activity_id")
+  activity   Activity @relation(fields: [activityId], references: [id])
+
+  @@map("completions")
 }
 
 // Necessary for Next auth
@@ -54,13 +68,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("id")
-  name          String?   @map("name")
-  email         String?   @unique @map("email")
-  emailVerified DateTime? @map("email_verified")
-  image         String?   @map("image")
+  id            String       @id @default(cuid()) @map("id")
+  name          String?      @map("name")
+  email         String?      @unique @map("email")
+  emailVerified DateTime?    @map("email_verified")
+  image         String?      @map("image")
   accounts      Account[]
   sessions      Session[]
+  activities    Activity[]
+  completions   Completion[]
 
   @@map("users")
 }
