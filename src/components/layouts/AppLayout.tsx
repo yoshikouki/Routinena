@@ -2,8 +2,9 @@
 
 import {
   BottomNavigation,
-  BottomNavigationAction, Container,
-  Paper
+  BottomNavigationAction,
+  Container,
+  Paper,
 } from "@mui/material";
 import { type SyntheticEvent, useState } from "react";
 import { type ReactNode } from "react";
@@ -54,7 +55,11 @@ const AppLayout = ({ children }: Props) => {
         <BottomNavigation
           value={value}
           onChange={handleChange}
-          sx={{ borderRadius: "16px 16px 0 0", backgroundColor: "transparent", height: "auto" }}
+          sx={{
+            borderRadius: "16px 16px 0 0",
+            backgroundColor: "transparent",
+            height: "auto",
+          }}
         >
           {Object.values(navigationActions).map((action) => (
             <BottomNavigationAction
