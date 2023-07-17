@@ -13,10 +13,11 @@ import {
   Typography,
   useColorScheme,
 } from "@mui/material";
-import { useState } from "react";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
 import { DarkMode, LightMode, Logout, Settings } from "@mui/icons-material";
+import { signOut, useSession } from "next-auth/react";
+
+import AppLogo from "./AppLogo";
+import { useState } from "react";
 
 const AppHeader = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -28,15 +29,7 @@ const AppHeader = () => {
     <AppBar color="transparent" sx={{ boxShadow: "none" }}>
       <Container maxWidth="md">
         <Toolbar disableGutters={true}>
-          <IconButton>
-            <Image
-              src="/icons/apple-touch-icon.png"
-              alt="ルーティンナさん"
-              width={40}
-              height={40}
-              style={{ borderRadius: "100%" }}
-            />
-          </IconButton>
+          <AppLogo />
 
           <Box sx={{ flexGrow: 1 }} />
 
