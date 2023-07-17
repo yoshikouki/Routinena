@@ -13,7 +13,7 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Container maxWidth="md">
+    <>
       <LandingPageHeader>
         <IconButton>
           <Image
@@ -27,6 +27,6 @@ export default function LoginLayout({
       </LandingPageHeader>
 
       {children}
-    </Container>
+    </>
   );
 }
