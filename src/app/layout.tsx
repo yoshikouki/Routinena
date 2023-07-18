@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1,
   },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FEFCF7" },
+    { media: "(prefers-color-scheme: dark)", color: "#40221B" },
+  ],
 
   // PWA config
   manifest: "/manifest.webmanifest",
