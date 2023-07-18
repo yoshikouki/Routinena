@@ -56,4 +56,15 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
       textTransform: "none",
     },
   },
+
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          padding: theme.spacing(3),
+          fontWeight: 900,
+        }),
+      },
+    },
+  },
 };

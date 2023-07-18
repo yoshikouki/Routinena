@@ -43,9 +43,7 @@ export default function NewActivity() {
                 {...field}
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message}
-                margin="normal"
                 label="活動名"
-                variant="standard"
                 fullWidth
               />
             )}
@@ -61,8 +59,6 @@ export default function NewActivity() {
                 {...field}
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message}
-                variant="standard"
-                margin="normal"
                 label="詳細"
                 multiline
                 minRows={3}
@@ -77,13 +73,11 @@ export default function NewActivity() {
             type="submit"
             color="primary"
             variant="contained"
-            size="large"
             fullWidth
           >
             保存
           </Button>
         </Box>
-
       </Box>
     </Container>
   );
