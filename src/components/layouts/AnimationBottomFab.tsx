@@ -26,6 +26,7 @@ const AnimationBottomFab = () => {
     >
       <BottomFab
         aria-label="add"
+        href="/dashboard/activities/new"
       >
         <AddIcon />
       </BottomFab>
