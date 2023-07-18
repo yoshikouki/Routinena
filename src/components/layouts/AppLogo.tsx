@@ -9,7 +9,7 @@ interface Props {}
 
 const AppLogo = ({}: Props) => {
   return (
-    <IconButton>
+    <IconButton href={"/"}>
       <Image
         src="/icons/apple-touch-icon.png"
         alt="ルーティンナさん"

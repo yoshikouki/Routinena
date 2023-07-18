@@ -3,16 +3,19 @@ import { type SyntheticEvent, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import DoneIcon from "@mui/icons-material/Done";
 import AnimationBottomFab from "./AnimationBottomFab";
+import Link from "next/link";
 
 const navigationActions = {
   home: {
     label: "Home",
     value: "dashboard",
+    path: "/dashboard",
     icon: <HomeIcon />,
   },
   done: {
     label: "Done",
     value: "done",
+    path: "/done",
     icon: <DoneIcon />,
   },
 };
@@ -20,7 +23,7 @@ const navigationActions = {
 const AppBottomNavigation = () => {
   const [value, setValue] = useState(navigationActions.home.value);
 
-  const handleChange = (event: SyntheticEvent, newValue: string) => {
+  const handleChange = (event: SyntheticEvent, newValue: keyof typeof navigationActions) => {
     setValue(newValue);
   };
 
@@ -48,7 +51,11 @@ const AppBottomNavigation = () => {
         {Object.values(navigationActions).map((action) => (
           <BottomNavigationAction
             key={action.value}
-            {...action}
+            LinkComponent={Link}
+            href={action.path}
+            label={action.label}
+            value={action.value}
+            icon={action.icon}
             sx={{ py: 2 }}
           />
         ))}
