@@ -13,7 +13,7 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
   const theme = extendTheme(cssVarsThemeOptions);
 
   return (
-    <CssVarsProvider theme={theme}>
+    <CssVarsProvider theme={theme} defaultMode="light">
       {getInitColorSchemeScript()}
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
