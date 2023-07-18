@@ -6,6 +6,10 @@ import { type NewActivityRequest, newActivityRequestSchema } from "~/schemas/act
 
 export const useActivityForm = () => {
   const { control, handleSubmit } = useForm<NewActivityRequest>({
+    defaultValues: {
+      name: "",
+      description: "",
+    },
     resolver: zodResolver(newActivityRequestSchema),
   });
 
