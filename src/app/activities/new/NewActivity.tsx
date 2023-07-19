@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
+
 import { Controller } from "react-hook-form";
 import { useActivityForm } from "~/hooks/activity-form";
 
@@ -25,7 +26,7 @@ export default function NewActivity() {
             fontSize: 30,
           }}
         >
-          新規の活動
+          活動の作成
         </Typography>
       </Box>
 

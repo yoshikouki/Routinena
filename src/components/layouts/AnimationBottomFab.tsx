@@ -1,9 +1,11 @@
 "use client";
 
+import type {} from "@mui/material/themeCssVarsAugmentation"; // Workaround for theme type errors with CSS theme variables
+
 import { Fab, Zoom, styled, useTheme } from "@mui/material";
+
 import AddIcon from "@mui/icons-material/Add";
 
-import type {} from "@mui/material/themeCssVarsAugmentation"; // Workaround for theme type errors with CSS theme variables
 const BottomFab = styled(Fab)(({ theme }) => ({
   position: "absolute",
   zIndex: 10,
@@ -26,7 +28,7 @@ const AnimationBottomFab = () => {
     >
       <BottomFab
         aria-label="add"
-        href="/dashboard/activities/new"
+        href="/activities/new"
       >
         <AddIcon />
       </BottomFab>
