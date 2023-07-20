@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  type ActivityModificationRequest,
   activityModificationRequestSchema,
-  activityUpdateRequestSchema,
 } from "~/schemas/activities";
 import { api } from "~/utils/api";
 import { useRouter } from "next/navigation";
@@ -15,30 +15,28 @@ export const useActivityForm = (props?: {
   onSubmit?: () => void;
 }) => {
   const activity = props && props.activity;
-  const formProps = activity
-    ? {
+  const { control, handleSubmit } =
+    useForm<ActivityModificationRequest>({
         defaultValues: {
-          activityId: activity.id,
-          name: activity.name,
-          description: activity.description,
-        },
-        resolver: zodResolver(activityUpdateRequestSchema),
-      }
-    : {
-        defaultValues: {
-          name: "",
-          description: "",
+          name: activity?.name || "",
+          description: activity?.description || null,
         },
         resolver: zodResolver(activityModificationRequestSchema),
-      };
-  const { control, handleSubmit } = useForm(formProps);
-  const mutation = props?.activity
-    ? api.activities.updateOne.useMutation()
-    : api.activities.create.useMutation();
+      });
+  const mutationUpdate = api.activities.updateOne.useMutation();
+  const mutationCreate = api.activities.create.useMutation();
   const router = useRouter();
 
   const onSubmit = handleSubmit((data) => {
-    mutation.mutate(data);
+    if (activity) {
+      mutationUpdate.mutate({
+        activityId: activity.id,
+        ...data,
+      });
+    } else {
+      mutationCreate.mutate(data);
+    }
+
     if (props?.onSubmit) {
       props.onSubmit();
     } else {
