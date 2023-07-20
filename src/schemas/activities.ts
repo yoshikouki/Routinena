@@ -7,7 +7,7 @@ export type ActivityIdentifier = z.infer<typeof activityIdentifierSchema>;
 
 export const activityModificationRequestSchema = z.object({
   name: z.string().max(255).trim(),
-  description: z.string().max(2000).trim().optional(),
+  description: z.string().max(2000).trim().nullable(),
 });
 export type ActivityModificationRequest = z.infer<
   typeof activityModificationRequestSchema

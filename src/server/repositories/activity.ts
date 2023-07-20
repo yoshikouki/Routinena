@@ -43,7 +43,10 @@ export const activityRepository = (props?: Props) => {
     ): Promise<Activity> => {
       const activity = await prisma.activity.update({
         where: { id: activityParams.activityId, ownerId: userId },
-        data: activityParams,
+        data: {
+          name: activityParams.name,
+          description: activityParams.description,
+        },
       });
       return activity;
     },
