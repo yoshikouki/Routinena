@@ -1,14 +1,14 @@
 "use client";
 
 import { Box, Button, Container, Typography } from "@mui/material";
-import { useActivity } from "~/hooks/activities";
+// import { useActivity } from "~/hooks/activities";
 
-export default function Activity({ activityId }: { activityId: string }) {
-  const { activity, deleteActivity } = useActivity({ activityId });
-  const onDeleteActivity = () => {
-    if (!activity) return;
-    deleteActivity();
-  };
+export default function Activity(_props: { activityId: string }) {
+  // const { activity, deleteActivity } = useActivity({ activityId });
+  // const onDeleteActivity = () => {
+  //   if (!activity) return;
+  //   deleteActivity();
+  // };
 
   return (
     <Container
@@ -28,18 +28,18 @@ export default function Activity({ activityId }: { activityId: string }) {
             fontSize: 30,
           }}
         >
-          {activity?.name}
+          activity?.name
         </Typography>
       </Box>
 
       <Box>
         <Box sx={{ mt: 4 }}>
-          <Typography variant="body1">{activity?.description}</Typography>
+          <Typography variant="body1">activity?.description</Typography>
         </Box>
 
         <Box sx={{ mt: 6 }}>
           <Button
-            onClick={onDeleteActivity}
+            // onClick={onDeleteActivity}
             color="warning"
             variant="outlined"
             fullWidth

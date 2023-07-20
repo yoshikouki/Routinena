@@ -5,6 +5,6 @@ export const metadata: Metadata = {
   title: "活動 - ルーティンナさん | Routinena",
 };
 
-export default function NewActivityPage({ params }: { params: { activityId: string } }) {
+export default function ActivityPage({ params }: { params: { activityId: string } }) {
   return <Activity activityId={params.activityId} />;
 }
