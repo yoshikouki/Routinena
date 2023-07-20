@@ -1,12 +1,17 @@
 "use client";
 
 import { Box, Button, Container, Typography } from "@mui/material";
-import { redirect } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 import { useActivity } from "~/hooks/activities";
 
 export default function Activity({ activityId }: { activityId: string }) {
-  const { activity } = useActivity({ activityId });
+  const { activity, deleteActivity } = useActivity({ activityId });
+  const router = useRouter();
+  const onDeleteActivity = () => {
+    if (!activity) return;
+    deleteActivity();
+    router.push("/dashboard");
+  };
 
   return (
     <Container
@@ -36,7 +41,12 @@ export default function Activity({ activityId }: { activityId: string }) {
         </Box>
 
         <Box sx={{ mt: 6 }}>
-          <Button color="warning" variant="outlined" fullWidth>
+          <Button
+            onClick={onDeleteActivity}
+            color="warning"
+            variant="outlined"
+            fullWidth
+          >
             削除
           </Button>
         </Box>

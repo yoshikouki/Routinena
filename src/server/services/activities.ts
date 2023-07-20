@@ -14,5 +14,9 @@ export const activitiesService = () => {
     create: async (userId: string, newActivityParams: NewActivityRequest) => {
       return activityRepository().create(userId, newActivityParams);
     },
+
+    deleteOne: async (userId: string, activityRequest: ActivityRequest) => {
+      return activityRepository().deleteOne(userId, activityRequest.activityId);
+    },
   };
 };

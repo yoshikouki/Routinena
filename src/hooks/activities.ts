@@ -14,7 +14,9 @@ interface useActivityProps {
 }
 export const useActivity = ({ activityId }: useActivityProps) => {
   const { data: activity } = api.activities.getOne.useQuery({ activityId });
+  const { mutate: deleteActivity } = api.activities.deleteOne.useMutation();
   return {
     activity,
+    deleteActivity: () => deleteActivity({ activityId }),
   };
 };

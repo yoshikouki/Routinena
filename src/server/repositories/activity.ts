@@ -36,5 +36,12 @@ export const activityRepository = (props?: Props) => {
       });
       return activity;
     },
+
+    deleteOne: async (userId: string, activityId: string) => {
+      const activity = await prisma.activity.delete({
+        where: { id: activityId, ownerId: userId },
+      });
+      return activity;
+    }
   };
 };
