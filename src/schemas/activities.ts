@@ -9,4 +9,10 @@ export const activityModificationRequestSchema = z.object({
   name: z.string().max(255).trim(),
   description: z.string().max(2000).trim().optional(),
 });
-export type ActivityModificationRequest = z.infer<typeof activityModificationRequestSchema>;
+export type ActivityModificationRequest = z.infer<
+  typeof activityModificationRequestSchema
+>;
+
+export const activityUpdateRequestSchema =
+  activityModificationRequestSchema.merge(activityIdentifierSchema);
+export type ActivityUpdateRequest = z.infer<typeof activityUpdateRequestSchema>;

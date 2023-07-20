@@ -1,6 +1,6 @@
 import { type Activity, type PrismaClient } from "@prisma/client";
 import { prisma as prismaClient } from "./../db";
-import { type ActivityModificationRequest } from "~/schemas/activities";
+import { type ActivityUpdateRequest, type ActivityModificationRequest } from "~/schemas/activities";
 
 interface Props {
   prisma?: PrismaClient;
@@ -37,11 +37,22 @@ export const activityRepository = (props?: Props) => {
       return activity;
     },
 
+    updateOne: async (
+      userId: string,
+      activityParams: ActivityUpdateRequest,
+    ): Promise<Activity> => {
+      const activity = await prisma.activity.update({
+        where: { id: activityParams.activityId, ownerId: userId },
+        data: activityParams,
+      });
+      return activity;
+    },
+
     deleteOne: async (userId: string, activityId: string) => {
       const activity = await prisma.activity.delete({
         where: { id: activityId, ownerId: userId },
       });
       return activity;
-    }
+    },
   };
 };

@@ -1,4 +1,4 @@
-import { type ActivityIdentifier, type ActivityModificationRequest } from "~/schemas/activities";
+import { type ActivityUpdateRequest, type ActivityIdentifier, type ActivityModificationRequest } from "~/schemas/activities";
 import { activityRepository } from "../repositories/activity";
 
 export const activitiesService = () => {
@@ -13,6 +13,10 @@ export const activitiesService = () => {
 
     create: async (userId: string, newActivityParams: ActivityModificationRequest) => {
       return activityRepository().create(userId, newActivityParams);
+    },
+
+    updateOne: async (userId: string, activityRequest: ActivityUpdateRequest) => {
+      return activityRepository().updateOne(userId, activityRequest);
     },
 
     deleteOne: async (userId: string, activityRequest: ActivityIdentifier) => {
