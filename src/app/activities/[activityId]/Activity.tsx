@@ -1,16 +1,15 @@
 "use client";
 
 import { Box, Button, Container, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { useActivity } from "~/hooks/activities";
 
 export default function Activity({ activityId }: { activityId: string }) {
   const { activity, deleteActivity } = useActivity({ activityId });
-  const router = useRouter();
   const onDeleteActivity = () => {
     if (!activity) return;
     deleteActivity();
-    router.push("/dashboard");
+    notFound();
   };
 
   return (
