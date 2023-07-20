@@ -1,6 +1,6 @@
 import { type Activity, type PrismaClient } from "@prisma/client";
 import { prisma as prismaClient } from "./../db";
-import { type NewActivityRequest } from "~/schemas/activities";
+import { type ActivityModificationRequest } from "~/schemas/activities";
 
 interface Props {
   prisma?: PrismaClient;
@@ -26,7 +26,7 @@ export const activityRepository = (props?: Props) => {
 
     create: async (
       userId: string,
-      newActivityParams: NewActivityRequest,
+      newActivityParams: ActivityModificationRequest,
     ): Promise<Activity> => {
       const activity = await prisma.activity.create({
         data: {

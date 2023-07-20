@@ -1,4 +1,4 @@
-import { activityRequestSchema, newActivityRequestSchema } from "~/schemas/activities";
+import { activityIdentifierSchema, activityModificationRequestSchema } from "~/schemas/activities";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -8,7 +8,7 @@ import { activitiesService } from "~/server/services/activities";
 
 export const activitiesRouter = createTRPCRouter({
   getOne: protectedProcedure
-    .input(activityRequestSchema)
+    .input(activityIdentifierSchema)
     .query(({ ctx, input }) => activitiesService().getOne(ctx.session.user.id, input)),
 
   getAll: protectedProcedure.query(({ ctx }) =>
@@ -16,13 +16,13 @@ export const activitiesRouter = createTRPCRouter({
   ),
 
   create: protectedProcedure
-    .input(newActivityRequestSchema)
+    .input(activityModificationRequestSchema)
     .mutation(({ ctx, input }) =>
       activitiesService().create(ctx.session.user.id, input),
     ),
 
   deleteOne: protectedProcedure
-    .input(activityRequestSchema)
+    .input(activityIdentifierSchema)
     .mutation(({ ctx, input }) =>
       activitiesService().deleteOne(ctx.session.user.id, input),
     ),

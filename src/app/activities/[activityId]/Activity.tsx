@@ -7,7 +7,7 @@ import { useActivity } from "~/hooks/activities";
 export default function Activity({ activityId }: { activityId: string }) {
   const { activity, deleteActivity } = useActivity({ activityId });
   const router = useRouter();
-  const onDeleteActivity = () => {
+  const onActivityDeletion = () => {
     if (!activity) return;
     deleteActivity();
     router.push("/dashboard");
@@ -42,7 +42,7 @@ export default function Activity({ activityId }: { activityId: string }) {
 
         <Box sx={{ mt: 6 }}>
           <Button
-            onClick={onDeleteActivity}
+            onClick={onActivityDeletion}
             color="warning"
             variant="outlined"
             fullWidth
