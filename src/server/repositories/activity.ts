@@ -10,6 +10,13 @@ export const activityRepository = (props?: Props) => {
   const prisma: PrismaClient = props?.prisma || prismaClient;
 
   return {
+    getOne: async (userId: string, activityId: string) => {
+      const activity = await prisma.activity.findUnique({
+        where: { id: activityId, ownerId: userId },
+      });
+      return activity;
+    },
+
     getAll: async (userId: string): Promise<Activity[]> => {
       const activities = await prisma.activity.findMany({
         where: { ownerId: userId },
