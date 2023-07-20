@@ -1,7 +1,6 @@
 "use client";
 
 import { Box, Button, Container, Typography } from "@mui/material";
-import { notFound } from "next/navigation";
 import { useActivity } from "~/hooks/activities";
 
 export default function Activity({ activityId }: { activityId: string }) {
@@ -9,7 +8,6 @@ export default function Activity({ activityId }: { activityId: string }) {
   const onDeleteActivity = () => {
     if (!activity) return;
     deleteActivity();
-    notFound();
   };
 
   return (
