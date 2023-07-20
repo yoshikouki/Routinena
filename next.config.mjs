@@ -14,10 +14,10 @@ const config = {
    *
    * @see https://github.com/vercel/next.js/issues/41980
    */
-  i18n: {
-    locales: ["en", "ja"],
-    defaultLocale: "en",
-  },
+  // i18n: {
+  //   locales: ["en", "ja"],
+  //   defaultLocale: "ja",
+  // },
 };
 
 export default config;
