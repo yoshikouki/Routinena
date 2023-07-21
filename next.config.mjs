@@ -18,6 +18,11 @@ const config = {
   //   locales: ["en", "ja"],
   //   defaultLocale: "ja",
   // },
+
+  // https://nextjs.org/docs/app/api-reference/next-config-js/devIndicators
+  devIndicators: {
+    buildActivityPosition: "bottom-right",
+  },
 };
 
 export default config;
