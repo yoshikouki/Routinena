@@ -18,7 +18,7 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
         },
         primary: {
           main: "#F29D52",
-          dark: "#A6705D",
+          contrastText: "#FEFCF7",
         },
         secondary: {
           main: "#509AB2",
@@ -36,6 +36,7 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
         },
         primary: {
           main: "#F29D52",
+          contrastText: "#FEFCF7",
         },
         secondary: {
           main: "#509AB2",
@@ -57,6 +58,10 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
     },
   },
 
+  shape: {
+    borderRadius: 12,
+  },
+
   components: {
     MuiButton: {
       styleOverrides: {
@@ -64,6 +69,29 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
           padding: theme.spacing(3),
           fontWeight: 900,
         }),
+      },
+    },
+
+    MuiButtonBase: {
+      styleOverrides: {
+        root: ({ _theme }) => ({
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "none",
+          },
+        }),
+      },
+    },
+
+    MuiCssBaseline: {
+      styleOverrides: {
+        a: {
+          color: "inherit",
+          textDecoration: "none",
+          "&:hover": {
+            textDecoration: "underline",
+          },
+        },
       },
     },
   },
