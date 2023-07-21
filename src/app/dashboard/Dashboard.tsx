@@ -1,6 +1,7 @@
 "use client";
 
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
+import { Check, Dehaze } from "@mui/icons-material";
 
 import Link from "next/link";
 import { useActivities } from "~/hooks/activities";
@@ -26,20 +27,42 @@ export default function Dashboard() {
             fontSize: 30,
           }}
         >
-          今日の予定
+          直近の予定
         </Typography>
       </Box>
       <Box sx={{ py: 2 }}>
         {activities ? (
           activities.map((activity) => (
-            <Link key={activity.id} href={`/activities/${activity.id}`}>
-              <Box sx={{ py: 2 }}>
-                <Typography variant="body1" sx={{ fontWeight: 900 }}>
-                  {activity.name}
-                </Typography>
-                <Typography variant="body2">{activity.description}</Typography>
+            <Box key={activity.id} sx={{ mb: 1, py: 2 }}>
+              <Box
+                component={Typography}
+                variant="h3"
+                sx={{ fontWeight: 900, fontSize: "1.1rem" }}
+              >
+                {activity.name}
               </Box>
-            </Link>
+              <Typography variant="body1" sx={{ mt: 1 }}>
+                {activity.description}
+              </Typography>
+              <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+                <Button
+                  variant="contained"
+                  sx={{ flex: 1, py: 1 }}
+                  startIcon={<Check />}
+                >
+                  完了
+                </Button>
+                <Button
+                  LinkComponent={Link}
+                  href={`/activities/${activity.id}`}
+                  startIcon={<Dehaze />}
+                  variant="outlined"
+                  sx={{ flex: 1, py: 1 }}
+                >
+                  詳細
+                </Button>
+              </Box>
+            </Box>
           ))
         ) : (
           <Typography variant="body1">予定を追加しましょう！</Typography>
