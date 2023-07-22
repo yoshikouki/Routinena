@@ -5,14 +5,14 @@ export const activityIdentifierSchema = z.object({
 });
 export type ActivityIdentifier = z.infer<typeof activityIdentifierSchema>;
 
-export const activityModificationRequestSchema = z.object({
+export const activityModificationParamsSchema = z.object({
   name: z.string().max(255).trim(),
   description: z.string().max(2000).trim().nullable(),
 });
-export type ActivityModificationRequest = z.infer<
-  typeof activityModificationRequestSchema
+export type ActivityModificationParams = z.infer<
+  typeof activityModificationParamsSchema
 >;
 
-export const activityUpdateRequestSchema =
-  activityModificationRequestSchema.merge(activityIdentifierSchema);
-export type ActivityUpdateRequest = z.infer<typeof activityUpdateRequestSchema>;
+export const activityUpdateParamsSchema =
+  activityModificationParamsSchema.merge(activityIdentifierSchema);
+export type ActivityUpdateParams = z.infer<typeof activityUpdateParamsSchema>;

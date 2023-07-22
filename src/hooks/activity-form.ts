@@ -3,8 +3,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  type ActivityModificationRequest,
-  activityModificationRequestSchema,
+  type ActivityModificationParams,
+  activityModificationParamsSchema,
 } from "~/schemas/activities";
 import { api } from "~/utils/api";
 import { useRouter } from "next/navigation";
@@ -17,12 +17,12 @@ export type UseActivityForm = {
 };
 export const useActivityForm = (props?: UseActivityForm) => {
   const activity = props && props.activity;
-  const { control, handleSubmit } = useForm<ActivityModificationRequest>({
+  const { control, handleSubmit } = useForm<ActivityModificationParams>({
     defaultValues: {
       name: activity?.name || "",
       description: activity?.description || "",
     },
-    resolver: zodResolver(activityModificationRequestSchema),
+    resolver: zodResolver(activityModificationParamsSchema),
   });
   const mutationUpdate = api.activities.updateOne.useMutation();
   const mutationCreate = api.activities.create.useMutation();

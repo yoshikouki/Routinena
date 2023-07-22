@@ -1,6 +1,6 @@
 "use client";
 
-import { type ActivityModificationRequest } from "~/schemas/activities";
+import { type ActivityModificationParams } from "~/schemas/activities";
 import { api } from "~/utils/api";
 import { type Activity } from "@prisma/client";
 
@@ -12,7 +12,7 @@ export const useActivity = ({ activity }: useActivityProps) => {
   const { mutate: deleteActivity } = api.activities.deleteOne.useMutation();
   return {
     activity,
-    updateActivity: (params: ActivityModificationRequest) =>
+    updateActivity: (params: ActivityModificationParams) =>
       updateActivity({ activityId: activity.id, ...params }),
     deleteActivity: () => deleteActivity({ activityId: activity.id }),
   };
