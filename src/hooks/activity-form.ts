@@ -10,19 +10,20 @@ import { api } from "~/utils/api";
 import { useRouter } from "next/navigation";
 import { type Activity } from "@prisma/client";
 
-export const useActivityForm = (props?: {
+export type UseActivityForm = {
   activity?: Activity;
   onSubmit?: () => void;
-}) => {
+  onCancel?: () => void;
+};
+export const useActivityForm = (props?: UseActivityForm) => {
   const activity = props && props.activity;
-  const { control, handleSubmit } =
-    useForm<ActivityModificationRequest>({
-        defaultValues: {
-          name: activity?.name || "",
-          description: activity?.description || null,
-        },
-        resolver: zodResolver(activityModificationRequestSchema),
-      });
+  const { control, handleSubmit } = useForm<ActivityModificationRequest>({
+    defaultValues: {
+      name: activity?.name || "",
+      description: activity?.description || "",
+    },
+    resolver: zodResolver(activityModificationRequestSchema),
+  });
   const mutationUpdate = api.activities.updateOne.useMutation();
   const mutationCreate = api.activities.create.useMutation();
   const router = useRouter();
@@ -44,8 +45,17 @@ export const useActivityForm = (props?: {
     }
   });
 
+  const onCancel = () => {
+    if (props?.onCancel) {
+      props.onCancel();
+    } else {
+      router.push("/dashboard");
+    }
+  };
+
   return {
     control,
     onSubmit,
+    onCancel,
   };
 };

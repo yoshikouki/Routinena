@@ -1,10 +1,9 @@
 "use client";
 
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { type Activity } from "@prisma/client";
 
-import { Controller } from "react-hook-form";
-import { useActivityForm } from "~/hooks/activity-form";
+import { ActivityForm } from "~/components/ActivityForm";
 
 type ActivityEditingProps = {
   activity: Activity;
@@ -16,11 +15,6 @@ export default function ActivityEditing({
   onActivityUpdate,
   onCancel,
 }: ActivityEditingProps) {
-  const { control, onSubmit } = useActivityForm({
-    activity,
-    onSubmit: onActivityUpdate,
-  });
-
   return (
     <Container
       maxWidth="sm"
@@ -43,57 +37,11 @@ export default function ActivityEditing({
         </Typography>
       </Box>
 
-      <Box
-        component="form"
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onSubmit={onSubmit}
-      >
-        <Box sx={{ mt: 4 }}>
-          <Controller
-            name="name"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-                label="活動名"
-                fullWidth
-              />
-            )}
-          />
-        </Box>
-
-        <Box sx={{ mt: 4 }}>
-          <Controller
-            name="description"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-                label="詳細"
-                multiline
-                minRows={3}
-                fullWidth
-              />
-            )}
-          />
-        </Box>
-
-        <Box sx={{ mt: 6 }}>
-          <Button type="submit" color="primary" variant="contained" fullWidth>
-            保存
-          </Button>
-        </Box>
-
-        <Box sx={{ mt: 4 }}>
-          <Button onClick={onCancel} color="inherit" variant="text" fullWidth>
-            キャンセル
-          </Button>
-        </Box>
-      </Box>
+      <ActivityForm
+        activity={activity}
+        onSubmit={onActivityUpdate}
+        onCancel={onCancel}
+       />
     </Container>
   );
 }
