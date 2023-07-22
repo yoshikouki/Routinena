@@ -8,7 +8,7 @@ export const activitiesService = () => {
     },
 
     getAll: async (userId: string) => {
-      return activityRepository().getAll(userId);
+      return activityRepository().getAllWithCompletions(userId);
     },
 
     create: async (

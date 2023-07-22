@@ -17,9 +17,20 @@ export const activityRepository = (props?: Props) => {
       return activity;
     },
 
-    getAll: async (userId: string): Promise<Activity[]> => {
+    getAllWithCompletions: async (userId: string): Promise<Activity[]> => {
       const activities = await prisma.activity.findMany({
         where: { ownerId: userId },
+        include: {
+          completions: {
+            select: {
+              completedAt: true,
+            },
+            orderBy: {
+              completedAt: "desc",
+            },
+            take: 1,
+          },
+        },
       });
       return activities;
     },
@@ -70,7 +81,15 @@ export const activityRepository = (props?: Props) => {
           }
         },
         include: {
-          completions: true,
+          completions: {
+            select: {
+              completedAt: true,
+            },
+            orderBy: {
+              completedAt: "desc",
+            },
+            take: 1,
+          },
         }
       });
       return activity;
