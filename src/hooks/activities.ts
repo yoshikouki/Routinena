@@ -4,7 +4,7 @@ import { type ActivityModificationRequest } from "~/schemas/activities";
 import { api } from "~/utils/api";
 
 export const useActivities = () => {
-  const { data: activities } = api.activities.getAll.useQuery();
+  const [activities, _query] = api.activities.getAll.useSuspenseQuery();
   return {
     activities,
   };
