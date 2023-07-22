@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Activity from "./Activity";
 import { type Metadata } from "next";
 
@@ -6,5 +7,9 @@ export const metadata: Metadata = {
 };
 
 export default function ActivityPage({ params }: { params: { activityId: string } }) {
-  return <Activity activityId={params.activityId} />;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <Activity activityId={params.activityId} />
+    </Suspense>
+  );
 }
