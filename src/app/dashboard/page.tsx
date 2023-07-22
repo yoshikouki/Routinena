@@ -1,13 +1,18 @@
 import { type Metadata } from "next";
 import { Box, Container, Typography } from "@mui/material";
-import { Suspense } from "react";
-import ActivityList, { ActivityListSkeleton } from "./ActivityList";
+import { activitiesService } from "~/server/services/activities";
+import { getServerAuthSession } from "~/server/auth";
+import ActivityListItem from "./ActivityListItem";
 
 export const metadata: Metadata = {
   title: "ダッシュボード - ルーティンナさん | Routinena",
 };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await getServerAuthSession();
+  if (!session?.user) return null;
+  const activities = await activitiesService().getAll(session.user.id);
+
   return (
     <Container
       maxWidth="md"
@@ -30,9 +35,9 @@ export default function DashboardPage() {
         </Typography>
       </Box>
       <Box sx={{ py: 2 }}>
-        <Suspense fallback={<ActivityListSkeleton />}>
-          <ActivityList />
-        </Suspense>
+        {activities.map((activity) => (
+          <ActivityListItem key={activity.id} activity={activity} />
+        ))}
       </Box>
     </Container>
   );

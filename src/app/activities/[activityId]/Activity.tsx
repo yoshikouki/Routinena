@@ -5,23 +5,27 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useActivity } from "~/hooks/activities";
 import ActivityEditing from "./ActivityEditing";
+import { type Activity as ActivityType } from "@prisma/client";
 
-export default function Activity({ activityId }: { activityId: string }) {
-  const { activity, deleteActivity } = useActivity({ activityId });
+export default function Activity({ activity }: { activity: ActivityType }) {
+  const { deleteActivity } = useActivity({ activity });
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
   const onActivityUpdate = () => {
     setIsEditing(false);
-  }
+  };
   const onActivityDeletion = () => {
-    if (!activity) return;
     deleteActivity();
     router.push("/dashboard");
   };
 
-  return activity && isEditing ? (
-    <ActivityEditing activity={activity} onActivityUpdate={onActivityUpdate} onCancel={() => setIsEditing(false)} />
+  return isEditing ? (
+    <ActivityEditing
+      activity={activity}
+      onActivityUpdate={onActivityUpdate}
+      onCancel={() => setIsEditing(false)}
+    />
   ) : (
     <Container
       maxWidth="sm"
@@ -40,12 +44,12 @@ export default function Activity({ activityId }: { activityId: string }) {
             fontSize: 30,
           }}
         >
-          {activity?.name}
+          {activity.name}
         </Typography>
       </Box>
 
       <Box sx={{ mt: 4 }}>
-        <Typography variant="body1">{activity?.description}</Typography>
+        <Typography variant="body1">{activity.description}</Typography>
       </Box>
 
       <Box sx={{ mt: 6 }}>
