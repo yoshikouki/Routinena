@@ -20,7 +20,7 @@ export default async function DashboardPage() {
         gap: 4,
       }}
     >
-      <Box sx={{}}>
+      <Box>
         <Typography
           component="h1"
           sx={{
@@ -31,6 +31,7 @@ export default async function DashboardPage() {
           直近の予定
         </Typography>
       </Box>
+
       <Box sx={{ py: 2 }}>
         {activities.length === 0 && (
           <Typography variant="body1">予定を作成しましょう</Typography>

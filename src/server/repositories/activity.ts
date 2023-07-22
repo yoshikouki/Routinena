@@ -57,5 +57,23 @@ export const activityRepository = (props?: Props) => {
       });
       return activity;
     },
+
+    complete: async (userId: string, activityId: string) => {
+      const activity = await prisma.activity.update({
+        where: { id: activityId, ownerId: userId },
+        data: {
+          completions: {
+            create: {
+              completedAt: new Date(),
+              userId,
+            },
+          }
+        },
+        include: {
+          completions: true,
+        }
+      });
+      return activity;
+    },
   };
 };

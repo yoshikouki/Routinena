@@ -28,5 +28,9 @@ export const activitiesService = () => {
     deleteOne: async (userId: string, activityId: string) => {
       return activityRepository().deleteOne(userId, activityId);
     },
+
+    complete: async (userId: string, activityId: string) => {
+      return activityRepository().complete(userId, activityId);
+    },
   };
 };

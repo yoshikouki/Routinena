@@ -24,4 +24,10 @@ export const activitiesRouter = createTRPCRouter({
     .mutation(({ ctx, input }) =>
       activitiesService().deleteOne(ctx.session.user.id, input.activityId),
     ),
+
+  complete: protectedProcedure
+    .input(activityIdentifierSchema)
+    .mutation(({ ctx, input }) =>
+      activitiesService().complete(ctx.session.user.id, input.activityId),
+    ),
 });
