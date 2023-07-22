@@ -7,14 +7,6 @@ import {
 import { activitiesService } from "~/server/services/activities";
 
 export const activitiesRouter = createTRPCRouter({
-  getOne: protectedProcedure
-    .input(activityIdentifierSchema)
-    .query(({ ctx, input }) => activitiesService().getOne(ctx.session.user.id, input)),
-
-  getAll: protectedProcedure.query(({ ctx }) =>
-    activitiesService().getAll(ctx.session.user.id),
-  ),
-
   create: protectedProcedure
     .input(activityModificationRequestSchema)
     .mutation(({ ctx, input }) =>
@@ -30,6 +22,6 @@ export const activitiesRouter = createTRPCRouter({
   deleteOne: protectedProcedure
     .input(activityIdentifierSchema)
     .mutation(({ ctx, input }) =>
-      activitiesService().deleteOne(ctx.session.user.id, input),
+      activitiesService().deleteOne(ctx.session.user.id, input.activityId),
     ),
 });
