@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <Box component="main" sx={{ mt: 10 }}>
+      <Box component="main" sx={{ mt: 12 }}>
         <Box sx={{ mt: 15 }}>
           <Typography variant="h1" sx={{ letterSpacing: ".2rem" }}>
             ルーティンナさん

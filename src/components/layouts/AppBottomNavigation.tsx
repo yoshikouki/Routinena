@@ -1,3 +1,5 @@
+"use client";
+
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { type SyntheticEvent, useState } from "react";
 import HomeIcon from "@mui/icons-material/Home";
@@ -22,8 +24,10 @@ const navigationActions = {
 
 const AppBottomNavigation = () => {
   const [value, setValue] = useState(navigationActions.home.value);
-
-  const handleChange = (event: SyntheticEvent, newValue: keyof typeof navigationActions) => {
+  const onClickBottomNavigation = (
+    _: SyntheticEvent,
+    newValue: keyof typeof navigationActions,
+  ) => {
     setValue(newValue);
   };
 
@@ -41,7 +45,7 @@ const AppBottomNavigation = () => {
     >
       <BottomNavigation
         value={value}
-        onChange={handleChange}
+        onChange={onClickBottomNavigation}
         sx={{
           borderRadius: "16px 16px 0 0",
           backgroundColor: "transparent",

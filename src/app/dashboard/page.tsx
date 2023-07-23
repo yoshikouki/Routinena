@@ -15,7 +15,7 @@ export default async function DashboardPage() {
       maxWidth="md"
       sx={{
         height: "100vh",
-        mt: 10,
+        mt: 12,
         padding: 0,
         gap: 4,
       }}

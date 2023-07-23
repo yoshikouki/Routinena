@@ -1,15 +1,9 @@
-"use client";
-
-import {
-  IconButton
-} from "@mui/material";
+import { IconButton } from "@mui/material";
 import Image from "next/image";
 
-interface Props {}
-
-const AppLogo = ({}: Props) => {
+const AppLogo = () => {
   return (
-    <IconButton href={"/"}>
+    <IconButton href={"/"} sx={{ py: 2, px: 0 }}>
       <Image
         src="/icons/apple-touch-icon.png"
         alt="ルーティンナさん"

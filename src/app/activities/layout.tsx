@@ -1,5 +1,11 @@
 import AppLayout from "~/components/layouts/AppLayout";
+import { useServerSession } from "~/hooks/server-session";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  return <AppLayout>{children}</AppLayout>;
+export default async function ActivitiesLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await useServerSession.get();
+  return <AppLayout session={session}>{children}</AppLayout>;
 }
