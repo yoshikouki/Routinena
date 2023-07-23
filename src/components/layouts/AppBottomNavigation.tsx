@@ -6,9 +6,10 @@ import HomeIcon from "@mui/icons-material/Home";
 import DoneIcon from "@mui/icons-material/Done";
 import AnimationBottomFab from "./AnimationBottomFab";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const navigationActions = {
-  home: {
+  dashboard: {
     label: "Home",
     value: "dashboard",
     path: "/dashboard",
@@ -23,12 +24,21 @@ const navigationActions = {
 };
 
 const AppBottomNavigation = () => {
-  const [value, setValue] = useState(navigationActions.home.value);
+  const router = useRouter();
+  const pathname = usePathname();
+  const initValue = Object.values(navigationActions).find(
+    (action) => action.path === pathname,
+  )?.value || "other";
+  const [value, setValue] = useState(initValue);
+
   const onClickBottomNavigation = (
     _: SyntheticEvent,
     newValue: keyof typeof navigationActions,
   ) => {
     setValue(newValue);
+    if (navigationActions[newValue]?.path === pathname) {
+      router.refresh();
+    }
   };
 
   return (
