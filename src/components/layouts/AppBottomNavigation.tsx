@@ -12,10 +12,10 @@ const navigationActions = {
     path: "/dashboard",
     icon: <HomeIcon />,
   },
-  done: {
-    label: "Done",
-    value: "done",
-    path: "/done",
+  completions: {
+    label: "Completions",
+    value: "completions",
+    path: "/completions",
     icon: <DoneIcon />,
   },
 };
