@@ -1,4 +1,4 @@
-import { type Activity, type PrismaClient } from "@prisma/client";
+import { type PrismaClient } from "@prisma/client";
 import { prisma as prismaClient } from "./../db";
 import { type ActivityUpdateParams, type ActivityModificationParams } from "~/schemas/activities";
 
@@ -16,6 +16,7 @@ export const activityRepository = (props?: Props) => {
         include: {
           completions: {
             select: {
+              id: true,
               completedAt: true,
             },
             orderBy: {
@@ -27,12 +28,13 @@ export const activityRepository = (props?: Props) => {
       return activity;
     },
 
-    getAllWithLatestCompletion: async (userId: string): Promise<Activity[]> => {
+    getAllWithLatestCompletion: async (userId: string) => {
       const activities = await prisma.activity.findMany({
         where: { ownerId: userId },
         include: {
           completions: {
             select: {
+              id: true,
               completedAt: true,
             },
             orderBy: {
@@ -48,7 +50,7 @@ export const activityRepository = (props?: Props) => {
     create: async (
       userId: string,
       newActivityParams: ActivityModificationParams,
-    ): Promise<Activity> => {
+    ) => {
       const activity = await prisma.activity.create({
         data: {
           ownerId: userId,
@@ -61,7 +63,7 @@ export const activityRepository = (props?: Props) => {
     updateOne: async (
       userId: string,
       activityParams: ActivityUpdateParams,
-    ): Promise<Activity> => {
+    ) => {
       const activity = await prisma.activity.update({
         where: { id: activityParams.activityId, ownerId: userId },
         data: {
@@ -93,6 +95,7 @@ export const activityRepository = (props?: Props) => {
         include: {
           completions: {
             select: {
+              id: true,
               completedAt: true,
             },
             orderBy: {

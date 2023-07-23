@@ -5,6 +5,7 @@ import { useServerSession } from "./server-session";
 
 export type ActivityWithCompletions = Activity & {
   completions: {
+    id: string
     completedAt: Date;
   }[];
 };

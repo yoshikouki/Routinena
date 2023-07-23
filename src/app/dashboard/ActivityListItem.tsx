@@ -3,13 +3,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Check, Dehaze } from "@mui/icons-material";
 
-import { type ActivitiesWithCompletions } from "~/hooks/server-activities";
+import { type ActivityWithCompletions } from "~/hooks/server-activities";
 import Link from "next/link";
 import { useActivity } from "~/hooks/activities";
 import { RelativeDate } from "~/components/RelativeDate";
 
 interface ActivityListItemProps {
-  activity: ActivitiesWithCompletions;
+  activity: ActivityWithCompletions;
 }
 
 export default function ActivityListItem(props: ActivityListItemProps) {

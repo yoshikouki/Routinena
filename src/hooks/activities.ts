@@ -29,7 +29,7 @@ export const useActivity = (props: useActivityProps) => {
   }, [completeMutation.data]);
 
   return {
-    activity: completeMutation.data || activity,
+    activity,
     updateActivity: (params: ActivityModificationParams) =>
       updateActivity({ activityId: activity.id, ...params }),
     deleteActivity: () => deleteActivity({ activityId: activity.id }),
