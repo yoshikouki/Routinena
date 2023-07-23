@@ -20,7 +20,7 @@ model Activity {
   name        String       @map("name")
   description String?      @map("description")
   ownerId     String       @map("owner_id")
-  owner       User         @relation(fields: [ownerId], references: [id])
+  owner       User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
   completions Completion[]
@@ -32,9 +32,9 @@ model Completion {
   id          String   @id @default(cuid()) @map("id")
   completedAt DateTime @map("completed_at")
   userId      String   @map("user_id")
-  user        User     @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   activityId  String   @map("activity_id")
-  activity    Activity @relation(fields: [activityId], references: [id])
+  activity    Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
