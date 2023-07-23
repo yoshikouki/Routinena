@@ -10,14 +10,24 @@ export const activityRepository = (props?: Props) => {
   const prisma: PrismaClient = props?.prisma || prismaClient;
 
   return {
-    getOne: async (userId: string, activityId: string) => {
+    getOneWithCompletions: async (userId: string, activityId: string) => {
       const activity = await prisma.activity.findUnique({
         where: { id: activityId, ownerId: userId },
+        include: {
+          completions: {
+            select: {
+              completedAt: true,
+            },
+            orderBy: {
+              completedAt: "desc",
+            },
+          },
+        },
       });
       return activity;
     },
 
-    getAllWithCompletions: async (userId: string): Promise<Activity[]> => {
+    getAllWithLatestCompletion: async (userId: string): Promise<Activity[]> => {
       const activities = await prisma.activity.findMany({
         where: { ownerId: userId },
         include: {
@@ -78,7 +88,7 @@ export const activityRepository = (props?: Props) => {
               completedAt: new Date(),
               userId,
             },
-          }
+          },
         },
         include: {
           completions: {
@@ -90,7 +100,7 @@ export const activityRepository = (props?: Props) => {
             },
             take: 1,
           },
-        }
+        },
       });
       return activity;
     },

@@ -4,11 +4,11 @@ import { activityRepository } from "../repositories/activity";
 export const activitiesService = () => {
   return {
     getOne: async (userId: string, activityId: string) => {
-      return activityRepository().getOne(userId, activityId);
+      return activityRepository().getOneWithCompletions(userId, activityId);
     },
 
     getAll: async (userId: string) => {
-      return activityRepository().getAllWithCompletions(userId);
+      return activityRepository().getAllWithLatestCompletion(userId);
     },
 
     create: async (
