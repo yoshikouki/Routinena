@@ -28,7 +28,7 @@ export default async function DashboardPage() {
             fontSize: 30,
           }}
         >
-          直近の予定
+          予定
         </Typography>
       </Box>
 

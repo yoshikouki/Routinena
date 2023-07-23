@@ -6,18 +6,16 @@ import { Check, Dehaze } from "@mui/icons-material";
 import { type ActivitiesWithCompletions } from "~/hooks/server-activities";
 import Link from "next/link";
 import { useActivity } from "~/hooks/activities";
-import { AccessTime } from "@mui/icons-material";
+import { RelativeDate } from "~/components/RelativeDate";
 
 interface ActivityListItemProps {
   activity: ActivitiesWithCompletions;
 }
 
 export default function ActivityListItem(props: ActivityListItemProps) {
-  const { activity, complete, isCompleted, getTimeFromLatestCompletion } =
-    useActivity({
-      activity: props.activity,
-    });
-  const timeFromLatestCompletion = getTimeFromLatestCompletion();
+  const { activity, complete, isCompleted, latestCompletion } = useActivity({
+    activity: props.activity,
+  });
 
   return (
     <Box sx={{ mb: 1, py: 2 }}>
@@ -28,26 +26,11 @@ export default function ActivityListItem(props: ActivityListItemProps) {
       >
         {activity.name}
       </Box>
-
       <Typography variant="body1" sx={{ mt: 1 }}>
         {activity.description}
       </Typography>
 
-      {timeFromLatestCompletion && (
-        <Typography
-          variant="body2"
-          sx={(theme) => ({ mt: 1, color: theme.vars.palette.text.secondary })}
-        >
-          <AccessTime
-            sx={(theme) => ({
-              fontSize: theme.typography.body2.fontSize,
-              verticalAlign: "middle",
-              mr: 1,
-            })}
-          />
-          {timeFromLatestCompletion}
-        </Typography>
-      )}
+      <RelativeDate date={latestCompletion?.completedAt} />
 
       <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
         {isCompleted ? (

@@ -3,7 +3,6 @@
 import { type ActivityModificationParams } from "~/schemas/activities";
 import { api } from "~/utils/api";
 import { type ActivityWithCompletions } from "~/hooks/server-activities";
-import { getRelativeDate } from "~/utils/date";
 import { useEffect, useState } from "react";
 
 type useActivityProps = {
@@ -17,8 +16,6 @@ export const useActivity = (props: useActivityProps) => {
 
   const latestCompletion = activity.completions[0];
   const isCompleted = !!completeMutation.isSuccess
-  const getTimeFromLatestCompletion = () => latestCompletion ?
-    getRelativeDate(latestCompletion.completedAt) : null;
   const complete = () => {
     completeMutation.mutate({
       activityId: activity.id,
@@ -39,6 +36,5 @@ export const useActivity = (props: useActivityProps) => {
     complete,
     isCompleted,
     latestCompletion,
-    getTimeFromLatestCompletion,
   };
 };
