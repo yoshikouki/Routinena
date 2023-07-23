@@ -1,13 +1,14 @@
 "use client";
 
 import { Box, Button, Container, Typography } from "@mui/material";
+
+import ActivityEditing from "./ActivityEditing";
+import { type ActivityWithCompletions } from "~/hooks/server-activities";
+import { useActivity } from "~/hooks/activities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useActivity } from "~/hooks/activities";
-import ActivityEditing from "./ActivityEditing";
-import { type Activity as ActivityType } from "@prisma/client";
 
-export default function Activity({ activity }: { activity: ActivityType }) {
+export default function Activity({ activity }: { activity: ActivityWithCompletions }) {
   const { deleteActivity } = useActivity({ activity });
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
