@@ -23,15 +23,7 @@ export default async function CompletionsPage() {
       }}
     >
       <Box>
-        <Typography
-          component="h1"
-          sx={{
-            fontWeight: 900,
-            fontSize: 30,
-          }}
-        >
-          実績
-        </Typography>
+        <Typography variant="h1">実績</Typography>
       </Box>
 
       <Box sx={{ py: 2 }}>
@@ -41,10 +33,9 @@ export default async function CompletionsPage() {
 
         {completions.map((completion) => (
           <Box key={completion.id} sx={{ mb: 3 }}>
-
             <Typography
-              variant="h2"
-              sx={{ fontWeight: 900, fontSize: "1.2rem", mt: 1 }}
+              component="h2"
+              sx={{ mt: 1 }}
             >
               {completion.activity.name}
             </Typography>

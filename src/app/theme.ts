@@ -53,6 +53,14 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
     allVariants: {
       fontFamily: font.style.fontFamily,
     },
+    h1: {
+      fontSize: "2rem",
+      fontWeight: 900,
+    },
+    h2: {
+      fontSize: "1.5rem",
+      fontWeight: 900,
+    },
     button: {
       textTransform: "none",
     },

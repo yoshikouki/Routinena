@@ -21,15 +21,7 @@ export default async function DashboardPage() {
       }}
     >
       <Box>
-        <Typography
-          component="h1"
-          sx={{
-            fontWeight: 900,
-            fontSize: 30,
-          }}
-        >
-          予定
-        </Typography>
+        <Typography variant="h1">予定</Typography>
       </Box>
 
       <Box sx={{ py: 2 }}>

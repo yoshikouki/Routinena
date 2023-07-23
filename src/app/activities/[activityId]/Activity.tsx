@@ -9,7 +9,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
 
-export default function Activity({ activity }: { activity: ActivityWithCompletions }) {
+export default function Activity({
+  activity,
+}: {
+  activity: ActivityWithCompletions;
+}) {
   const { deleteActivity } = useActivity({ activity });
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
@@ -39,15 +43,7 @@ export default function Activity({ activity }: { activity: ActivityWithCompletio
       }}
     >
       <Box>
-        <Typography
-          component="h1"
-          sx={{
-            fontWeight: 900,
-            fontSize: 30,
-          }}
-        >
-          {activity.name}
-        </Typography>
+        <Typography variant="h1">{activity.name}</Typography>
       </Box>
 
       <Box sx={{ mt: 4 }}>
@@ -77,15 +73,7 @@ export default function Activity({ activity }: { activity: ActivityWithCompletio
       </Box>
 
       <Box sx={{ mt: 4 }}>
-        <Typography
-          component="h2"
-          sx={{
-            fontWeight: 900,
-            fontSize: 30,
-          }}
-        >
-          実績
-        </Typography>
+        <Typography variant="h2">実績</Typography>
 
         {activity.completions.length === 0 && (
           <Typography variant="body1">実績がありません</Typography>

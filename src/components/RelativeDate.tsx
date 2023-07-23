@@ -11,7 +11,7 @@ export const RelativeDate = ({date}: {date: Date | null | undefined}) => {
 
   return (
     <Typography
-      variant="body2"
+      variant="caption"
       sx={(theme) => ({ mt: 1, color: theme.vars.palette.text.secondary })}
     >
       <AccessTime
@@ -23,5 +23,5 @@ export const RelativeDate = ({date}: {date: Date | null | undefined}) => {
       />
       {relativeDateString}
     </Typography>
-  )
+  );
 };

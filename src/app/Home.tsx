@@ -1,9 +1,10 @@
 "use client";
 
-import { Typography, Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
+
 import DashboardButton from "~/components/DashboardButton";
-import LoginButton from "~/components/LoginButton";
 import InstallationButton from "./InstallationButton";
+import LoginButton from "~/components/LoginButton";
 import { useSession } from "next-auth/react";
 
 export default function Home() {
@@ -13,19 +14,12 @@ export default function Home() {
     <>
       <Box component="main" sx={{ mt: 10 }}>
         <Box sx={{ mt: 15 }}>
-          <Typography
-            component="h1"
-            sx={{
-              fontWeight: 900,
-              fontSize: 30,
-              letterSpacing: ".2rem",
-            }}
-          >
+          <Typography variant="h1" sx={{ letterSpacing: ".2rem" }}>
             ルーティンナさん
           </Typography>
         </Box>
         <Box sx={{ mt: 8 }}>
-          <Typography variant="subtitle1" sx={{ fontSize: 25 }}>
+          <Typography variant="subtitle1" sx={{ fontSize: "1.5rem" }}>
             日々の用事を、
             <br />
             もっと手軽に、もっと楽しく

@@ -2,25 +2,29 @@
 
 import { Box, Button, Container, Typography } from "@mui/material";
 import { type BuiltInProviderType } from "next-auth/providers";
-import { type ClientSafeProvider, type LiteralUnion } from "next-auth/react/types";
+import {
+  type ClientSafeProvider,
+  type LiteralUnion,
+} from "next-auth/react/types";
 import LoginButton from "~/components/LoginButton";
 
-export default function Login({ providers }: {
+export default function Login({
+  providers,
+}: {
   providers: Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider>;
 }) {
   return (
-    <Container maxWidth="sm" sx={{ display: "flex", height: "100vh", flexDirection: "column", justifyContent: "center" }}>
-      <Box sx={{  }}>
-        <Typography
-            component="h1"
-            sx={{
-              fontWeight: 900,
-              fontSize: 30,
-            }}
-          >
-            登録 / ログイン
-          </Typography>
-
+    <Container
+      maxWidth="sm"
+      sx={{
+        display: "flex",
+        height: "100vh",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <Box sx={{}}>
+        <Typography variant="h1">登録 / ログイン</Typography>
       </Box>
       <Box sx={{ mt: 4 }}>
         {Object.values(providers).map((provider) => (
@@ -34,11 +38,10 @@ export default function Login({ providers }: {
                 sx: {
                   minWidth: 300,
                   width: "100%",
-                  padding: 3
                 },
               }}
             >
-              {provider.name}アカウントでログイン
+              {provider.name} でログイン
             </LoginButton>
           </Box>
         ))}
@@ -51,7 +54,6 @@ export default function Login({ providers }: {
             sx={{
               minWidth: 300,
               width: "100%",
-              padding: 2,
             }}
           >
             キャンセル

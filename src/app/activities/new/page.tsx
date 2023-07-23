@@ -19,15 +19,7 @@ export default function NewActivityPage() {
       }}
     >
       <Box>
-        <Typography
-          component="h1"
-          sx={{
-            fontWeight: 900,
-            fontSize: 30,
-          }}
-        >
-          活動の作成
-        </Typography>
+        <Typography variant="h1">活動の作成</Typography>
       </Box>
 
       <ActivityForm />
