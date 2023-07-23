@@ -7,6 +7,7 @@ import { type ActivityWithCompletions } from "~/hooks/server-activities";
 import { useActivity } from "~/hooks/activities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { RelativeDate } from "~/components/RelativeDate";
 
 export default function Activity({ activity }: { activity: ActivityWithCompletions }) {
   const { deleteActivity } = useActivity({ activity });
@@ -73,6 +74,28 @@ export default function Activity({ activity }: { activity: ActivityWithCompletio
         >
           削除
         </Button>
+      </Box>
+
+      <Box sx={{ mt: 4 }}>
+        <Typography
+          component="h2"
+          sx={{
+            fontWeight: 900,
+            fontSize: 30,
+          }}
+        >
+          実績
+        </Typography>
+
+        {activity.completions.length === 0 && (
+          <Typography variant="body1">実績がありません</Typography>
+        )}
+
+        {activity.completions.map((completion) => (
+          <Box key={completion.id} sx={{ mb: 3 }}>
+            <RelativeDate date={completion.completedAt} />
+          </Box>
+        ))}
       </Box>
     </Container>
   );
