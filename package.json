@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "prisma migrate deploy && next build",
-    "dev": "next dev --turbo -p 8888",
+    "dev": "next dev -p 8888",
+    "dev:turbo": "npm run dev -- --turbo",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "test": "echo 'WIP'",
