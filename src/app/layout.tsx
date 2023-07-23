@@ -4,6 +4,7 @@ import { TrpcProvider } from "./TrpcProvider";
 import ThemeRegistry from "./ThemeRegistry";
 import { ClientSessionProvider } from "./ClientSessionProvider";
 import { font } from "./theme";
+import { CssBaseline } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "ルーティンナさん | Routinena",
@@ -40,14 +41,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" suppressHydrationWarning>
-      <body className={font.className}>
+    <html lang="ja" suppressHydrationWarning className={font.className}>
+      <TrpcProvider>
         <ClientSessionProvider>
-          <ThemeRegistry>
-            <TrpcProvider>{children}</TrpcProvider>
-          </ThemeRegistry>
+          <body>
+            <ThemeRegistry>
+              <CssBaseline />
+              {children}
+            </ThemeRegistry>
+          </body>
         </ClientSessionProvider>
-      </body>
+      </TrpcProvider>
     </html>
   );
 }
