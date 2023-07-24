@@ -9,7 +9,10 @@ interface Props {
 }
 const AppHeader = ({ session }: Props) => {
   return (
-    <AppBar color="transparent" sx={{ boxShadow: "none" }}>
+    <AppBar
+      color="transparent"
+      sx={{ boxShadow: "none", backdropFilter: "blur(2px)" }}
+    >
       <Container maxWidth="md">
         <Toolbar disableGutters={true} sx={{ justifyContent: "space-between" }}>
           <AppLogo />
