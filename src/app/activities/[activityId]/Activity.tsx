@@ -1,27 +1,28 @@
 "use client";
 
 import { Box, Button, Container, Typography } from "@mui/material";
-
-import ActivityEditing from "./ActivityEditing";
-import { type ActivityWithCompletions } from "~/hooks/server-activities";
-import { useActivity } from "~/hooks/activities";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
+import { useActivity } from "~/hooks/activities";
+import { type ActivityWithCompletions } from "~/hooks/server-activities";
+import ActivityEditing from "./ActivityEditing";
 
-export default function Activity({
-  activity,
-}: {
-  activity: ActivityWithCompletions;
-}) {
-  const { deleteActivity } = useActivity({ activity });
+export default function Activity(props: { activity: ActivityWithCompletions }) {
+  const { activity, setActivity, deleteActivity } = useActivity({
+    activity: props.activity,
+  });
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
 
-  const onActivityUpdate = () => {
+  const onEditingSubmit = (updatedActivity: ActivityWithCompletions) => {
     setIsEditing(false);
+    setActivity({
+      ...activity,
+      ...updatedActivity,
+    });
   };
-  const onActivityDeletion = () => {
+  const onDeletion = () => {
     deleteActivity();
     router.push("/dashboard");
   };
@@ -29,7 +30,7 @@ export default function Activity({
   return isEditing ? (
     <ActivityEditing
       activity={activity}
-      onActivityUpdate={onActivityUpdate}
+      onSubmit={onEditingSubmit}
       onCancel={() => setIsEditing(false)}
     />
   ) : (
@@ -63,7 +64,7 @@ export default function Activity({
 
       <Box sx={{ mt: 4 }}>
         <Button
-          onClick={onActivityDeletion}
+          onClick={onDeletion}
           color="warning"
           variant="outlined"
           fullWidth

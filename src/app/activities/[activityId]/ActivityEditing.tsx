@@ -1,20 +1,12 @@
 "use client";
 
 import { Box, Container, Typography } from "@mui/material";
-import { type Activity } from "@prisma/client";
-
 import { ActivityForm } from "~/components/ActivityForm";
+import { type UseActivityForm } from "~/hooks/activity-form";
 
-type ActivityEditingProps = {
-  activity: Activity;
-  onActivityUpdate: () => void;
-  onCancel: () => void;
-};
-export default function ActivityEditing({
-  activity,
-  onActivityUpdate,
-  onCancel,
-}: ActivityEditingProps) {
+type ActivityEditingProps = UseActivityForm;
+
+export default function ActivityEditing(props: ActivityEditingProps) {
   return (
     <Container
       maxWidth="sm"
@@ -29,11 +21,7 @@ export default function ActivityEditing({
         <Typography variant="h1">活動の作成</Typography>
       </Box>
 
-      <ActivityForm
-        activity={activity}
-        onSubmit={onActivityUpdate}
-        onCancel={onCancel}
-      />
+      <ActivityForm {...props} />
     </Container>
   );
 }

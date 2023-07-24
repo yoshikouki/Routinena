@@ -56,6 +56,18 @@ export const activityRepository = (props?: Props) => {
           ownerId: userId,
           ...newActivityParams,
         },
+        include: {
+          completions: {
+            select: {
+              id: true,
+              completedAt: true,
+            },
+            orderBy: {
+              completedAt: "desc",
+            },
+            take: 1,
+          },
+        },
       });
       return activity;
     },
@@ -69,6 +81,18 @@ export const activityRepository = (props?: Props) => {
         data: {
           name: activityParams.name,
           description: activityParams.description,
+        },
+        include: {
+          completions: {
+            select: {
+              id: true,
+              completedAt: true,
+            },
+            orderBy: {
+              completedAt: "desc",
+            },
+            take: 1,
+          },
         },
       });
       return activity;

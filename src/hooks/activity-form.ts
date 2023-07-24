@@ -1,61 +1,64 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { type Activity } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import {
-  type ActivityModificationParams,
   activityModificationParamsSchema,
+  type ActivityModificationParams,
 } from "~/schemas/activities";
 import { api } from "~/utils/api";
-import { useRouter } from "next/navigation";
-import { type Activity } from "@prisma/client";
+import { type ActivityWithCompletions } from "./server-activities";
 
-export type UseActivityForm = {
+export interface UseActivityForm {
   activity?: Activity;
-  onSubmit?: () => void;
+  onSubmit?: (params: ActivityWithCompletions) => void;
   onCancel?: () => void;
-};
+}
+
 export const useActivityForm = (props?: UseActivityForm) => {
   const activity = props && props.activity;
-  const { control, handleSubmit } = useForm<ActivityModificationParams>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ActivityModificationParams>({
     defaultValues: {
       name: activity?.name || "",
       description: activity?.description || "",
     },
     resolver: zodResolver(activityModificationParamsSchema),
   });
-  const mutationUpdate = api.activities.updateOne.useMutation();
-  const mutationCreate = api.activities.create.useMutation();
-  const router = useRouter();
 
-  const onSubmit = handleSubmit((data) => {
-    if (activity) {
-      mutationUpdate.mutate({
-        activityId: activity.id,
-        ...data,
-      });
-    } else {
-      mutationCreate.mutate(data);
-    }
-
-    if (props?.onSubmit) {
-      props.onSubmit();
-    } else {
-      router.push("/dashboard");
-    }
+  const procedure = activity ? api.activities.updateOne : api.activities.create;
+  const mutation = procedure.useMutation({
+    onSuccess: (data: ActivityWithCompletions) => {
+      if (props?.onSubmit) {
+        props.onSubmit(data);
+      } else {
+        router.push("/dashboard");
+      }
+    },
   });
 
-  const onCancel = () => {
-    if (props?.onCancel) {
-      props.onCancel();
-    } else {
-      router.push("/dashboard");
-    }
-  };
+  const router = useRouter();
+
+  const onSubmit = handleSubmit(async (data) => {
+    await mutation.mutateAsync({
+      ...data,
+      activityId: activity ? activity.id : "",
+    });
+  });
+
+  const onCancel = props?.onCancel
+    ? props?.onCancel
+    : () => router.push("/dashboard");
 
   return {
     control,
     onSubmit,
     onCancel,
+    errors,
   };
 };

@@ -1,11 +1,11 @@
 "use client";
 
 import { Box, Button, TextField } from "@mui/material";
-
 import { Controller } from "react-hook-form";
-import { type UseActivityForm, useActivityForm } from "~/hooks/activity-form";
+import { useActivityForm, type UseActivityForm } from "~/hooks/activity-form";
 
 type ActivityFormProps = UseActivityForm;
+
 export const ActivityForm = (props: ActivityFormProps) => {
   const { control, onSubmit, onCancel } = useActivityForm(props);
 
