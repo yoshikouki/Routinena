@@ -51,6 +51,7 @@ const AppBottomNavigation = () => {
         backgroundColor: "transparent",
         backgroundImage: "none",
         boxShadow: "none",
+        zIndex: 1200,
         backdropFilter: "blur(2px)",
       }}
     >
