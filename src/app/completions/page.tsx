@@ -8,9 +8,15 @@ export const metadata: Metadata = {
   title: "活動の作成 - ルーティンナさん | Routinena",
 };
 
+const useServerCompletions = {
+  getAll: async () => {
+    const session = await useServerSession.get();
+    return await completionsService().getAll(session.user.id);
+  },
+};
+
 export default async function CompletionsPage() {
-  const session = await useServerSession.get();
-  const completions = await completionsService().getAll(session.user.id);
+  const completions = await useServerCompletions.getAll();
 
   return (
     <Container
