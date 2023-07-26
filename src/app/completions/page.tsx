@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { type Metadata } from "next";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useServerSession } from "~/hooks/server-session";
@@ -19,15 +19,7 @@ export default async function CompletionsPage() {
   const completions = await useServerCompletions.getAll();
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        height: "100vh",
-        mt: 12,
-        padding: 0,
-        gap: 4,
-      }}
-    >
+    <>
       <Box>
         <Typography variant="h1">実績</Typography>
       </Box>
@@ -50,6 +42,6 @@ export default async function CompletionsPage() {
           </Box>
         ))}
       </Box>
-    </Container>
+    </>
   );
 }

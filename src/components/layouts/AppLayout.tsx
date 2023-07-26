@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { type ReactNode } from "react";
 import AppHeader from "./AppHeader";
 import AppBottomNavigation from "./AppBottomNavigation";
@@ -11,11 +11,20 @@ interface Props {
 
 const AppLayout = ({ children, session }: Props) => {
   return (
-    <Container maxWidth="md">
+    <Container
+      sx={{
+        maxWidth: "md",
+        height: "100vh",
+        overflow: "auto",
+        pt: 12,
+        pb: 12,
+        gap: 4,
+      }}
+    >
+      {children}
+
       <AppHeader session={session} />
       <AppBottomNavigation />
-
-      {children}
     </Container>
   );
 };

@@ -34,15 +34,7 @@ export default function Activity(props: { activity: ActivityWithCompletions }) {
       onCancel={() => setIsEditing(false)}
     />
   ) : (
-    <Container
-      maxWidth="sm"
-      sx={{
-        height: "100vh",
-        mt: 12,
-        padding: 0,
-        gap: 4,
-      }}
-    >
+    <>
       <Box>
         <Typography variant="h1">{activity.name}</Typography>
       </Box>
@@ -86,6 +78,6 @@ export default function Activity(props: { activity: ActivityWithCompletions }) {
           </Box>
         ))}
       </Box>
-    </Container>
+    </>
   );
 }

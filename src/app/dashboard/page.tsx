@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ActivityListItem from "./ActivityListItem";
 import { useServerActivities } from "~/hooks/server-activities";
 
@@ -11,15 +11,7 @@ export default async function DashboardPage() {
   const activities = await useServerActivities.getAll();
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{
-        height: "100vh",
-        mt: 12,
-        padding: 0,
-        gap: 4,
-      }}
-    >
+    <>
       <Box>
         <Typography variant="h1">予定</Typography>
       </Box>
@@ -32,6 +24,6 @@ export default async function DashboardPage() {
           <ActivityListItem key={activity.id} activity={activity} />
         ))}
       </Box>
-    </Container>
+    </>
   );
 }

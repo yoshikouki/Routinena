@@ -22,11 +22,19 @@ export default function ActivityListItem(props: ActivityListItemProps) {
       <Box
         component={Typography}
         variant="h3"
-        sx={{ fontWeight: 900, fontSize: "1.1rem" }}
+        sx={{
+          fontWeight: 900,
+          fontSize: "1.1rem",
+        }}
       >
         {activity.name}
       </Box>
-      <Typography variant="body1" sx={{ mt: 1 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          mt: 1,
+        }}
+      >
         {activity.description}
       </Typography>
 
