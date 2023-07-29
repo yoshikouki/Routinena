@@ -1,15 +1,7 @@
-import { type Activity } from "@prisma/client";
-import { activitiesService } from "~/server/services/activities";
 import { notFound } from "next/navigation";
+import { activitiesService } from "~/server/services/activities";
+import { type ActivitiesWithCompletions } from "./activities";
 import { useServerSession } from "./server-session";
-
-export type ActivityWithCompletions = Activity & {
-  completions: {
-    id: string
-    completedAt: Date;
-  }[];
-};
-export type ActivitiesWithCompletions = ActivityWithCompletions[];
 
 export const useServerActivities = {
   getAll: async (): Promise<ActivitiesWithCompletions> => {

@@ -1,9 +1,22 @@
 "use client";
 
+import { type Activity } from "@prisma/client";
 import { useState } from "react";
-import { type ActivityWithCompletions } from "~/hooks/server-activities";
 import { type ActivityModificationParams } from "~/schemas/activities";
 import { api } from "~/utils/api";
+
+export type ActivityWithCompletions = Activity & {
+  completions: {
+    id: string;
+    completedAt: Date;
+  }[];
+};
+export type ActivitiesWithCompletions = ActivityWithCompletions[];
+
+export const useActivities = () => {
+  const [activities] = api.activities.getAll.useSuspenseQuery();
+  return { activities };
+};
 
 type useActivityProps = {
   activity: ActivityWithCompletions;

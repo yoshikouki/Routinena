@@ -4,8 +4,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
-import { useActivity } from "~/hooks/activities";
-import { type ActivityWithCompletions } from "~/hooks/server-activities";
+import { useActivity, type ActivityWithCompletions } from "~/hooks/activities";
 import ActivityEditing from "./ActivityEditing";
 
 export default function Activity(props: { activity: ActivityWithCompletions }) {

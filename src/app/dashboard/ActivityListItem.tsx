@@ -5,8 +5,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { RelativeDate } from "~/components/RelativeDate";
-import { useActivity } from "~/hooks/activities";
-import { type ActivityWithCompletions } from "~/hooks/server-activities";
+import { useActivity, type ActivityWithCompletions } from "~/hooks/activities";
 
 interface ActivityListItemProps {
   activity: ActivityWithCompletions;

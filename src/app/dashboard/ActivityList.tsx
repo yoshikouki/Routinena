@@ -2,10 +2,10 @@
 
 import ActivityListItem from "./ActivityListItem";
 import { Typography } from "@mui/material";
-import { api } from "~/utils/api";
+import { useActivities } from "~/hooks/activities";
 
 export default function ActivityList() {
-  const [activities] = api.activities.getAll.useSuspenseQuery();
+  const { activities } = useActivities();
 
   return (
     <>
