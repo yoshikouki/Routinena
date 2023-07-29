@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { type ReactNode } from "react";
 import AppHeader from "./AppHeader";
 import AppBottomNavigation from "./AppBottomNavigation";

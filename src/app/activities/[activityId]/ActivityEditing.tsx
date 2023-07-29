@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ActivityForm } from "~/components/ActivityForm";
 import { type UseActivityForm } from "~/hooks/activity-form";
 
