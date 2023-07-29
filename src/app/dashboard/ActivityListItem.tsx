@@ -5,10 +5,10 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { RelativeDate } from "~/components/RelativeDate";
-import { useActivity, type ActivityWithCompletions } from "~/hooks/activities";
+import { useActivity, type ActivityModel } from "~/hooks/activities";
 
 interface ActivityListItemProps {
-  activity: ActivityWithCompletions;
+  activity: ActivityModel;
 }
 
 export default function ActivityListItem(props: ActivityListItemProps) {

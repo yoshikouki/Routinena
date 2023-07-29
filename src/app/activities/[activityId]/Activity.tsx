@@ -8,28 +8,18 @@ import { useActivity, type ActivityWithCompletions } from "~/hooks/activities";
 import ActivityEditing from "./ActivityEditing";
 
 export default function Activity(props: { activity: ActivityWithCompletions }) {
-  const { activity, setActivity, deleteActivity } = useActivity({
-    activity: props.activity,
-  });
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
-
-  const onEditingSubmit = (updatedActivity: ActivityWithCompletions) => {
-    setIsEditing(false);
-    setActivity({
-      ...activity,
-      ...updatedActivity,
-    });
-  };
-  const onDeletion = () => {
-    deleteActivity();
-    router.push("/dashboard");
-  };
+  const { activity, onUpdate, onDelete } = useActivity({
+    activity: props.activity,
+    onUpdate: () => setIsEditing(false),
+    onDelete: () => router.push("/dashboard"),
+  });
 
   return isEditing ? (
     <ActivityEditing
       activity={activity}
-      onSubmit={onEditingSubmit}
+      onSubmit={onUpdate}
       onCancel={() => setIsEditing(false)}
     />
   ) : (
@@ -54,12 +44,7 @@ export default function Activity(props: { activity: ActivityWithCompletions }) {
       </Box>
 
       <Box sx={{ mt: 4 }}>
-        <Button
-          onClick={onDeletion}
-          color="warning"
-          variant="outlined"
-          fullWidth
-        >
+        <Button onClick={onDelete} color="warning" variant="outlined" fullWidth>
           削除
         </Button>
       </Box>
