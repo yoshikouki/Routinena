@@ -7,6 +7,16 @@ import {
 import { activitiesService } from "~/server/services/activities";
 
 export const activitiesRouter = createTRPCRouter({
+  getOne: protectedProcedure
+    .input(activityIdentifierSchema)
+    .query(({ ctx, input }) =>
+      activitiesService().getOne(ctx.session.user.id, input.activityId),
+    ),
+
+  getAll: protectedProcedure.query(({ ctx }) =>
+    activitiesService().getAll(ctx.session.user.id),
+  ),
+
   create: protectedProcedure
     .input(activityModificationParamsSchema)
     .mutation(({ ctx, input }) =>

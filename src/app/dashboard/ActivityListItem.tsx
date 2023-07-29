@@ -1,12 +1,11 @@
 "use client";
 
-import { Box, Button, Typography } from "@mui/material";
 import { Check, Dehaze } from "@mui/icons-material";
-
-import { type ActivityWithCompletions } from "~/hooks/server-activities";
+import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
-import { useActivity } from "~/hooks/activities";
 import { RelativeDate } from "~/components/RelativeDate";
+import { useActivity } from "~/hooks/activities";
+import { type ActivityWithCompletions } from "~/hooks/server-activities";
 
 interface ActivityListItemProps {
   activity: ActivityWithCompletions;

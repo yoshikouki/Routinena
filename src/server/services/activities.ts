@@ -1,4 +1,7 @@
-import { type ActivityUpdateParams, type ActivityModificationParams } from "~/schemas/activities";
+import {
+  type ActivityModificationParams,
+  type ActivityUpdateParams,
+} from "~/schemas/activities";
 import { activityRepository } from "../repositories/activity";
 
 export const activitiesService = () => {
