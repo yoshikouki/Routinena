@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Dehaze } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import { RelativeDate } from "~/components/RelativeDate";
@@ -12,9 +13,10 @@ interface ActivityListItemProps {
 }
 
 export default function ActivityListItem(props: ActivityListItemProps) {
-  const { activity, complete, isCompleted, latestCompletion } = useActivity({
-    activity: props.activity,
-  });
+  const { activity, complete, isCompleting, isCompleted, latestCompletion } =
+    useActivity({
+      activity: props.activity,
+    });
 
   return (
     <Box sx={{ mb: 1, py: 2 }}>
@@ -49,13 +51,15 @@ export default function ActivityListItem(props: ActivityListItemProps) {
             完了
           </Button>
         ) : (
-          <Button
+          <LoadingButton
             variant="outlined"
             sx={{ flex: 1, py: 1 }}
             startIcon={<Check />}
             onClick={complete}
+            loading={isCompleting}
           />
         )}
+
         <Button
           LinkComponent={Link}
           href={`/activities/${activity.id}`}
