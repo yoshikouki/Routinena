@@ -17,7 +17,7 @@ export type ActivityModel = ActivityWithCompletions & {
   onUpdate: (updatedActivity: ActivityWithCompletions) => void;
 };
 
-const updateActivity = (
+const modifyActivityState = (
   activityStates: ActivitiesWithCompletions,
   updatedActivity: ActivityWithCompletions,
 ) => {
@@ -28,7 +28,7 @@ const updateActivity = (
   );
 };
 
-const deleteActivity = (
+const removeActivityState = (
   activityStates: ActivitiesWithCompletions,
   activityId: string,
 ) => {
@@ -43,9 +43,9 @@ export const useActivities = () => {
     return {
       ...activity,
       onUpdate: (updatedActivity: ActivityWithCompletions) =>
-        setActivityStates((prev) => updateActivity(prev, updatedActivity)),
+        setActivityStates((prev) => modifyActivityState(prev, updatedActivity)),
       onDelete: () =>
-        setActivityStates((prev) => deleteActivity(prev, activity.id)),
+        setActivityStates((prev) => removeActivityState(prev, activity.id)),
     };
   });
   return { activities };
