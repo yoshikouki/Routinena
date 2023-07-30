@@ -3,7 +3,6 @@
 import { Check, Dehaze } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Typography } from "@mui/material";
-import Link from "next/link";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
 
@@ -60,8 +59,7 @@ export default function ActivityListItem(props: ActivityListItemProps) {
         )}
 
         <Button
-          LinkComponent={Link}
-          href={`/activities/${activity.id}`}
+          onClick={() => props.activity.onShow()}
           startIcon={<Dehaze />}
           variant="outlined"
           sx={{ flex: 1, py: 1 }}

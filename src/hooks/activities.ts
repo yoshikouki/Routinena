@@ -14,17 +14,37 @@ export type ActivityWithCompletions = Activity & {
 export type ActivitiesWithCompletions = ActivityWithCompletions[];
 
 export type ActivityModel = ActivityWithCompletions & {
+  onShow: () => void;
+  onCancelShow: () => void;
+  onEdit: () => void;
+  onCancelEdit: () => void;
   onUpdate: (updatedActivity: ActivityWithCompletions) => void;
   onDelete: () => void;
 };
-type ActivitiesState = Record<string, ActivityModel>;
+type ActivitiesObject = Record<string, ActivityModel>;
+type DisplayMode =
+  | {
+      mode: "dashboard";
+      activityId: null;
+    }
+  | {
+      mode: "show" | "edit";
+      activityId: string;
+    };
 
 export const useActivities = () => {
-  const [activityStates, setActivityStates] = useState<ActivitiesState>({});
-  const activities = Object.values(activityStates);
+  const [activitiesObject, setActivitiesObject] = useState<ActivitiesObject>(
+    {},
+  );
+  const [displayMode, setDisplayMode] = useState<DisplayMode>({
+    mode: "dashboard",
+    activityId: null,
+  });
+  const activities = Object.values(activitiesObject);
+  const currentActivity = activitiesObject[displayMode.activityId ?? ""];
 
-  const modifyActivityState = (updatedActivity: ActivityWithCompletions) => {
-    setActivityStates((prev) => {
+  const modifyActivitiesObject = (updatedActivity: ActivityWithCompletions) => {
+    setActivitiesObject((prev) => {
       const {
         [updatedActivity.id]: modifiedActivityState,
         ...newActivityStates
@@ -43,8 +63,8 @@ export const useActivities = () => {
     });
   };
 
-  const removeActivityState = (activityId: string) => {
-    setActivityStates((prev) => {
+  const removeActivitiesObject = (activityId: string) => {
+    setActivitiesObject((prev) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [activityId]: _, ...newActivityStates } = prev;
       return newActivityStates;
@@ -53,13 +73,33 @@ export const useActivities = () => {
 
   api.activities.getAll.useSuspenseQuery(undefined, {
     onSuccess: (data: ActivitiesWithCompletions) => {
-      setActivityStates((prev) => {
+      setActivitiesObject((prev) => {
         return data.reduce((acc, activity) => {
           acc[activity.id] = {
             ...activity,
-            onUpdate: (updatedActivity: ActivityWithCompletions) =>
-              modifyActivityState(updatedActivity),
-            onDelete: () => removeActivityState(activity.id),
+            onShow: () => {
+              setDisplayMode({ mode: "show", activityId: activity.id });
+            },
+            onCancelShow: () => {
+              setDisplayMode({ mode: "dashboard", activityId: null });
+            },
+            onEdit: () => {
+              setDisplayMode({ mode: "edit", activityId: activity.id });
+            },
+            onCancelEdit: () => {
+              setDisplayMode({ mode: "edit", activityId: activity.id });
+            },
+            onUpdate: (updatedActivity: ActivityWithCompletions) => {
+              modifyActivitiesObject(updatedActivity);
+              setDisplayMode({
+                mode: "show",
+                activityId: updatedActivity.id,
+              });
+            },
+            onDelete: () => {
+              removeActivitiesObject(activity.id);
+              setDisplayMode({ mode: "dashboard", activityId: null });
+            },
           };
           return acc;
         }, prev);
@@ -67,7 +107,12 @@ export const useActivities = () => {
     },
   });
 
-  return { activities };
+  return {
+    activities,
+    activitiesObject,
+    currentActivity,
+    currentDisplayMode: displayMode.mode,
+  };
 };
 
 type useActivityProps = {
@@ -114,7 +159,6 @@ export const useActivity = (props: useActivityProps) => {
 
   return {
     activity,
-    setActivity,
     onUpdate,
     onDelete,
     complete,
