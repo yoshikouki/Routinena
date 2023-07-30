@@ -15,39 +15,58 @@ export type ActivitiesWithCompletions = ActivityWithCompletions[];
 
 export type ActivityModel = ActivityWithCompletions & {
   onUpdate: (updatedActivity: ActivityWithCompletions) => void;
+  onDelete: () => void;
 };
-
-const modifyActivityState = (
-  activityStates: ActivitiesWithCompletions,
-  updatedActivity: ActivityWithCompletions,
-) => {
-  return activityStates.map((activity) =>
-    activity.id === updatedActivity.id
-      ? { ...activity, ...updatedActivity }
-      : activity,
-  );
-};
-
-const removeActivityState = (
-  activityStates: ActivitiesWithCompletions,
-  activityId: string,
-) => {
-  return activityStates.filter((activity) => activity.id !== activityId);
-};
+type ActivitiesState = Record<string, ActivityModel>;
 
 export const useActivities = () => {
-  const [activityData] = api.activities.getAll.useSuspenseQuery();
-  const [activityStates, setActivityStates] = useState(() => activityData);
+  const [activityStates, setActivityStates] = useState<ActivitiesState>({});
+  const activities = Object.values(activityStates);
 
-  const activities = activityStates.map((activity) => {
-    return {
-      ...activity,
-      onUpdate: (updatedActivity: ActivityWithCompletions) =>
-        setActivityStates((prev) => modifyActivityState(prev, updatedActivity)),
-      onDelete: () =>
-        setActivityStates((prev) => removeActivityState(prev, activity.id)),
-    };
+  const modifyActivityState = (updatedActivity: ActivityWithCompletions) => {
+    setActivityStates((prev) => {
+      const {
+        [updatedActivity.id]: modifiedActivityState,
+        ...newActivityStates
+      } = prev;
+      if (modifiedActivityState) {
+        return {
+          ...newActivityStates,
+          [updatedActivity.id]: {
+            ...modifiedActivityState,
+            ...updatedActivity,
+          },
+        };
+      } else {
+        return prev;
+      }
+    });
+  };
+
+  const removeActivityState = (activityId: string) => {
+    setActivityStates((prev) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { [activityId]: _, ...newActivityStates } = prev;
+      return newActivityStates;
+    });
+  };
+
+  api.activities.getAll.useSuspenseQuery(undefined, {
+    onSuccess: (data: ActivitiesWithCompletions) => {
+      setActivityStates((prev) => {
+        return data.reduce((acc, activity) => {
+          acc[activity.id] = {
+            ...activity,
+            onUpdate: (updatedActivity: ActivityWithCompletions) =>
+              modifyActivityState(updatedActivity),
+            onDelete: () => removeActivityState(activity.id),
+          };
+          return acc;
+        }, prev);
+      });
+    },
   });
+
   return { activities };
 };
 
