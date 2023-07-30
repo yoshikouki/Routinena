@@ -9,7 +9,7 @@ import {
   type ActivityModificationParams,
 } from "~/schemas/activities";
 import { api } from "~/utils/api";
-import { type ActivityWithCompletions } from "./server-activities";
+import { type ActivityWithCompletions } from "./activities";
 
 export interface UseActivityForm {
   activity?: Activity;
