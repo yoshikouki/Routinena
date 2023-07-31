@@ -1,10 +1,7 @@
 "use client";
 
-import type {} from "@mui/material/themeCssVarsAugmentation"; // Workaround for theme type errors with CSS theme variables
-
 import { Fab, Zoom, styled, useTheme } from "@mui/material";
-
-import AddIcon from "@mui/icons-material/Add";
+import { useBottomFab } from "~/hooks/bottom-fab";
 
 const BottomFab = styled(Fab)(({ theme }) => ({
   position: "absolute",
@@ -18,19 +15,19 @@ const BottomFab = styled(Fab)(({ theme }) => ({
 
 const AnimationBottomFab = () => {
   const theme = useTheme();
+  const { current } = useBottomFab();
+  const { icon: FabIcon, props: fabProps } = current;
+
   return (
     <Zoom
-      in={true}
+      in={!!current}
       timeout={{
         enter: theme.transitions.duration.enteringScreen,
         exit: theme.transitions.duration.leavingScreen,
       }}
     >
-      <BottomFab
-        aria-label="add"
-        href="/activities/new"
-      >
-        <AddIcon />
+      <BottomFab {...fabProps}>
+        <FabIcon />
       </BottomFab>
     </Zoom>
   );
