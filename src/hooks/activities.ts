@@ -1,7 +1,7 @@
 "use client";
 
 import { type Activity } from "@prisma/client";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { type ActivityModificationParams } from "~/schemas/activities";
 import { api } from "~/utils/api";
 
@@ -71,41 +71,48 @@ export const useActivities = () => {
     });
   };
 
-  api.activities.getAll.useSuspenseQuery(undefined, {
-    onSuccess: (data: ActivitiesWithCompletions) => {
-      setActivitiesObject((prev) => {
-        return data.reduce((acc, activity) => {
-          acc[activity.id] = {
-            ...activity,
-            onShow: () => {
-              setDisplayMode({ mode: "show", activityId: activity.id });
-            },
-            onCancelShow: () => {
-              setDisplayMode({ mode: "dashboard", activityId: null });
-            },
-            onEdit: () => {
-              setDisplayMode({ mode: "edit", activityId: activity.id });
-            },
-            onCancelEdit: () => {
-              setDisplayMode({ mode: "edit", activityId: activity.id });
-            },
-            onUpdate: (updatedActivity: ActivityWithCompletions) => {
-              modifyActivitiesObject(updatedActivity);
-              setDisplayMode({
-                mode: "show",
-                activityId: updatedActivity.id,
-              });
-            },
-            onDelete: () => {
-              removeActivitiesObject(activity.id);
-              setDisplayMode({ mode: "dashboard", activityId: null });
-            },
-          };
-          return acc;
-        }, prev);
-      });
+  const generateActivitiesModel = useCallback(
+    (activities: ActivitiesWithCompletions) => {
+      return activities.reduce<ActivitiesObject>((acc, activity) => {
+        acc[activity.id] = {
+          ...activity,
+          onShow: () => {
+            setDisplayMode({ mode: "show", activityId: activity.id });
+          },
+          onCancelShow: () => {
+            setDisplayMode({ mode: "dashboard", activityId: null });
+          },
+          onEdit: () => {
+            setDisplayMode({ mode: "edit", activityId: activity.id });
+          },
+          onCancelEdit: () => {
+            setDisplayMode({ mode: "edit", activityId: activity.id });
+          },
+          onUpdate: (updatedActivity: ActivityWithCompletions) => {
+            modifyActivitiesObject(updatedActivity);
+            setDisplayMode({
+              mode: "show",
+              activityId: updatedActivity.id,
+            });
+          },
+          onDelete: () => {
+            removeActivitiesObject(activity.id);
+            setDisplayMode({ mode: "dashboard", activityId: null });
+          },
+        };
+        return acc;
+      }, {});
     },
-  });
+    [],
+  );
+
+  const { data: fetchedActivities } = api.activities.getAll.useQuery();
+
+  useEffect(() => {
+    if (fetchedActivities) {
+      setActivitiesObject(generateActivitiesModel(fetchedActivities));
+    }
+  }, [fetchedActivities, generateActivitiesModel]);
 
   return {
     activities,
