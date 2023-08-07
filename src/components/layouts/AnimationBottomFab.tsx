@@ -3,15 +3,14 @@
 import { Fab, Zoom, styled, useTheme } from "@mui/material";
 import { useBottomFab } from "~/hooks/bottom-fab";
 
-const BottomFab = styled(Fab)(({ theme }) => ({
+const BottomFab = styled(Fab)({
   position: "absolute",
   zIndex: 10,
-  top: -30,
+  bottom: 40,
   left: 0,
   right: 0,
   margin: "0 auto",
-  backgroundColor: theme.vars.palette.primary.main,
-}));
+});
 
 const AnimationBottomFab = () => {
   const theme = useTheme();
@@ -26,7 +25,7 @@ const AnimationBottomFab = () => {
         exit: theme.transitions.duration.leavingScreen,
       }}
     >
-      <BottomFab {...fabProps}>
+      <BottomFab size="large" color="primary" {...fabProps}>
         <FabIcon />
       </BottomFab>
     </Zoom>
