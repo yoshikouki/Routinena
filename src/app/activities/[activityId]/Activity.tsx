@@ -1,19 +1,28 @@
 "use client";
 
+import { Close } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
-import { useActivity, type ActivityWithCompletions } from "~/hooks/activities";
+import { useActivity, type ActivityModel } from "~/hooks/activities";
+import { useBottomFab } from "~/hooks/bottom-fab";
 import ActivityEditing from "./ActivityEditing";
 
-export default function Activity(props: { activity: ActivityWithCompletions }) {
+export default function Activity(props: { activity: ActivityModel }) {
   const [isEditing, setIsEditing] = useState(false);
   const router = useRouter();
   const { activity, onUpdate, onDelete } = useActivity({
     activity: props.activity,
     onUpdate: () => setIsEditing(false),
     onDelete: () => router.push("/dashboard"),
+  });
+  useBottomFab({
+    icon: Close,
+    props: {
+      onClick: activity.onCancelShow,
+      color: "secondary",
+    },
   });
 
   return isEditing ? (

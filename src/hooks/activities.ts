@@ -123,7 +123,7 @@ export const useActivities = () => {
 };
 
 type useActivityProps = {
-  activity: ActivityWithCompletions | ActivityModel;
+  activity: ActivityModel;
   onUpdate?: () => void;
   onDelete?: () => void;
 };
@@ -152,7 +152,7 @@ export const useActivity = (props: useActivityProps) => {
 
   const completeMutation = api.activities.complete.useMutation({
     onSuccess: (data) => {
-      setActivity(data);
+      setActivity({ ...activity, ...data });
     },
   });
   const latestCompletion = activity.completions[0];
