@@ -12,7 +12,7 @@ const BottomFab = styled(Fab)({
   margin: "0 auto",
 });
 
-const AnimationBottomFab = () => {
+export const BottomAnimationFab = () => {
   const theme = useTheme();
   const { current } = useBottomFab();
   const { icon: FabIcon, props: fabProps } = current;
@@ -31,5 +31,3 @@ const AnimationBottomFab = () => {
     </Zoom>
   );
 };
-
-export default AnimationBottomFab;

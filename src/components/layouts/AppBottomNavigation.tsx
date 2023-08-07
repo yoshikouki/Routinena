@@ -1,12 +1,12 @@
 "use client";
 
-import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { type SyntheticEvent, useState } from "react";
-import HomeIcon from "@mui/icons-material/Home";
 import DoneIcon from "@mui/icons-material/Done";
-import AnimationBottomFab from "./AnimationBottomFab";
+import HomeIcon from "@mui/icons-material/Home";
+import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useState, type SyntheticEvent } from "react";
+import { BottomAnimationFab } from "./BottomAnimationFab";
 
 const navigationActions = {
   dashboard: {
@@ -26,10 +26,12 @@ const navigationActions = {
 const AppBottomNavigation = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const initValue = Object.values(navigationActions).find(
-    (action) => action.path === pathname,
-  )?.value || "other";
-  const [value, setValue] = useState(initValue);
+  const [value, setValue] = useState(
+    () =>
+      Object.values(navigationActions).find(
+        (action) => action.path === pathname,
+      )?.value || "other",
+  );
 
   const onClickBottomNavigation = (
     _: SyntheticEvent,
@@ -77,7 +79,7 @@ const AppBottomNavigation = () => {
         ))}
       </BottomNavigation>
 
-      <AnimationBottomFab />
+      <BottomAnimationFab />
     </Paper>
   );
 };
