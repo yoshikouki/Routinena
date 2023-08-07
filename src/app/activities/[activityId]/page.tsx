@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { useServerActivities } from "~/hooks/server-activities";
-import Activity from "./Activity";
+import Activity from "../../dashboard/Activity";
 
 export const metadata: Metadata = {
   title: "活動 - ルーティンナさん | Routinena",

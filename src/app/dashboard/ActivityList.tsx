@@ -2,9 +2,9 @@
 
 import { Container, Typography } from "@mui/material";
 
-import Activity from "../activities/[activityId]/Activity";
-import ActivityListItem from "./ActivityListItem";
 import { useActivities } from "~/hooks/activities";
+import Activity from "./Activity";
+import ActivityListItem from "./ActivityListItem";
 
 export default function ActivityList() {
   const { activities, currentActivity } = useActivities();
