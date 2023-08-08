@@ -1,7 +1,8 @@
 "use client";
 
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
+import Overlap from "~/components/Overlap";
 import { useActivities } from "~/hooks/activities";
 import Activity from "./Activity";
 import ActivityListItem from "./ActivityListItem";
@@ -19,25 +20,9 @@ export default function ActivityList() {
       ))}
 
       {currentActivity && (
-        <Container
-          sx={{
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            position: "fixed",
-            zIndex: 1000,
-            bgcolor: "background.paper",
-            maxWidth: "md",
-            height: "100vh",
-            overflow: "auto",
-            pt: 12,
-            pb: 12,
-            gap: 4,
-          }}
-        >
+        <Overlap>
           <Activity key={currentActivity.id} activity={currentActivity} />
-        </Container>
+        </Overlap>
       )}
     </>
   );
