@@ -1,22 +1,38 @@
 "use client";
 
+import { Close } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
 import { type FabProps, type SvgIcon } from "@mui/material";
-import { useCallback, useReducer } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 
-const bottomFabVariations = {
+type InitializeBottomFabProps = {
+  onClickNewActivity: () => void;
+  onClickCloseNewActivity: () => void;
+};
+
+const generateBottomFabVariations = (props?: InitializeBottomFabProps) => ({
   newActivity: {
     icon: AddIcon,
     props: {
       "aria-label": "add",
-      href: "/activities/new",
+      onClick: props ? props.onClickNewActivity : () => undefined,
     },
   },
-};
+  closeNewActivity: {
+    icon: Close,
+    props: {
+      "aria-label": "add",
+      onClick: props ? props.onClickCloseNewActivity : () => undefined,
+    },
+  },
+});
 
-export const initialBottomFab = {
-  current: bottomFabVariations.newActivity,
-  ...bottomFabVariations,
+export const generateInitialBottomFab = (props?: InitializeBottomFabProps) => {
+  const bottomFabVariations = generateBottomFabVariations(props);
+  return {
+    current: bottomFabVariations.newActivity,
+    ...bottomFabVariations,
+  };
 };
 
 export type BottomFab = {
@@ -24,11 +40,26 @@ export type BottomFab = {
   props: FabProps;
 };
 
-type BottomFabManager = Record<keyof typeof initialBottomFab, BottomFab>;
+type BottomFabVariationKeys = keyof ReturnType<
+  typeof generateBottomFabVariations
+>;
+
+type BottomFabManager = Record<
+  keyof ReturnType<typeof generateInitialBottomFab>,
+  BottomFab
+>;
 
 type BottomFabReducerAction =
   | {
       type: "toDefault";
+    }
+  | {
+      type: "initialize";
+      bottomFab: BottomFabManager;
+    }
+  | {
+      type: "select";
+      key: BottomFabVariationKeys;
     }
   | ({
       type: "set";
@@ -42,7 +73,14 @@ const reducer = (
     case "toDefault":
       return {
         ...bottomFab,
-        current: bottomFabVariations.newActivity,
+        current: bottomFab.newActivity,
+      };
+    case "initialize":
+      return action.bottomFab;
+    case "select":
+      return {
+        ...bottomFab,
+        current: bottomFab[action.key],
       };
     case "set":
       return {
@@ -56,7 +94,8 @@ const reducer = (
 };
 
 export const useBottomFabContext = () => {
-  const [bottomFab, dispatch] = useReducer(reducer, initialBottomFab);
+  const [openNewActivity, setOpenNewActivity] = useState(false);
+  const [bottomFab, dispatch] = useReducer(reducer, generateInitialBottomFab());
 
   const setDefaultBottomFab = useCallback(
     () => dispatch({ type: "toDefault" }),
@@ -66,11 +105,36 @@ export const useBottomFabContext = () => {
     (bottomFab: BottomFab) => dispatch({ type: "set", ...bottomFab }),
     [],
   );
+  const onOpenNewActivity = useCallback(() => {
+    setOpenNewActivity(true);
+    dispatch({ type: "select", key: "closeNewActivity" });
+  }, [dispatch]);
+  const onCloseNewActivity = useCallback(() => {
+    setOpenNewActivity(false);
+    setDefaultBottomFab();
+  }, [setDefaultBottomFab]);
+
+  useEffect(
+    () => {
+      const bottomFab = generateInitialBottomFab({
+        onClickNewActivity: onOpenNewActivity,
+        onClickCloseNewActivity: onCloseNewActivity,
+      });
+      dispatch({
+        type: "initialize",
+        bottomFab,
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return {
     current: bottomFab.current,
     setBottomFab,
     setDefaultBottomFab,
+    openNewActivity,
+    onCloseNewActivity,
   };
 };
 export type UseBottomFabContext = ReturnType<typeof useBottomFabContext>;

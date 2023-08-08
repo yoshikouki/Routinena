@@ -4,6 +4,7 @@ import { type ReactNode } from "react";
 import AppBottomNavigation from "./AppBottomNavigation";
 import AppHeader from "./AppHeader";
 import { BottomFabProvider } from "./BottomFabProvider";
+import { NewActivityModal } from "./NewActivityModal";
 
 interface Props {
   children: ReactNode;
@@ -27,6 +28,7 @@ const AppLayout = ({ children, session }: Props) => {
 
         <AppHeader session={session} />
         <AppBottomNavigation />
+        <NewActivityModal />
       </Container>
     </BottomFabProvider>
   );

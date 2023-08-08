@@ -5,7 +5,7 @@ import { useBottomFab } from "~/hooks/bottom-fab";
 
 const BottomFab = styled(Fab)({
   position: "absolute",
-  zIndex: 10,
+  zIndex: 1400,
   bottom: 40,
   left: 0,
   right: 0,
@@ -18,16 +18,18 @@ export const BottomAnimationFab = () => {
   const { icon: FabIcon, props: fabProps } = current;
 
   return (
-    <Zoom
-      in={!!current}
-      timeout={{
-        enter: theme.transitions.duration.enteringScreen,
-        exit: theme.transitions.duration.leavingScreen,
-      }}
-    >
-      <BottomFab size="large" color="primary" {...fabProps}>
-        <FabIcon />
-      </BottomFab>
-    </Zoom>
+    <>
+      <Zoom
+        in={!!current}
+        timeout={{
+          enter: theme.transitions.duration.enteringScreen,
+          exit: theme.transitions.duration.leavingScreen,
+        }}
+      >
+        <BottomFab size="large" color="primary" {...fabProps}>
+          <FabIcon />
+        </BottomFab>
+      </Zoom>
+    </>
   );
 };

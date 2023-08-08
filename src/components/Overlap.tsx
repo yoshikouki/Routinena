@@ -2,10 +2,13 @@ import { Container } from "@mui/material";
 import { type ReactNode } from "react";
 
 interface Props {
+  open: boolean;
   children: ReactNode;
 }
 
-const Overlap = ({ children }: Props) => {
+const Overlap = ({ open, children }: Props) => {
+  if (!open) return null;
+
   return (
     <Container
       sx={{
@@ -13,10 +16,11 @@ const Overlap = ({ children }: Props) => {
         left: 0,
         right: 0,
         bottom: 0,
-        position: "absolute",
+        position: "fixed",
         zIndex: "auto",
         bgcolor: "background.paper",
         width: "100%",
+        height: "100vh",
         overflow: "auto",
         pt: 12,
         pb: 12,

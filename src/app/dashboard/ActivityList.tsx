@@ -20,7 +20,7 @@ export default function ActivityList() {
       ))}
 
       {currentActivity && (
-        <Overlap>
+        <Overlap open={!!currentActivity}>
           <Activity key={currentActivity.id} activity={currentActivity} />
         </Overlap>
       )}
