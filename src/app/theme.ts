@@ -34,6 +34,7 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
       palette: {
         background: {
           default: "#000000",
+          paper: "#40221B",
         },
         primary: {
           main: "#F29D52",
@@ -45,7 +46,7 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
         },
         text: {
           primary: grey[50], // #fafafa
-          secondary: grey[300], // #e0e0e0
+          secondary: grey[400], // #bdbdbd
         },
       },
     },
