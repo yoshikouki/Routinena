@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <>
-      <Box>
+      <Box sx={{ px: 2 }}>
         <Typography variant="h1">予定</Typography>
       </Box>
 

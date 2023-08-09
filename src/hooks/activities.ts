@@ -158,7 +158,7 @@ export const useActivity = (props: useActivityProps) => {
   const latestCompletion = activity.completions[0];
   const isCompleting = completeMutation.isLoading;
   const isCompleted = completeMutation.isSuccess;
-  const complete = () => {
+  const onComplete = () => {
     completeMutation.mutate({
       activityId: activity.id,
     });
@@ -168,9 +168,10 @@ export const useActivity = (props: useActivityProps) => {
     activity,
     onUpdate,
     onDelete,
-    complete,
+    onComplete,
     isCompleting,
     isCompleted,
     latestCompletion,
+    completions: activity.completions,
   };
 };

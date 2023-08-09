@@ -1,8 +1,16 @@
 "use client";
 
-import { Check, Dehaze } from "@mui/icons-material";
+import { CheckRounded } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/material";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
 
@@ -11,62 +19,76 @@ interface ActivityListItemProps {
 }
 
 export default function ActivityListItem(props: ActivityListItemProps) {
-  const { activity, complete, isCompleting, isCompleted, latestCompletion } =
-    useActivity({
-      activity: props.activity,
-    });
+  const {
+    activity,
+    onComplete,
+    isCompleting,
+    isCompleted,
+    latestCompletion,
+    completions,
+  } = useActivity({
+    activity: props.activity,
+  });
 
   return (
-    <Box sx={{ mb: 1, py: 2 }}>
-      <Box
-        component={Typography}
-        variant="h3"
-        sx={{
-          fontWeight: 900,
-          fontSize: "1.1rem",
-        }}
-      >
-        {activity.name}
-      </Box>
-      <Typography
-        variant="body1"
-        sx={{
-          mt: 1,
-        }}
-      >
-        {activity.description}
-      </Typography>
+    <Card
+      sx={(theme) => ({
+        mb: 1,
+        py: 2,
+        background: theme.vars.palette.background.default,
+      })}
+      elevation={0}
+    >
+      <CardActionArea onClick={() => props.activity.onShow()}>
+        <CardContent sx={{ pb: 2 }}>
+          <Box
+            component={Typography}
+            variant="h3"
+            sx={{ fontWeight: 900, fontSize: "1.1rem" }}
+          >
+            {activity.name}
+          </Box>
+          {activity.description && (
+            <Typography
+              variant="body1"
+              sx={(theme) => ({
+                mt: 0.5,
+                color: theme.vars.palette.text.secondary,
+              })}
+            >
+              {activity.description}
+            </Typography>
+          )}
+        </CardContent>
+      </CardActionArea>
 
-      <RelativeDate date={latestCompletion?.completedAt} />
+      <CardActions sx={{ display: "flex", gap: 2, py: 0, px: 2 }}>
+        <RelativeDate
+          date={latestCompletion?.completedAt}
+          iconVariant="body1"
+          variant="body2"
+        />
 
-      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
         {isCompleted ? (
           <Button
             variant="contained"
-            sx={{ flex: 1, py: 1 }}
-            startIcon={<Check />}
+            sx={{ py: 1 }}
+            startIcon={<CheckRounded />}
           >
-            完了
+            {completions.length}
           </Button>
         ) : (
           <LoadingButton
-            variant="outlined"
-            sx={{ flex: 1, py: 1 }}
-            startIcon={<Check />}
-            onClick={complete}
+            variant="text"
+            sx={{ py: 1 }}
+            startIcon={<CheckRounded fontSize="large" />}
+            onClick={onComplete}
             loading={isCompleting}
-          />
+          >
+            {completions.length}
+          </LoadingButton>
         )}
-
-        <Button
-          onClick={() => props.activity.onShow()}
-          startIcon={<Dehaze />}
-          variant="outlined"
-          sx={{ flex: 1, py: 1 }}
-        >
-          詳細
-        </Button>
-      </Box>
-    </Box>
+      </CardActions>
+    </Card>
   );
 }

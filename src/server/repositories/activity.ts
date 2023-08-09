@@ -1,6 +1,9 @@
 import { type PrismaClient } from "@prisma/client";
+import {
+  type ActivityModificationParams,
+  type ActivityUpdateParams,
+} from "~/schemas/activities";
 import { prisma as prismaClient } from "./../db";
-import { type ActivityUpdateParams, type ActivityModificationParams } from "~/schemas/activities";
 
 interface Props {
   prisma?: PrismaClient;
@@ -40,7 +43,6 @@ export const activityRepository = (props?: Props) => {
             orderBy: {
               completedAt: "desc",
             },
-            take: 1,
           },
         },
       });
@@ -65,17 +67,13 @@ export const activityRepository = (props?: Props) => {
             orderBy: {
               completedAt: "desc",
             },
-            take: 1,
           },
         },
       });
       return activity;
     },
 
-    updateOne: async (
-      userId: string,
-      activityParams: ActivityUpdateParams,
-    ) => {
+    updateOne: async (userId: string, activityParams: ActivityUpdateParams) => {
       const activity = await prisma.activity.update({
         where: { id: activityParams.activityId, ownerId: userId },
         data: {
@@ -91,7 +89,6 @@ export const activityRepository = (props?: Props) => {
             orderBy: {
               completedAt: "desc",
             },
-            take: 1,
           },
         },
       });
@@ -125,7 +122,6 @@ export const activityRepository = (props?: Props) => {
             orderBy: {
               completedAt: "desc",
             },
-            take: 1,
           },
         },
       });

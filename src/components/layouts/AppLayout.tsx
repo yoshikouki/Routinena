@@ -23,6 +23,7 @@ const AppLayout = ({ children, session }: Props) => {
           pb: 12,
           gap: 4,
         }}
+        disableGutters
       >
         {children}
 
