@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#FEFCF7" },
-    { media: "(prefers-color-scheme: dark)", color: "#40221B" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 
   // PWA config

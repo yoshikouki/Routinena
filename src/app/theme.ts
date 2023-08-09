@@ -14,36 +14,38 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
     light: {
       palette: {
         background: {
-          defaultChannel: "#FEFCF7",
+          defaultChannel: grey[100], // #f5f5f5
         },
         primary: {
           main: "#F29D52",
-          contrastText: "#FEFCF7",
+          contrastText: grey[50], // #fafafa
         },
         secondary: {
           main: "#509AB2",
+          contrastText: grey[50], // #fafafa
         },
         text: {
-          primary: "#40221B",
-          secondary: grey[800], // #424242
+          primary: grey[800], // #424242
+          secondary: grey[700], // #616161
         },
       },
     },
     dark: {
       palette: {
         background: {
-          default: "#40221B",
+          default: "#000000",
         },
         primary: {
           main: "#F29D52",
-          contrastText: "#FEFCF7",
+          contrastText: grey[50], // #fafafa
         },
         secondary: {
           main: "#509AB2",
+          contrastText: grey[50], // #fafafa
         },
         text: {
-          primary: "#FFFCF5",
-          secondary: grey[500], // #9e9e9e
+          primary: grey[50], // #fafafa
+          secondary: grey[300], // #e0e0e0
         },
       },
     },
