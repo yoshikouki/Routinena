@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowBackIosRounded, BookmarkRounded } from "@mui/icons-material";
 import { Box, Button, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { useActivityForm, type UseActivityForm } from "~/hooks/activity-form";
@@ -49,15 +50,38 @@ export const ActivityForm = (props: ActivityFormProps) => {
         />
       </Box>
 
-      <Box sx={{ mt: 6 }}>
-        <Button type="submit" color="primary" variant="contained" fullWidth>
-          保存
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          mt: 6,
+          display: "flex",
+          // flexWrap: "nowrap",
+          gap: 1,
+          mb: 15,
+          px: 2,
+          width: "100%",
+        }}
+      >
+        <Button
+          onClick={onCancel}
+          color="inherit"
+          variant="text"
+          sx={{ flexShrink: 1 }}
+        >
+          <ArrowBackIosRounded />
         </Button>
-      </Box>
 
-      <Box sx={{ mt: 4 }}>
-        <Button onClick={onCancel} color="inherit" variant="text" fullWidth>
-          キャンセル
+        <Button
+          type="submit"
+          startIcon={<BookmarkRounded />}
+          color="primary"
+          variant="contained"
+          fullWidth
+        >
+          保存
         </Button>
       </Box>
     </Box>

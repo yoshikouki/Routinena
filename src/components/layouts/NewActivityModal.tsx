@@ -1,5 +1,6 @@
 "use client";
 
+import { Typography } from "@mui/material";
 import { useBottomFab } from "~/hooks/bottom-fab";
 import { ActivityForm } from "../ActivityForm";
 import Overlap from "../Overlap";
@@ -9,6 +10,7 @@ export const NewActivityModal = () => {
 
   return (
     <Overlap open={openNewActivity}>
+      <Typography variant="h1">活動の作成</Typography>
       <ActivityForm onCancel={onCloseNewActivity} />
     </Overlap>
   );
