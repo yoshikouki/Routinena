@@ -14,15 +14,16 @@ const generateBottomFabVariations = (props?: InitializeBottomFabProps) => ({
   newActivity: {
     icon: AddIcon,
     props: {
-      "aria-label": "add",
       onClick: props ? props.onClickNewActivity : () => undefined,
+      "aria-label": "add",
     },
   },
   closeNewActivity: {
     icon: Close,
     props: {
-      "aria-label": "add",
       onClick: props ? props.onClickCloseNewActivity : () => undefined,
+      "aria-label": "add",
+      color: "secondary",
     },
   },
 });
