@@ -21,20 +21,17 @@ export default async function CompletionsPage() {
   return (
     <>
       <Box>
-        <Typography variant="h1">実績</Typography>
+        <Typography variant="h1">履歴</Typography>
       </Box>
 
       <Box sx={{ py: 2 }}>
         {completions.length === 0 && (
-          <Typography variant="body1">実績がありません</Typography>
+          <Typography variant="body1">履歴がありません</Typography>
         )}
 
         {completions.map((completion) => (
           <Box key={completion.id} sx={{ mb: 3 }}>
-            <Typography
-              component="h2"
-              sx={{ mt: 1 }}
-            >
+            <Typography component="h2" sx={{ mt: 1 }}>
               {completion.activity.name}
             </Typography>
 

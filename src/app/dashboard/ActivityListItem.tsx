@@ -74,6 +74,7 @@ export default function ActivityListItem(props: ActivityListItemProps) {
             variant="contained"
             sx={{ py: 1 }}
             startIcon={<CheckRounded />}
+            color="success"
           >
             {completions.length}
           </Button>

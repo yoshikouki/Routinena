@@ -1,4 +1,4 @@
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import { type CssVarsThemeOptions } from "@mui/material/styles";
 import { M_PLUS_Rounded_1c } from "next/font/google";
 
@@ -24,6 +24,10 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
           main: "#509AB2",
           contrastText: grey[50], // #fafafa
         },
+        warning: {
+          main: red[500], // #f44336
+          contrastText: grey[50], // #fafafa
+        },
         text: {
           primary: grey[800], // #424242
           secondary: grey[700], // #616161
@@ -42,6 +46,10 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
         },
         secondary: {
           main: "#509AB2",
+          contrastText: grey[50], // #fafafa
+        },
+        warning: {
+          main: red[500], // #f44336
           contrastText: grey[50], // #fafafa
         },
         text: {
@@ -82,6 +90,12 @@ export const cssVarsThemeOptions: CssVarsThemeOptions = {
           padding: theme.spacing(3),
           fontWeight: 900,
         }),
+        text: {
+          backdropFilter: "blur(8px)",
+        },
+        outlined: {
+          backdropFilter: "blur(8px)",
+        },
       },
     },
 
