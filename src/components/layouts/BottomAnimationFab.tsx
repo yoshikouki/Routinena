@@ -15,6 +15,8 @@ const BottomFab = styled(Fab)({
 export const BottomAnimationFab = () => {
   const theme = useTheme();
   const { current } = useBottomFab();
+  if (!current) return null;
+
   const { icon: FabIcon, props: fabProps } = current;
 
   return (

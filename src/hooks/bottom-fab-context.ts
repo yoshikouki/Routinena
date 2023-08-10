@@ -10,12 +10,15 @@ type InitializeBottomFabProps = {
   onClickCloseNewActivity: () => void;
 };
 
-const generateBottomFabVariations = (props?: InitializeBottomFabProps) => ({
+const generateBottomFabVariations = (
+  props?: InitializeBottomFabProps,
+): Record<"newActivity" | "closeNewActivity", BottomFab> => ({
   newActivity: {
     icon: AddIcon,
     props: {
       onClick: props ? props.onClickNewActivity : () => undefined,
       "aria-label": "add",
+      color: "primary",
     },
   },
   closeNewActivity: {
