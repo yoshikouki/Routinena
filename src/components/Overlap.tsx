@@ -24,7 +24,6 @@ const Overlap = ({ open, children }: Props) => {
         overflow: "auto",
         pt: 12,
         pb: 12,
-        gap: 4,
       }}
     >
       {children}

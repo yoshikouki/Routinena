@@ -106,7 +106,8 @@ export const useActivities = () => {
     [],
   );
 
-  const { data: fetchedActivities } = api.activities.getAll.useQuery();
+  const { data: fetchedActivities, isLoading } =
+    api.activities.getAll.useQuery();
 
   useEffect(() => {
     if (fetchedActivities) {
@@ -117,6 +118,7 @@ export const useActivities = () => {
   return {
     activities,
     activitiesObject,
+    isLoading,
     currentActivity,
     currentDisplayMode: displayMode.mode,
   };
