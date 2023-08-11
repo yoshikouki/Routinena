@@ -37,6 +37,13 @@ export const useActivities = () => {
   const [activitiesObject, setActivitiesObject] = useState<ActivitiesObject>(
     {},
   );
+  const getSortedActivities = useCallback(
+    (obj: ActivitiesObject) =>
+      Object.values(obj).sort(
+        (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
+      ),
+    [],
+  );
   const [displayMode, setDisplayMode] = useState<DisplayMode>({
     mode: "dashboard",
     activityId: null,
@@ -122,17 +129,13 @@ export const useActivities = () => {
     [modifyActivitiesObject, removeActivitiesObject, refreshActivities],
   );
 
-  const activities = Object.values(activitiesObject).sort(
-    (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
-  );
-
   useEffect(() => {
     if (!fetchedActivities) return;
-    setActivitiesObject(generateActivitiesModel(fetchedActivities));
+    setActivitiesObject({ ...generateActivitiesModel(fetchedActivities) });
   }, [fetchedActivities, generateActivitiesModel]);
 
   return {
-    activities,
+    activities: getSortedActivities(activitiesObject),
     activitiesObject,
     isLoading,
     currentActivity: displayMode.activityId
@@ -150,22 +153,28 @@ type useActivityProps = {
 export const useActivity = (props: useActivityProps) => {
   const { activity } = props;
 
-  const { mutate: updateActivity } = api.activities.updateOne.useMutation();
+  const { mutate: updateActivity } = api.activities.updateOne.useMutation({
+    onSuccess: (data) => {
+      activity.onUpdate({ ...activity, ...data });
+      if (props.onUpdate) {
+        props.onUpdate();
+      }
+    },
+  });
   const onUpdate = (updatedActivity: ActivityModificationParams) => {
     updateActivity({ activityId: activity.id, ...updatedActivity });
-    activity.onUpdate({ ...activity, ...updatedActivity });
-    if (props.onUpdate) {
-      props.onUpdate();
-    }
   };
 
-  const { mutate: deleteActivity } = api.activities.deleteOne.useMutation();
+  const { mutate: deleteActivity } = api.activities.deleteOne.useMutation({
+    onSuccess: () => {
+      activity.onDelete();
+      if (props.onDelete) {
+        props.onDelete();
+      }
+    },
+  });
   const onDelete = () => {
     deleteActivity({ activityId: activity.id });
-    activity.onDelete();
-    if (props.onDelete) {
-      props.onDelete();
-    }
   };
 
   const completeMutation = api.activities.complete.useMutation({
