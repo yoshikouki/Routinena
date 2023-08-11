@@ -7,7 +7,17 @@ import {
   EditRounded,
   SyncRounded,
 } from "@mui/icons-material";
-import { Box, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
 import { useBottomFab } from "~/hooks/bottom-fab";
@@ -24,6 +34,10 @@ export default function Activity(props: { activity: ActivityModel }) {
       color: "secondary",
     },
   });
+
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+  const onOpenDeleteConfirm = () => setOpenDeleteConfirm(true);
+  const onCloseDeleteConfirm = () => setOpenDeleteConfirm(false);
 
   return (
     <Box
@@ -85,13 +99,50 @@ export default function Activity(props: { activity: ActivityModel }) {
           {activity.completions.length}
         </Button>
 
-        <Button onClick={activity.onEdit} sx={{ flexShrink: 1 }}>
+        <Button
+          onClick={activity.onEdit}
+          sx={{ flexShrink: 1 }}
+          color="inherit"
+        >
           <EditRounded />
         </Button>
 
-        <Button onClick={onDelete} color="warning" sx={{ flexShrink: 1 }}>
+        <Button
+          onClick={onOpenDeleteConfirm}
+          color="warning"
+          sx={{ flexShrink: 1 }}
+        >
           <DeleteRounded />
         </Button>
+
+        <Dialog
+          open={openDeleteConfirm}
+          onClose={onCloseDeleteConfirm}
+          aria-labelledby="confirmation-to-delete-activity"
+          aria-describedby="confirmation-describe-to-delete-activity"
+        >
+          <DialogTitle id="confirmation-to-delete-activity">
+            本当に削除しますか？
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="confirmation-describe-to-delete-activity">
+              これまでの活動履歴も削除されます。 この操作は取り消せません。
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={onCloseDeleteConfirm} color="inherit" autoFocus>
+              戻る
+            </Button>
+            <Button
+              onClick={onDelete}
+              startIcon={<DeleteRounded />}
+              color="warning"
+              variant="contained"
+            >
+              削除する
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Box>
   );
