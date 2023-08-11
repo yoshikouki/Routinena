@@ -8,21 +8,15 @@ import {
   SyncRounded,
 } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
 import { useBottomFab } from "~/hooks/bottom-fab";
-import ActivityEditing from "./ActivityEditing";
 
 export default function Activity(props: { activity: ActivityModel }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const router = useRouter();
-  const { activity, onUpdate, onDelete, onComplete, isCompleting, isCompleted } = useActivity({
-    activity: props.activity,
-    onUpdate: () => setIsEditing(false),
-    onDelete: () => router.push("/dashboard"),
-  });
+  const { activity, onDelete, onComplete, isCompleting, isCompleted } =
+    useActivity({
+      activity: props.activity,
+    });
   useBottomFab({
     icon: Close,
     props: {
@@ -31,13 +25,7 @@ export default function Activity(props: { activity: ActivityModel }) {
     },
   });
 
-  return isEditing ? (
-    <ActivityEditing
-      activity={activity}
-      onSubmit={onUpdate}
-      onCancel={() => setIsEditing(false)}
-    />
-  ) : (
+  return (
     <Box
       sx={{
         display: "flex",
@@ -97,7 +85,7 @@ export default function Activity(props: { activity: ActivityModel }) {
           {activity.completions.length}
         </Button>
 
-        <Button onClick={() => setIsEditing(true)} sx={{ flexShrink: 1 }}>
+        <Button onClick={activity.onEdit} sx={{ flexShrink: 1 }}>
           <EditRounded />
         </Button>
 

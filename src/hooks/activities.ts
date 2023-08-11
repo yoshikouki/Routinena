@@ -103,7 +103,7 @@ export const useActivities = () => {
             setDisplayMode({ mode: "edit", activityId: activity.id });
           },
           onCancelEdit: () => {
-            setDisplayMode({ mode: "edit", activityId: activity.id });
+            setDisplayMode({ mode: "show", activityId: activity.id });
           },
           onUpdate: (updatedActivity: ActivityWithCompletions) => {
             modifyActivitiesObject(updatedActivity);

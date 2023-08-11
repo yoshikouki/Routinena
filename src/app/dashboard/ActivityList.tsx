@@ -6,10 +6,12 @@ import { ActivityListItemSkeleton } from "~/components/ActivityListItemSkeleton"
 import Overlap from "~/components/Overlap";
 import { useActivities } from "~/hooks/activities";
 import Activity from "./Activity";
+import ActivityEditing from "./ActivityEditing";
 import ActivityListItem from "./ActivityListItem";
 
 export default function ActivityList() {
-  const { activities, currentActivity, isLoading } = useActivities();
+  const { activities, currentActivity, currentDisplayMode, isLoading } =
+    useActivities();
 
   return (
     <>
@@ -29,7 +31,15 @@ export default function ActivityList() {
 
       {currentActivity && (
         <Overlap open={!!currentActivity}>
-          <Activity key={currentActivity.id} activity={currentActivity} />
+          {currentDisplayMode === "show" && (
+            <Activity key={currentActivity.id} activity={currentActivity} />
+          )}
+          {currentDisplayMode === "edit" && (
+            <ActivityEditing
+              key={currentActivity.id}
+              activity={currentActivity}
+            />
+          )}
         </Overlap>
       )}
     </>
