@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type Activity } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import {
   activityModificationParamsSchema,
@@ -31,12 +31,16 @@ export const useActivityForm = (props?: UseActivityForm) => {
     resolver: zodResolver(activityModificationParamsSchema),
   });
 
+  const pathname = usePathname();
+  const apiUtils = api.useContext();
   const procedure = activity ? api.activities.updateOne : api.activities.create;
   const mutation = procedure.useMutation({
     onSuccess: (data: ActivityWithCompletions) => {
       if (props?.onSubmit) {
         props.onSubmit(data);
-      } else {
+      }
+      void apiUtils.activities.getAll.invalidate();
+      if (!pathname.startsWith("/dashboard")) {
         router.push("/dashboard");
       }
     },

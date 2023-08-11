@@ -25,6 +25,7 @@ export const ActivityForm = (props: ActivityFormProps) => {
               {...field}
               error={fieldState.invalid}
               helperText={fieldState.error?.message}
+              autoFocus
               label="活動名"
               fullWidth
             />

@@ -11,7 +11,10 @@ export const NewActivityModal = () => {
   return (
     <Overlap open={openNewActivity}>
       <Typography variant="h1">活動の作成</Typography>
-      <ActivityForm onCancel={onCloseNewActivity} />
+      <ActivityForm
+        onSubmit={onCloseNewActivity}
+        onCancel={onCloseNewActivity}
+      />
     </Overlap>
   );
 };
