@@ -20,6 +20,7 @@ export type ActivityModel = ActivityWithCompletions & {
   onCancelEdit: () => void;
   onUpdate: (updatedActivity: ActivityWithCompletions) => void;
   onDelete: () => void;
+  onComplete: (updatedActivity: ActivityWithCompletions) => void;
 };
 type ActivitiesObject = Record<string, ActivityModel>;
 type DisplayMode =
@@ -40,36 +41,45 @@ export const useActivities = () => {
     mode: "dashboard",
     activityId: null,
   });
-  const activities = Object.values(activitiesObject);
-  const currentActivity = activitiesObject[displayMode.activityId ?? ""];
 
-  const modifyActivitiesObject = (updatedActivity: ActivityWithCompletions) => {
-    setActivitiesObject((prev) => {
-      const {
-        [updatedActivity.id]: modifiedActivityState,
-        ...newActivityStates
-      } = prev;
-      if (modifiedActivityState) {
-        return {
-          ...newActivityStates,
-          [updatedActivity.id]: {
-            ...modifiedActivityState,
-            ...updatedActivity,
-          },
-        };
-      } else {
-        return prev;
-      }
-    });
-  };
+  const { data: fetchedActivities, isLoading } =
+    api.activities.getAll.useQuery();
+  const apiUtils = api.useContext();
+  const refreshActivities = useCallback(
+    () => void apiUtils.activities.getAll.invalidate(),
+    [apiUtils],
+  );
 
-  const removeActivitiesObject = (activityId: string) => {
+  const modifyActivitiesObject = useCallback(
+    (updatedActivity: ActivityWithCompletions) => {
+      setActivitiesObject((prev) => {
+        const {
+          [updatedActivity.id]: modifiedActivityState,
+          ...newActivityStates
+        } = prev;
+        if (modifiedActivityState) {
+          return {
+            ...newActivityStates,
+            [updatedActivity.id]: {
+              ...modifiedActivityState,
+              ...updatedActivity,
+            },
+          };
+        } else {
+          return prev;
+        }
+      });
+    },
+    [],
+  );
+
+  const removeActivitiesObject = useCallback((activityId: string) => {
     setActivitiesObject((prev) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [activityId]: _, ...newActivityStates } = prev;
-      return newActivityStates;
+      return { ...newActivityStates };
     });
-  };
+  }, []);
 
   const generateActivitiesModel = useCallback(
     (activities: ActivitiesWithCompletions) => {
@@ -94,32 +104,36 @@ export const useActivities = () => {
               mode: "show",
               activityId: updatedActivity.id,
             });
+            refreshActivities();
           },
           onDelete: () => {
             removeActivitiesObject(activity.id);
             setDisplayMode({ mode: "dashboard", activityId: null });
+            refreshActivities();
+          },
+          onComplete: (updatedActivity: ActivityWithCompletions) => {
+            modifyActivitiesObject(updatedActivity);
+            refreshActivities();
           },
         };
         return acc;
       }, {});
     },
-    [],
+    [modifyActivitiesObject, removeActivitiesObject, refreshActivities],
   );
 
-  const { data: fetchedActivities, isLoading } =
-    api.activities.getAll.useQuery();
-
   useEffect(() => {
-    if (fetchedActivities) {
-      setActivitiesObject(generateActivitiesModel(fetchedActivities));
-    }
+    if (!fetchedActivities) return;
+    setActivitiesObject(generateActivitiesModel(fetchedActivities));
   }, [fetchedActivities, generateActivitiesModel]);
 
   return {
-    activities,
+    activities: (() => Object.values(activitiesObject))(),
     activitiesObject,
     isLoading,
-    currentActivity,
+    currentActivity: displayMode.activityId
+      ? activitiesObject[displayMode.activityId]
+      : undefined,
     currentDisplayMode: displayMode.mode,
   };
 };
@@ -130,15 +144,12 @@ type useActivityProps = {
   onDelete?: () => void;
 };
 export const useActivity = (props: useActivityProps) => {
-  const [activity, setActivity] = useState(() => props.activity);
+  const { activity } = props;
 
   const { mutate: updateActivity } = api.activities.updateOne.useMutation();
   const onUpdate = (updatedActivity: ActivityModificationParams) => {
     updateActivity({ activityId: activity.id, ...updatedActivity });
-    setActivity({
-      ...activity,
-      ...updatedActivity,
-    });
+    activity.onUpdate({ ...activity, ...updatedActivity });
     if (props.onUpdate) {
       props.onUpdate();
     }
@@ -147,6 +158,7 @@ export const useActivity = (props: useActivityProps) => {
   const { mutate: deleteActivity } = api.activities.deleteOne.useMutation();
   const onDelete = () => {
     deleteActivity({ activityId: activity.id });
+    activity.onDelete();
     if (props.onDelete) {
       props.onDelete();
     }
@@ -154,7 +166,7 @@ export const useActivity = (props: useActivityProps) => {
 
   const completeMutation = api.activities.complete.useMutation({
     onSuccess: (data) => {
-      setActivity({ ...activity, ...data });
+      activity.onComplete({ ...activity, ...data });
     },
   });
   const latestCompletion = activity.completions[0];
