@@ -122,13 +122,17 @@ export const useActivities = () => {
     [modifyActivitiesObject, removeActivitiesObject, refreshActivities],
   );
 
+  const activities = Object.values(activitiesObject).sort(
+    (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
+  );
+
   useEffect(() => {
     if (!fetchedActivities) return;
     setActivitiesObject(generateActivitiesModel(fetchedActivities));
   }, [fetchedActivities, generateActivitiesModel]);
 
   return {
-    activities: (() => Object.values(activitiesObject))(),
+    activities,
     activitiesObject,
     isLoading,
     currentActivity: displayMode.activityId
