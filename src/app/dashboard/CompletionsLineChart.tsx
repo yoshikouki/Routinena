@@ -63,33 +63,39 @@ export function CompletionsLineChart() {
       areaOpacity={0.2}
       useMesh={true}
       enableSlices="x"
-      sliceTooltip={(props) => (
-        <Paper
-          sx={(theme) => ({
-            background: theme.vars.palette.background.default,
-            opacity: 0.7,
-            px: 2,
-            py: 2,
-          })}
-        >
-          <Box component={Typography} variant="body2">
-            {props.slice.points[0]?.data.xFormatted}
-          </Box>
-          <Box>
-            <Typography sx={{ fontWeight: "bold", mr: 1 }} component="span">
-              {props.slice.points[0]?.data.yFormatted}
-            </Typography>
-            <Typography
-              sx={{ fontWeight: "bold" }}
-              color="primary"
-              component="span"
-            >
-              {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
-              +{props.slice.points[0]?.data.completions.length}
-            </Typography>
-          </Box>
-        </Paper>
-      )}
+      sliceTooltip={(props) => {
+        if (!props.slice.points[0]) return;
+        const date = props.slice.points[0].data.x.toString();
+        const completionsCount = props.slice.points[0].data.yFormatted;
+        return (
+          <Paper
+            sx={(theme) => ({
+              background: theme.vars.palette.background.default,
+              opacity: 0.7,
+              px: 2,
+              py: 2,
+            })}
+          >
+            <Box component={Typography} variant="body2">
+              {date}
+            </Box>
+            <Box>
+              <Typography sx={{ fontWeight: "bold", mr: 1 }} component="span">
+                {completionsCount}
+              </Typography>
+              {dailyCompletions[date] && (
+                <Typography
+                  sx={{ fontWeight: "bold" }}
+                  color="primary"
+                  component="span"
+                >
+                  +{dailyCompletions[date]?.completions.length}
+                </Typography>
+              )}
+            </Box>
+          </Paper>
+        );
+      }}
       legends={[]}
     />
   );
