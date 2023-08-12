@@ -18,29 +18,43 @@ export default function Summary() {
           sx={{
             position: "relative",
             display: "flex",
-            alignItems: "center",
             height: 200,
           }}
         >
           <CompletionsLineChart />
-          <Box
-            sx={{
-              position: "absolute",
-              display: "flex",
-              gap: 1,
-              px: 2,
-            }}
-          >
-            <Typography variant="h1" component="p">
-              {completions.length}
-            </Typography>
-            {last24HoursCompletions.length > 0 && (
-              <Zoom in={!isFetching}>
-                <Typography variant="h1" component="p" color="primary">
-                  +{last24HoursCompletions.length}
-                </Typography>
-              </Zoom>
-            )}
+          <Box sx={{ position: "absolute", px: 3, py: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+              }}
+            >
+              <Typography variant="body1">Total</Typography>
+              {last24HoursCompletions.length > 0 && (
+                <Zoom in={!isFetching}>
+                  <Typography variant="body1" color="primary" sx={{ pl: 0.5 }}>
+                    Today
+                  </Typography>
+                </Zoom>
+              )}
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+              }}
+            >
+              <Typography variant="h1" component="p">
+                {completions.length}
+              </Typography>
+              {last24HoursCompletions.length > 0 && (
+                <Zoom in={!isFetching}>
+                  <Typography variant="h1" component="p" color="primary">
+                    +{last24HoursCompletions.length}
+                  </Typography>
+                </Zoom>
+              )}
+            </Box>
           </Box>
         </Paper>
       )}
