@@ -56,6 +56,10 @@ export const useActivities = () => {
     () => void apiUtils.activities.getAll.invalidate(),
     [apiUtils],
   );
+  const refreshCompletions = useCallback(
+    () => void apiUtils.completions.getAll.invalidate(),
+    [apiUtils],
+  );
 
   const modifyActivitiesObject = useCallback(
     (updatedActivity: ActivityWithCompletions) => {
@@ -117,16 +121,23 @@ export const useActivities = () => {
             removeActivitiesObject(activity.id);
             setDisplayMode({ mode: "dashboard", activityId: null });
             refreshActivities();
+            refreshCompletions();
           },
           onComplete: (updatedActivity: ActivityWithCompletions) => {
             modifyActivitiesObject(updatedActivity);
             refreshActivities();
+            refreshCompletions();
           },
         };
         return acc;
       }, {});
     },
-    [modifyActivitiesObject, removeActivitiesObject, refreshActivities],
+    [
+      modifyActivitiesObject,
+      removeActivitiesObject,
+      refreshActivities,
+      refreshCompletions,
+    ],
   );
 
   useEffect(() => {

@@ -52,7 +52,7 @@ export default function Completions() {
         </Timeline>
       )}
 
-      {!isLoading && (!completions || completions.length) === 0 && (
+      {!isLoading && completions.length === 0 && (
         <Box component={Typography} variant="body1">
           履歴がありません
         </Box>
@@ -67,7 +67,7 @@ export default function Completions() {
           px: 2,
         }}
       >
-        {completions?.map((completion) => (
+        {completions.map((completion) => (
           <TimelineItem key={completion.id}>
             <TimelineSeparator>
               <TimelineDot />

@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 import { Suspense } from "react";
 import { ActivityListItemSkeleton } from "~/components/ActivityListItemSkeleton";
 import ActivityList from "./ActivityList";
+import Summary from "./Summary";
 
 export const metadata: Metadata = {
   title: "ダッシュボード - ルーティンナさん | Routinena",
@@ -11,9 +12,7 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <>
-      <Box sx={{ px: 2 }}>
-        <Typography variant="h1">予定</Typography>
-      </Box>
+      <Summary />
 
       <Box sx={{ py: 2 }}>
         <Suspense fallback={<ActivityListItemSkeleton />}>
