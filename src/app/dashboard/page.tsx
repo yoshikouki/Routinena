@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { type Metadata } from "next";
 import { Suspense } from "react";
 import { ActivityListItemSkeleton } from "~/components/ActivityListItemSkeleton";
