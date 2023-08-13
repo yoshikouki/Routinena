@@ -23,6 +23,7 @@ import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
 import { useBottomFab } from "~/hooks/bottom-fab";
+import { CompletionsTimeline } from "../completions/CompletionsTimeline";
 
 export default function Activity(props: { activity: ActivityModel }) {
   const { activity, onDelete, onComplete, isCompleting, isCompleted } =
@@ -68,27 +69,7 @@ export default function Activity(props: { activity: ActivityModel }) {
             <Typography variant="body1">履歴がありません</Typography>
           )}
 
-          {activity.completions.map((completion) => (
-            <Box key={completion.id} sx={{ mt: 3, display: "flex" }}>
-              <Box sx={{ flex: 1 }}>
-                <RelativeDate date={completion.completedAt} />
-              </Box>
-              <Box>
-                <Typography
-                  variant="body2"
-                  sx={(theme) => ({
-                    color: theme.vars.palette.text.secondary,
-                    fontSize: theme.typography.body2.fontSize,
-                  })}
-                >
-                  {/* 時刻まで表示する */}
-                  {format(completion.completedAt, "yyyy-MM-dd (eee) HH:mm", {
-                    locale: ja,
-                  })}
-                </Typography>
-              </Box>
-            </Box>
-          ))}
+          <CompletionsTimeline completions={activity.completions} />
         </Box>
       </Box>
 

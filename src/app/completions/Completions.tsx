@@ -17,7 +17,7 @@ export default function Completions() {
   const { completions, isLoading } = useCompletions();
 
   return (
-    <>
+    <Box sx={{ mx: 2 }}>
       {isLoading && (
         <Timeline
           sx={{
@@ -25,7 +25,7 @@ export default function Completions() {
               flex: 0,
               padding: 0,
             },
-            px: 2,
+            px: 0,
           }}
         >
           <TimelineItem>
@@ -58,6 +58,6 @@ export default function Completions() {
       )}
 
       <CompletionsTimeline completions={completions} />
-    </>
+    </Box>
   );
 }

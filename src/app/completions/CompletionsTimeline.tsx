@@ -24,11 +24,7 @@ import {
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
 import { RelativeDate } from "~/components/RelativeDate";
-import {
-  useCompletion,
-  type Completion,
-  type Completions,
-} from "~/hooks/completions";
+import { useCompletion, type Completion } from "~/hooks/completions";
 
 type CompletionsTimelineItemProps = {
   completion: Completion;
@@ -73,7 +69,7 @@ function CompletionsTimelineItem(props: CompletionsTimelineItemProps) {
               </Typography>
             </Box>
           </Box>
-          {completion.activity.name}
+          {completion.activity?.name}
         </Box>
 
         <Collapse in={isEditing}>
@@ -139,7 +135,7 @@ function CompletionsTimelineItem(props: CompletionsTimelineItemProps) {
 }
 
 type CompletionsTimelineProps = {
-  completions: Completions;
+  completions: Completion[];
 };
 
 export function CompletionsTimeline({ completions }: CompletionsTimelineProps) {
@@ -150,6 +146,7 @@ export function CompletionsTimeline({ completions }: CompletionsTimelineProps) {
           flex: 0,
           padding: 0,
         },
+        px: 0,
       }}
     >
       {completions.map((completion) => (

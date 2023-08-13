@@ -5,7 +5,11 @@ import { useCallback, useEffect, useState } from "react";
 import { api, type RouterOutputs } from "~/utils/api";
 
 export type Completions = RouterOutputs["completions"]["getAll"];
-export type Completion = Completions[number];
+export type Completion = {
+  id: string;
+  completedAt: Date;
+  activity?: Completions[number]["activity"];
+};
 
 export const useCompletions = () => {
   const [completions, setCompletions] = useState<Completions>([]);
