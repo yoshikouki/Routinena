@@ -5,5 +5,9 @@ export const completionsService = () => {
     getAll: async (userId: string) => {
       return completionRepository().getAll(userId);
     },
+
+    delete: async (userId: string, completionId: string) => {
+      return completionRepository().delete(userId, completionId);
+    },
   };
 };

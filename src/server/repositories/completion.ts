@@ -10,7 +10,7 @@ export const completionRepository = (props?: Props) => {
 
   return {
     getAll: async (userId: string) => {
-      const activities = await prisma.completion.findMany({
+      const completions = await prisma.completion.findMany({
         where: { userId },
         select: {
           id: true,
@@ -27,7 +27,14 @@ export const completionRepository = (props?: Props) => {
           completedAt: "desc",
         },
       });
-      return activities;
+      return completions;
+    },
+
+    delete: async (userId: string, completionId: string) => {
+      const completion = await prisma.completion.delete({
+        where: { id: completionId, userId },
+      });
+      return completion;
     },
   };
 };

@@ -1,10 +1,11 @@
 "use client";
 
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { api, type RouterOutputs } from "~/utils/api";
 
 export type Completions = RouterOutputs["completions"]["getAll"];
+export type Completion = Completions[number];
 
 export const useCompletions = () => {
   const [completions, setCompletions] = useState<Completions>([]);
@@ -50,6 +51,56 @@ export const useCompletions = () => {
     dailyCompletions,
     isLoading,
     isFetching,
+  };
+};
+
+export const useCompletion = (fetchedCompletion: Completion) => {
+  const completion = {
+    ...fetchedCompletion,
+  };
+
+  const [isEditing, setIsEditing] = useState(false);
+  const onEdit = useCallback(() => setIsEditing(true), []);
+  const onCancelEdit = useCallback(() => setIsEditing(false), []);
+
+  const onUpdate = useCallback(
+    (data: Partial<Completion>) => {
+      console.log(data);
+      onCancelEdit();
+    },
+    [onCancelEdit],
+  );
+
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+  const onOpenDeleteConfirm = useCallback(() => setOpenDeleteConfirm(true), []);
+  const onCloseDeleteConfirm = useCallback(
+    () => setOpenDeleteConfirm(false),
+    [],
+  );
+
+  const apiUtils = api.useContext();
+  const { mutate: deleteMutation } = api.completions.delete.useMutation({
+    onSuccess: () => {
+      void apiUtils.completions.getAll.invalidate();
+      onCancelEdit();
+      onCloseDeleteConfirm();
+    },
+  });
+  const onDelete = useCallback(
+    () => deleteMutation({ completionId: completion.id }),
+    [completion.id, deleteMutation],
+  );
+
+  return {
+    completion,
+    isEditing,
+    onEdit,
+    onCancelEdit,
+    onUpdate,
+    onDelete,
+    openDeleteConfirm,
+    onOpenDeleteConfirm,
+    onCloseDeleteConfirm,
   };
 };
 
