@@ -1,11 +1,14 @@
 "use client";
 
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, useColorScheme } from "@mui/material";
 import { linearGradientDef } from "@nivo/core";
 import { ResponsiveLine } from "@nivo/line";
 import { useCompletions } from "~/hooks/completions";
 
 export function CompletionsLineChart() {
+  const { mode } = useColorScheme();
+  const color = mode === "dark" ? "#fff" : "#F29D52";
+
   const { dailyCompletions, completions } = useCompletions();
   const maxCount = completions.length;
   const data = Object.entries(dailyCompletions).reduce(
@@ -33,7 +36,6 @@ export function CompletionsLineChart() {
           data,
         },
       ]}
-      colors={{ scheme: "oranges" }}
       margin={{ top: 20, right: 0, bottom: 12, left: 0 }}
       xScale={{ type: "point" }}
       yScale={{
@@ -55,9 +57,9 @@ export function CompletionsLineChart() {
       enableArea={true}
       defs={[
         linearGradientDef("gradient", [
-          { offset: 0, color: "inherit" },
-          { offset: 80, color: "inherit", opacity: 0.4 },
-          { offset: 100, color: "inherit", opacity: 0 },
+          { offset: 0, color },
+          { offset: 80, color, opacity: 0.4 },
+          { offset: 100, color, opacity: 0 },
         ]),
       ]}
       fill={[{ match: "*", id: "gradient" }]}
