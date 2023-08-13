@@ -3,25 +3,26 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { linearGradientDef } from "@nivo/core";
 import { ResponsiveLine } from "@nivo/line";
-import { useCompletions, type Completions } from "~/hooks/completions";
+import { useCompletions } from "~/hooks/completions";
 
 export function CompletionsLineChart() {
   const { dailyCompletions, completions } = useCompletions();
   const maxCount = completions.length;
   const data = Object.entries(dailyCompletions).reduce(
-    (acc, [date, completionsObject]) => {
+    (acc, [date, _completionsObject]) => {
       const dailyTotalCount =
-        acc[0] === undefined ? maxCount : acc[0].y - acc[0].completions.length;
+        acc[0] === undefined
+          ? maxCount
+          : acc[0].y - dailyCompletions[date]!.completions.length;
       return [
         {
           x: date,
           y: dailyTotalCount,
-          completions: completionsObject.completions,
         },
         ...acc,
       ];
     },
-    [] as { x: string; y: number; completions: Completions }[],
+    [] as { x: string; y: number }[],
   );
 
   return (
