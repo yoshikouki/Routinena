@@ -17,6 +17,8 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
 import { useState } from "react";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
@@ -67,8 +69,24 @@ export default function Activity(props: { activity: ActivityModel }) {
           )}
 
           {activity.completions.map((completion) => (
-            <Box key={completion.id} sx={{ mt: 3 }}>
-              <RelativeDate date={completion.completedAt} />
+            <Box key={completion.id} sx={{ mt: 3, display: "flex" }}>
+              <Box sx={{ flex: 1 }}>
+                <RelativeDate date={completion.completedAt} />
+              </Box>
+              <Box>
+                <Typography
+                  variant="body2"
+                  sx={(theme) => ({
+                    color: theme.vars.palette.text.secondary,
+                    fontSize: theme.typography.body2.fontSize,
+                  })}
+                >
+                  {/* 時刻まで表示する */}
+                  {format(completion.completedAt, "yyyy-MM-dd (eee) HH:mm", {
+                    locale: ja,
+                  })}
+                </Typography>
+              </Box>
             </Box>
           ))}
         </Box>

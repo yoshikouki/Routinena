@@ -10,6 +10,8 @@ import {
   timelineItemClasses,
 } from "@mui/lab";
 import { Box, Skeleton, Typography } from "@mui/material";
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
 import { RelativeDate } from "~/components/RelativeDate";
 
 import { useCompletions } from "~/hooks/completions";
@@ -73,8 +75,26 @@ export default function Completions() {
               <TimelineDot />
               <TimelineConnector sx={{ opacity: 0.3 }} />
             </TimelineSeparator>
-            <TimelineContent sx={{ pb: 3 }}>
-              <RelativeDate date={completion.completedAt} />
+            <TimelineContent sx={{ pb: 3, pr: 0 }}>
+              <Box sx={{ display: "flex" }}>
+                <Box sx={{ flex: 1 }}>
+                  <RelativeDate date={completion.completedAt} />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="body2"
+                    sx={(theme) => ({
+                      color: theme.vars.palette.text.secondary,
+                      fontSize: theme.typography.body2.fontSize,
+                    })}
+                  >
+                    {/* 時刻まで表示する */}
+                    {format(completion.completedAt, "yyyy-MM-dd (eee) HH:mm", {
+                      locale: ja,
+                    })}
+                  </Typography>
+                </Box>
+              </Box>
               {completion.activity.name}
             </TimelineContent>
           </TimelineItem>
