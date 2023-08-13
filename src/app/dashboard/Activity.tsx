@@ -17,10 +17,7 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { format } from "date-fns";
-import { ja } from "date-fns/locale";
 import { useState } from "react";
-import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
 import { useBottomFab } from "~/hooks/bottom-fab";
 import { CompletionsTimeline } from "../completions/CompletionsTimeline";
