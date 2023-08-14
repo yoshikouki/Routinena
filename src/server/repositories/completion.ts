@@ -1,5 +1,6 @@
 import { type PrismaClient } from "@prisma/client";
 import { prisma as prismaClient } from "../db";
+import { type CompletionUpdateParams } from "../services/completions";
 
 interface Props {
   prisma?: PrismaClient;
@@ -28,6 +29,14 @@ export const completionRepository = (props?: Props) => {
         },
       });
       return completions;
+    },
+
+    update: async (params: CompletionUpdateParams) => {
+      const completion = await prisma.completion.update({
+        where: { id: params.completionId, userId: params.userId },
+        data: { completedAt: params.completedAt },
+      });
+      return completion;
     },
 
     delete: async (userId: string, completionId: string) => {

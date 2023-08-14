@@ -2,6 +2,7 @@
 
 import { format } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { api, type RouterOutputs } from "~/utils/api";
 
 export type Completions = RouterOutputs["completions"]["getAll"];
@@ -108,3 +109,33 @@ export const useCompletion = (fetchedCompletion: Completion) => {
   };
 };
 
+type UseCompletionFormParams = {
+  completion: Completion;
+  onCancelEdit: () => void;
+};
+export const useCompletionForm = (props: UseCompletionFormParams) => {
+  const apiUtils = api.useContext();
+  const { mutate: updateMutation } = api.completions.update.useMutation({
+    onSuccess: () => {
+      void apiUtils.completions.getAll.invalidate();
+      props.onCancelEdit();
+    },
+  });
+
+  const { handleSubmit, control } = useForm({
+    defaultValues: {
+      completedAt: props.completion.completedAt,
+    },
+  });
+  const onUpdate = handleSubmit((data) => {
+    updateMutation({
+      ...data,
+      completionId: props.completion.id,
+    });
+  });
+
+  return {
+    onUpdate,
+    control,
+  };
+};
