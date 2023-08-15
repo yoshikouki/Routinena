@@ -149,7 +149,7 @@ type CompletionEditorProps = CompletionsTimelineItemProps & {
 function CompletionEditor(props: CompletionEditorProps) {
   const { onUpdate, control } = useCompletionForm(props);
   return (
-    <form onSubmit={onUpdate}>
+    <form>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Controller
           control={control}
@@ -163,7 +163,12 @@ function CompletionEditor(props: CompletionEditorProps) {
           )}
         />
       </LocalizationProvider>
-      <IconButton type="submit" sx={{ flexShrink: 1, p: 2 }} color="inherit">
+      <IconButton
+        type="submit"
+        onClick={onUpdate}
+        sx={{ flexShrink: 1, p: 2 }}
+        color="inherit"
+      >
         <BookmarkRounded />
       </IconButton>
     </form>
