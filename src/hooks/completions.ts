@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { useCallback, useEffect, useState } from "react";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { api, type RouterOutputs } from "~/utils/api";
 
@@ -127,15 +127,26 @@ export const useCompletionForm = (props: UseCompletionFormParams) => {
       completedAt: props.completion.completedAt,
     },
   });
-  const onUpdate = handleSubmit((data) => {
-    updateMutation({
-      ...data,
-      completionId: props.completion.id,
-    });
-  });
+  const onUpdate = onPromise(
+    handleSubmit((data) => {
+      updateMutation({
+        ...data,
+        completionId: props.completion.id,
+      });
+    }),
+  );
 
   return {
     onUpdate,
     control,
   };
 };
+function onPromise<T>(promise: (event: SyntheticEvent) => Promise<T>) {
+  return (event: SyntheticEvent) => {
+    if (promise) {
+      promise(event).catch((error) => {
+        console.log("Unexpected error", error);
+      });
+    }
+  };
+}
