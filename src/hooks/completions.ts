@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns";
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type SyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import { api, type RouterOutputs } from "~/utils/api";
 
