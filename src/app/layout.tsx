@@ -1,10 +1,11 @@
-import { type Metadata } from "next";
-import "./globals.css";
-import { TrpcProvider } from "./TrpcProvider";
-import ThemeRegistry from "./ThemeRegistry";
-import { ClientSessionProvider } from "./ClientSessionProvider";
-import { font } from "./theme";
 import { CssBaseline } from "@mui/material";
+import { type Metadata } from "next";
+import { ClientSessionProvider } from "./ClientSessionProvider";
+import ThemeRegistry from "./ThemeRegistry";
+import { TrpcProvider } from "./TrpcProvider";
+import "./globals.css";
+import { font } from "./theme";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "ルーティンナさん | Routinena",
@@ -42,16 +43,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja" suppressHydrationWarning className={font.className}>
-      <TrpcProvider>
-        <ClientSessionProvider>
-          <body>
+      <body>
+        <TrpcProvider>
+          <ClientSessionProvider>
             <ThemeRegistry>
               <CssBaseline />
               {children}
             </ThemeRegistry>
-          </body>
-        </ClientSessionProvider>
-      </TrpcProvider>
+          </ClientSessionProvider>
+        </TrpcProvider>
+        <Analytics />
+      </body>
     </html>
   );
 }
