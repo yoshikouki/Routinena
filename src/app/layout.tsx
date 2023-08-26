@@ -1,11 +1,11 @@
 import { CssBaseline } from "@mui/material";
+import { Analytics } from "@vercel/analytics/react";
 import { type Metadata } from "next";
 import { ClientSessionProvider } from "./ClientSessionProvider";
 import ThemeRegistry from "./ThemeRegistry";
 import { TrpcProvider } from "./TrpcProvider";
 import "./globals.css";
 import { font } from "./theme";
-import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "ルーティンナさん | Routinena",
@@ -16,10 +16,7 @@ export const metadata: Metadata = {
     initialScale: 1,
     maximumScale: 1,
   },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FEFCF7" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
+  themeColor: [{ color: "#000000" }],
 
   // PWA config
   manifest: "/manifest.webmanifest",

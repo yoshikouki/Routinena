@@ -78,7 +78,6 @@ export default function Activity(props: { activity: ActivityModel }) {
           right: 0,
           mt: 6,
           display: "flex",
-          // flexWrap: "nowrap",
           gap: 1,
           mb: 15,
           px: 2,

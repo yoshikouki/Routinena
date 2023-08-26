@@ -1,21 +1,21 @@
 {
-    "name": "\u30eb\u30fc\u30c6\u30a3\u30f3\u30ca\u3055\u3093",
-    "short_name": "\u30eb\u30fc\u30c6\u30a3\u30f3\u30ca\u3055\u3093",
-    "description": "\u300c\u30eb\u30fc\u30c6\u30a3\u30f3\u30ca\u3055\u3093\u300d\u306f\u3042\u306a\u305f\u306e\u5b9a\u671f\u7684\u306a\u30bf\u30b9\u30af\u3092\u8ffd\u8de1\u3057\u3001\u6700\u5f8c\u306b\u3044\u3064\u5b8c\u4e86\u3057\u305f\u306e\u304b\u3092\u7c21\u5358\u306b\u8a18\u9332\u3067\u304d\u308bWeb\u30a2\u30d7\u30ea\u3067\u3059\u3002\u3042\u306a\u305f\u306e\u5fd9\u3057\u3044\u65e5\u5e38\u3092\u30b5\u30dd\u30fc\u30c8\u3057\u3001\u30bf\u30b9\u30af\u7ba1\u7406\u3092\u52b9\u7387\u7684\u306b\u3057\u307e\u3059\u3002",
-    "scope": "/",
-    "start_url": "/dashboard",
-    "display": "fullscreen",
-    "background_color": "#40221B",
-    "icons": [
-      {
-        "src": "/icons/android-chrome-192x192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "/icons/android-chrome-512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
+  "background_color": "#000000",
+  "description": "「ルーティンナさん」はあなたの定期的なタスクを追跡し、最後にいつ完了したのかを簡単に記録できるWebアプリです。あなたの忙しい日常をサポートし、タスク管理を効率的にします。",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "sizes": "192x192",
+      "src": "/icons/android-chrome-192x192.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "512x512",
+      "src": "/icons/android-chrome-512x512.png",
+      "type": "image/png"
+    }
+  ],
+  "name": "ルーティンナさん",
+  "scope": "/",
+  "short_name": "ルーティンナさん",
+  "start_url": "/dashboard"
 }
