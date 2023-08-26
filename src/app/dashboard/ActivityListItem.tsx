@@ -33,8 +33,7 @@ export default function ActivityListItem(props: ActivityListItemProps) {
   return (
     <Card
       sx={(theme) => ({
-        mb: 1,
-        py: 2,
+        mb: 2,
         background: theme.vars.palette.background.default,
       })}
       elevation={0}

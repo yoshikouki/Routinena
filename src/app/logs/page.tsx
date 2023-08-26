@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 export default function LogsPage() {
   return (
     <>
-      <CompletionsCalendarHeatmap />
-
-      <Box sx={{ mx: 2, mt: 4 }}>
+      <Box sx={{ mx: 2, mb: 4 }}>
         <Typography variant="h1">履歴</Typography>
       </Box>
+
+      <CompletionsCalendarHeatmap />
 
       <Completions />
     </>
