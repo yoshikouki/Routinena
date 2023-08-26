@@ -4,12 +4,12 @@ import { CheckRounded } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   Typography,
+  Zoom,
 } from "@mui/material";
 import { RelativeDate } from "~/components/RelativeDate";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
@@ -67,29 +67,22 @@ export default function ActivityListItem(props: ActivityListItemProps) {
           gap: 2,
           py: 0,
           px: 2,
+          alignContent: "center",
           justifyContent: "space-between",
         }}
       >
-        {isCompleted ? (
-          <Button
-            variant="contained"
-            sx={{ py: 1 }}
-            startIcon={<CheckRounded />}
-            color="success"
-          >
-            {completions.length}
-          </Button>
-        ) : (
+        <Zoom in={true}>
           <LoadingButton
-            variant="outlined"
+            variant={isCompleted ? "contained" : "outlined"}
             sx={{ py: 1 }}
             startIcon={<CheckRounded fontSize="large" />}
             onClick={onComplete}
             loading={isCompleting}
+            color={isCompleted ? "success" : "primary"}
           >
             {completions.length}
           </LoadingButton>
-        )}
+        </Zoom>
         <RelativeDate
           date={latestCompletion?.completedAt}
           iconVariant="body1"
