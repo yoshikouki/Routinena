@@ -1,6 +1,6 @@
 "use client";
 
-import DoneIcon from "@mui/icons-material/Done";
+import { AccessTimeFilledRounded } from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import Link from "next/link";
@@ -16,10 +16,10 @@ const navigationActions = {
     icon: <HomeIcon />,
   },
   completions: {
-    label: "Completions",
-    value: "completions",
-    path: "/completions",
-    icon: <DoneIcon />,
+    label: "Logs",
+    value: "logs",
+    path: "/logs",
+    icon: <AccessTimeFilledRounded />,
   },
 };
 

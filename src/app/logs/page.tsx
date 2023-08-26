@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "活動の履歴 - ルーティンナさん | Routinena",
 };
 
-export default function CompletionsPage() {
+export default function LogsPage() {
   return (
     <>
       <CompletionsCalendarHeatmap />

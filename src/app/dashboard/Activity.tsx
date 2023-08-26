@@ -20,7 +20,7 @@ import {
 import { useState } from "react";
 import { useActivity, type ActivityModel } from "~/hooks/activities";
 import { useBottomFab } from "~/hooks/bottom-fab";
-import { CompletionsTimeline } from "../completions/CompletionsTimeline";
+import { CompletionsTimeline } from "../../components/CompletionsTimeline";
 
 export default function Activity(props: { activity: ActivityModel }) {
   const { activity, onDelete, onComplete, isCompleting, isCompleted } =

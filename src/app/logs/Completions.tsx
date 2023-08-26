@@ -11,7 +11,7 @@ import {
 } from "@mui/lab";
 import { Box, Skeleton, Typography } from "@mui/material";
 import { useCompletions } from "~/hooks/completions";
-import { CompletionsTimeline } from "./CompletionsTimeline";
+import { CompletionsTimeline } from "../../components/CompletionsTimeline";
 
 export default function Completions() {
   const { completions, isLoading } = useCompletions();
