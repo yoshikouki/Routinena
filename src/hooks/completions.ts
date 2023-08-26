@@ -122,7 +122,11 @@ export const useCompletionForm = (props: UseCompletionFormParams) => {
     },
   });
 
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm({
     defaultValues: {
       completedAt: props.completion.completedAt,
     },
@@ -138,6 +142,7 @@ export const useCompletionForm = (props: UseCompletionFormParams) => {
 
   return {
     onUpdate,
+    isUpdating: isSubmitting,
     control,
   };
 };

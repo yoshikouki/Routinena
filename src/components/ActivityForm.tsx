@@ -8,7 +8,7 @@ import { useActivityForm, type UseActivityForm } from "~/hooks/activity-form";
 type ActivityFormProps = UseActivityForm;
 
 export const ActivityForm = (props: ActivityFormProps) => {
-  const { control, onSubmit, onCancel } = useActivityForm(props);
+  const { control, onSubmit, onCancel, isSubmitting } = useActivityForm(props);
 
   return (
     <Box
@@ -77,6 +77,7 @@ export const ActivityForm = (props: ActivityFormProps) => {
 
         <Button
           type="submit"
+          disabled={isSubmitting}
           startIcon={<BookmarkRounded />}
           color="primary"
           variant="contained"

@@ -2,6 +2,7 @@
 
 import { BookmarkRounded, DeleteRounded } from "@mui/icons-material";
 import {
+  LoadingButton,
   Timeline,
   TimelineConnector,
   TimelineContent,
@@ -147,7 +148,7 @@ type CompletionEditorProps = CompletionsTimelineItemProps & {
 };
 
 function CompletionEditor(props: CompletionEditorProps) {
-  const { onUpdate, control } = useCompletionForm(props);
+  const { onUpdate, control, isUpdating } = useCompletionForm(props);
   return (
     <form onSubmit={onUpdate}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -163,9 +164,14 @@ function CompletionEditor(props: CompletionEditorProps) {
           )}
         />
       </LocalizationProvider>
-      <IconButton type="submit" sx={{ flexShrink: 1, p: 2 }} color="inherit">
+      <LoadingButton
+        type="submit"
+        loading={isUpdating}
+        sx={{ flexShrink: 1, p: 2 }}
+        color="inherit"
+      >
         <BookmarkRounded />
-      </IconButton>
+      </LoadingButton>
     </form>
   );
 }

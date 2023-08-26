@@ -62,13 +62,15 @@ export default function ActivityListItem(props: ActivityListItemProps) {
         </CardContent>
       </CardActionArea>
 
-      <CardActions sx={{ display: "flex", gap: 2, py: 0, px: 2 }}>
-        <RelativeDate
-          date={latestCompletion?.completedAt}
-          iconVariant="body1"
-          variant="body2"
-        />
-
+      <CardActions
+        sx={{
+          display: "flex",
+          gap: 2,
+          py: 0,
+          px: 2,
+          justifyContent: "space-between",
+        }}
+      >
         {isCompleted ? (
           <Button
             variant="contained"
@@ -80,7 +82,7 @@ export default function ActivityListItem(props: ActivityListItemProps) {
           </Button>
         ) : (
           <LoadingButton
-            variant="text"
+            variant="outlined"
             sx={{ py: 1 }}
             startIcon={<CheckRounded fontSize="large" />}
             onClick={onComplete}
@@ -89,6 +91,11 @@ export default function ActivityListItem(props: ActivityListItemProps) {
             {completions.length}
           </LoadingButton>
         )}
+        <RelativeDate
+          date={latestCompletion?.completedAt}
+          iconVariant="body1"
+          variant="body2"
+        />
       </CardActions>
     </Card>
   );

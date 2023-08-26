@@ -22,7 +22,7 @@ export const useActivityForm = (props?: UseActivityForm) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ActivityModificationParams>({
     defaultValues: {
       name: activity?.name || "",
@@ -64,5 +64,6 @@ export const useActivityForm = (props?: UseActivityForm) => {
     onSubmit,
     onCancel,
     errors,
+    isSubmitting,
   };
 };
