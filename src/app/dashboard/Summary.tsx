@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Paper, Skeleton, Typography, Zoom } from "@mui/material";
+import { Box, Fade, Paper, Skeleton, Typography, Zoom } from "@mui/material";
 
 import { useCompletions } from "~/hooks/completions";
 import { CompletionsLineChart } from "./CompletionsLineChart";
@@ -10,15 +10,15 @@ export default function Summary() {
     useCompletions();
 
   return (
-    <Box sx={{ px: 2 }}>
-      {isLoading ? (
-        <Skeleton sx={{ height: "100%" }} />
-      ) : (
+    <Box sx={{ px: 2, height: 200 }}>
+      {isLoading && <Skeleton variant="rounded" sx={{ height: "100%" }} />}
+
+      <Fade in={!isLoading}>
         <Paper
           sx={{
             position: "relative",
             display: "flex",
-            height: 200,
+            height: "100%",
           }}
         >
           <CompletionsLineChart />
@@ -57,7 +57,7 @@ export default function Summary() {
             </Box>
           </Box>
         </Paper>
-      )}
+      </Fade>
     </Box>
   );
 }
