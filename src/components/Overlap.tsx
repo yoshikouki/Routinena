@@ -15,22 +15,21 @@ OverlapContainer.displayName = "OverlapContainer";
 
 const ClosableContainer = ({ children }: { children: ReactNode }) => {
   const [dragging, setDragging] = useState(false);
-  const [startY, setStartY] = useState(0);
-  const [currentY, setCurrentY] = useState(0);
-  const actionable = currentY - startY >= 100;
+  const startYRef = useRef(0);
+  const currentYRef = useRef(0);
   const elementRef = useRef<HTMLDivElement>(null);
 
   const handleTouchStart: TouchEventHandler = (e) => {
     setDragging(true);
-    setStartY((prev) => e.touches[0]?.clientY || prev);
-    setCurrentY((prev) => e.touches[0]?.clientY || prev);
+    startYRef.current = e.touches[0]?.clientY || 0;
+    currentYRef.current = e.touches[0]?.clientY || 0;
   };
 
   const handleTouchMove: TouchEventHandler = (e) => {
     const element = elementRef.current;
     if (!element || !dragging) return;
-    setCurrentY((prev) => e.touches[0]?.clientY || prev);
-    const diff = currentY - startY;
+    currentYRef.current = e.touches[0]?.clientY || 0;
+    const diff = currentYRef.current - startYRef.current;
 
     if (0 <= diff && diff <= 100) {
       element.style.transform = `translateY(${diff}px)`;
@@ -40,7 +39,7 @@ const ClosableContainer = ({ children }: { children: ReactNode }) => {
   const handleTouchEnd = () => {
     const element = elementRef.current;
     if (!element || !dragging) return;
-    const diff = currentY - startY;
+    const diff = currentYRef.current - startYRef.current;
 
     if (diff > 100) {
       // TODO: WIP
@@ -66,7 +65,7 @@ const ClosableContainer = ({ children }: { children: ReactNode }) => {
       }}
     >
       <Button
-        variant={actionable ? "contained" : "text"}
+        variant="text"
         color="secondary"
         sx={{
           position: "absolute",
