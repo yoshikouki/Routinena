@@ -29,19 +29,17 @@ export default function ActivityList() {
         <ActivityListItem key={activity.id} activity={activity} />
       ))}
 
-      {currentActivity && (
-        <Overlap open={!!currentActivity}>
-          {currentDisplayMode === "show" && (
-            <Activity key={currentActivity.id} activity={currentActivity} />
-          )}
-          {currentDisplayMode === "edit" && (
-            <ActivityEditing
-              key={currentActivity.id}
-              activity={currentActivity}
-            />
-          )}
-        </Overlap>
-      )}
+      <Overlap open={!!currentActivity}>
+        {currentDisplayMode === "show" && currentActivity && (
+          <Activity key={currentActivity.id} activity={currentActivity} />
+        )}
+        {currentDisplayMode === "edit" && currentActivity && (
+          <ActivityEditing
+            key={currentActivity.id}
+            activity={currentActivity}
+          />
+        )}
+      </Overlap>
     </>
   );
 }
