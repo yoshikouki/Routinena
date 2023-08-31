@@ -29,7 +29,7 @@ export default function ActivityList() {
         <ActivityListItem key={activity.id} activity={activity} />
       ))}
 
-      <Overlap open={!!currentActivity}>
+      <Overlap open={!!currentActivity} onClose={currentActivity?.onCancelShow}>
         {currentDisplayMode === "show" && currentActivity && (
           <Activity key={currentActivity.id} activity={currentActivity} />
         )}

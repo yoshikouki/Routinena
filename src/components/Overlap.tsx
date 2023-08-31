@@ -11,7 +11,13 @@ const OverlapContainer = forwardRef<HTMLDivElement, { children: ReactNode }>(
 );
 OverlapContainer.displayName = "OverlapContainer";
 
-const ClosableContainer = ({ children }: { children: ReactNode }) => {
+const ClosableContainer = ({
+  children,
+  onClose,
+}: {
+  children: ReactNode;
+  onClose?: () => void;
+}) => {
   const startYRef = useRef(0);
   const currentYRef = useRef(0);
   const elementRef = useRef<HTMLDivElement>(null);
@@ -29,6 +35,10 @@ const ClosableContainer = ({ children }: { children: ReactNode }) => {
     if (0 <= diff && diff <= 100) {
       elementRef.current.style.transform = `translateY(${diff}px)`;
     }
+    if (150 <= diff) {
+      const dropY = 100 + (diff - 150) / 4;
+      elementRef.current.style.transform = `translateY(${dropY}px)`;
+    }
   };
 
   const handleTouchEnd = () => {
@@ -36,8 +46,7 @@ const ClosableContainer = ({ children }: { children: ReactNode }) => {
     const diff = currentYRef.current - startYRef.current;
 
     if (diff > 100) {
-      // TODO: WIP
-      console.log("close");
+      onClose && onClose();
     }
     elementRef.current.style.transform = "translateY(0)";
   };
@@ -78,9 +87,10 @@ const ClosableContainer = ({ children }: { children: ReactNode }) => {
 interface Props {
   open: boolean;
   children: ReactNode;
+  onClose?: () => void;
 }
 
-const Overlap = ({ open, children }: Props) => {
+const Overlap = ({ open, children, onClose }: Props) => {
   return (
     <Slide
       in={open}
@@ -93,7 +103,7 @@ const Overlap = ({ open, children }: Props) => {
       }}
     >
       <OverlapContainer>
-        <ClosableContainer>{children}</ClosableContainer>
+        <ClosableContainer onClose={onClose}>{children}</ClosableContainer>
       </OverlapContainer>
     </Slide>
   );

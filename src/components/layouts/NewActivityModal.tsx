@@ -9,7 +9,7 @@ export const NewActivityModal = () => {
   const { openNewActivity, onCloseNewActivity } = useBottomFab();
 
   return (
-    <Overlap open={openNewActivity}>
+    <Overlap open={openNewActivity} onClose={onCloseNewActivity}>
       <Typography variant="h1">活動の作成</Typography>
       <ActivityForm
         onSubmit={onCloseNewActivity}
