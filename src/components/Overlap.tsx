@@ -72,8 +72,8 @@ const ClosableContainer = ({
         onTouchEnd={handleTouchEnd}
         sx={(theme) => ({
           width: "100%",
-          background: `rgba(${theme.vars.palette.background.paper} / 0.5)`,
-          backdropFilter: "blur(8px)",
+          background: `rgb(${theme.vars.palette.background.defaultChannel} / 0.5)`,
+          backdropFilter: "blur(20px)",
           pt: 5,
           pb: 12,
         })}
